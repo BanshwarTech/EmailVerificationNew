@@ -1,0 +1,76 @@
+@extends('Front.layouts.app')
+@section('page_title', 'Login')
+@section('content')
+    <!-- ...:::: Start Breadcrumb Section:::... -->
+    <div class="breadcrumb-section breadcrumb-bg-color--golden">
+        <div class="breadcrumb-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="breadcrumb-title">@yield('page_title')</h3>
+                        <div class="breadcrumb-nav breadcrumb-nav-color--black breadcrumb-nav-hover-color--golden">
+                            <nav aria-label="breadcrumb">
+                                <ul>
+                                    <li><a href="{{ route('index') }}">Home</a></li>
+                                    <li class="active" aria-current="page">@yield('page_title')</li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- ...:::: End Breadcrumb Section:::... -->
+
+    <!-- ...:::: Start Customer Login Section :::... -->
+    <div class="customer-login">
+        <div class="container">
+            <div class="row">
+                <!--login area start-->
+                <div class="col-lg-12 col-md-6">
+                    <div class="account_form" data-aos="fade-up" data-aos-delay="0">
+                        <h3>login</h3>
+                        <form action="#" method="POST">
+                            <div class="row">
+                                <div class="col-6 default-form-box">
+                                    <label>Username or email <span>*</span></label>
+                                    <input type="text">
+                                </div>
+                                <div class="col-6 default-form-box">
+                                    <label>Passwords <span>*</span></label>
+                                    <input type="password">
+                                </div>
+                            </div>
+
+                            <div class="">
+                                <label class="checkbox-default mb-4" for="offer">
+                                    <input type="checkbox" id="offer">
+                                    <span>Remember me</span>
+                                </label><br>
+                                <button class="btn btn-md btn-black-default-hover mb-4" type="submit">Login</button>
+
+                                <div class="d-flex justify-content-between align-items-center ">
+                                    <a href="#" class="text-primary">Lost your password?</a> <!-- First link -->
+
+                                    <span class="text-dark">
+                                        Don't have an account? <a href="{{ route('Register') }}"
+                                            class="text-decoration-none fw-bold text-primary">Create
+                                            an
+                                            account</a> <!-- Second link inside span -->
+                                    </span>
+                                </div>
+
+
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--login area start-->
+
+
+            </div>
+        </div>
+    </div> <!-- ...:::: End Customer Login Section :::... -->
+
+@endsection

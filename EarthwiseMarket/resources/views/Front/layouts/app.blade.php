@@ -13,192 +13,29 @@
     <!-- ::::::::::::::Favicon icon::::::::::::::-->
     <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/png">
 
-    <link rel="stylesheet" href="assets/css/vendor/vendor.min.css">
-    <link rel="stylesheet" href="assets/css/plugins/plugins.min.css">
-    <link rel="stylesheet" href="assets/css/style.min.css">
+    <!-- ::::::::::::::All CSS Files here :::::::::::::: -->
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="assets/css/vendor/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/vendor/ionicons.css">
+    <link rel="stylesheet" href="assets/css/vendor/simple-line-icons.css">
+    <link rel="stylesheet" href="assets/css/vendor/jquery-ui.min.css">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="assets/css/plugins/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/plugins/animate.min.css">
+    <link rel="stylesheet" href="assets/css/plugins/nice-select.css">
+    <link rel="stylesheet" href="assets/css/plugins/venobox.min.css">
+    <link rel="stylesheet" href="assets/css/plugins/jquery.lineProgressbar.css">
+    <link rel="stylesheet" href="assets/css/plugins/aos.min.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
 
 </head>
 
 <body>
     @include('Front.layouts.header')
-
-    <!--  Start Offcanvas Mobile Menu Section -->
-    <div id="mobile-menu-offcanvas" class="offcanvas offcanvas-rightside offcanvas-mobile-menu-section">
-        <!-- Start Offcanvas Header -->
-        <div class="offcanvas-header text-right">
-            <button class="offcanvas-close"><i class="ion-android-close"></i></button>
-        </div> <!-- End Offcanvas Header -->
-        <!-- Start Offcanvas Mobile Menu Wrapper -->
-        <div class="offcanvas-mobile-menu-wrapper">
-            <!-- Start Mobile Menu  -->
-            <div class="mobile-menu-bottom">
-                <!-- Start Mobile Menu Nav -->
-                <div class="offcanvas-menu">
-                    <ul>
-                        <li>
-                            <a href="#"><span>Home</span></a>
-                            <ul class="mobile-sub-menu">
-                                <li><a href="index.html">Home 1</a></li>
-                                <li><a href="index-2.html">Home 2</a></li>
-                                <li><a href="index-3.html">Home 3</a></li>
-                                <li><a href="index-4.html">Home 4</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><span>Shop</span></a>
-                            <ul class="mobile-sub-menu">
-                                <li>
-                                    <a href="#">Shop Layout</a>
-                                    <ul class="mobile-sub-menu">
-                                        <li><a href="shop-grid-sidebar-left.html">Grid Left Sidebar</a></li>
-                                        <li><a href="shop-grid-sidebar-right.html">Grid Right Sidebar</a></li>
-                                        <li><a href="shop-full-width.html">Full Width</a></li>
-                                        <li><a href="shop-list-sidebar-left.html">List Left Sidebar</a></li>
-                                        <li><a href="shop-list-sidebar-right.html">List Right Sidebar</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <ul class="mobile-sub-menu">
-                                <li>
-                                    <a href="#">Shop Pages</a>
-                                    <ul class="mobile-sub-menu">
-                                        <li><a href="cart.html">Cart</a></li>
-                                        <li><a href="empty-cart.html">Empty Cart</a></li>
-                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                        <li><a href="compare.html">Compare</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="login.html">Login</a></li>
-                                        <li><a href="my-account.html">My Account</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <ul class="mobile-sub-menu">
-                                <li>
-                                    <a href="#">Product Single</a>
-                                    <ul class="mobile-sub-menu">
-                                        <li><a href="product-details-default.html">Product Default</a></li>
-                                        <li><a href="product-details-variable.html">Product Variable</a></li>
-                                        <li><a href="product-details-affiliate.html">Product Referral</a></li>
-                                        <li><a href="product-details-group.html">Product Group</a></li>
-                                        <li><a href="product-details-single-slide.html">Product Slider</a></li>
-                                        <li><a href="product-details-tab-left.html">Product Tab Left</a></li>
-                                        <li><a href="product-details-tab-right.html">Product Tab Right</a></li>
-                                        <li><a href="product-details-gallery-left.html">Product Gallery Left</a></li>
-                                        <li><a href="product-details-gallery-right.html">Product Gallery Right</a></li>
-                                        <li><a href="product-details-sticky-left.html">Product Sticky Left</a></li>
-                                        <li><a href="product-details-sticky-right.html">Product Sticky right</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><span>Blogs</span></a>
-                            <ul class="mobile-sub-menu">
-                                <li>
-                                    <a href="#">Blog Grid</a>
-                                    <ul class="mobile-sub-menu">
-                                        <li><a href="blog-grid-sidebar-left.html">Blog Grid Sidebar left</a></li>
-                                        <li><a href="blog-grid-sidebar-right.html">Blog Grid Sidebar Right</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="blog-full-width.html">Blog Full Width</a>
-                                </li>
-                                <li>
-                                    <a href="#">Blog List</a>
-                                    <ul class="mobile-sub-menu">
-                                        <li><a href="blog-list-sidebar-left.html">Blog List Sidebar left</a></li>
-                                        <li><a href="blog-list-sidebar-right.html">Blog List Sidebar Right</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#">Blog Single</a>
-                                    <ul class="mobile-sub-menu">
-                                        <li><a href="blog-single-sidebar-left.html">Blog Single Sidebar left</a></li>
-                                        <li><a href="blog-single-sidebar-right.html">Blog Single Sidebar Right</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><span>Pages</span></a>
-                            <ul class="mobile-sub-menu">
-                                <li><a href="faq.html">Frequently Questions</a></li>
-                                <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                                <li><a href="404.html">404 Page</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="about-us.html">About Us</a></li>
-                        <li><a href="contact-us.html">Contact Us</a></li>
-                    </ul>
-                </div> <!-- End Mobile Menu Nav -->
-            </div> <!-- End Mobile Menu -->
-
-            <!-- Start Mobile contact Info -->
-            <div class="mobile-contact-info">
-                <div class="logo">
-                    <a href="index.html"><img src="assets/images/logo/logo_white.png" alt=""></a>
-                </div>
-
-                <address class="address">
-                    <span>Address: Your address goes here.</span>
-                    <span>Call Us: 0123456789, 0123456789</span>
-                    <span>Email: demo@example.com</span>
-                </address>
-
-                <ul class="social-link">
-                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                </ul>
-
-                <ul class="user-link">
-                    <li><a href="wishlist.html">Wishlist</a></li>
-                    <li><a href="cart.html">Cart</a></li>
-                    <li><a href="checkout.html">Checkout</a></li>
-                </ul>
-            </div>
-            <!-- End Mobile contact Info -->
-
-        </div> <!-- End Offcanvas Mobile Menu Wrapper -->
-    </div> <!-- ...:::: End Offcanvas Mobile Menu Section:::... -->
-
-    <!-- Start Offcanvas Mobile Menu Section -->
-    <div id="offcanvas-about" class="offcanvas offcanvas-rightside offcanvas-mobile-about-section">
-        <!-- Start Offcanvas Header -->
-        <div class="offcanvas-header text-right">
-            <button class="offcanvas-close"><i class="ion-android-close"></i></button>
-        </div> <!-- End Offcanvas Header -->
-        <!-- Start Offcanvas Mobile Menu Wrapper -->
-        <!-- Start Mobile contact Info -->
-        <div class="mobile-contact-info">
-            <div class="logo">
-                <a href="index.html"><img src="assets/images/logo/logo_white.png" alt=""></a>
-            </div>
-
-            <address class="address">
-                <span>Address: Your address goes here.</span>
-                <span>Call Us: 0123456789, 0123456789</span>
-                <span>Email: demo@example.com</span>
-            </address>
-
-            <ul class="social-link">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-            </ul>
-
-            <ul class="user-link">
-                <li><a href="wishlist.html">Wishlist</a></li>
-                <li><a href="cart.html">Cart</a></li>
-                <li><a href="checkout.html">Checkout</a></li>
-            </ul>
-        </div>
-        <!-- End Mobile contact Info -->
-    </div> <!-- ...:::: End Offcanvas Mobile Menu Section:::... -->
-
     <!-- Start Offcanvas Addcart Section -->
     <div id="offcanvas-add-cart" class="offcanvas offcanvas-rightside offcanvas-add-cart-section">
         <!-- Start Offcanvas Header -->
@@ -270,8 +107,8 @@
                 <span class="offcanvas-cart-total-price-value">$170.00</span>
             </div>
             <ul class="offcanvas-cart-action-button">
-                <li><a href="cart.html" class="btn btn-block btn-golden">View Cart</a></li>
-                <li><a href="compare.html" class=" btn btn-block btn-golden mt-5">Checkout</a></li>
+                <li><a href="cart.html" class="btn btn-block btn-green">View Cart</a></li>
+                <li><a href="compare.html" class=" btn btn-block btn-green mt-5">Checkout</a></li>
             </ul>
         </div> <!-- End  Offcanvas Addcart Wrapper -->
 
@@ -344,7 +181,7 @@
                 </li>
             </ul>
             <ul class="offcanvas-wishlist-action-button">
-                <li><a href="#" class="btn btn-block btn-golden">View wishlist</a></li>
+                <li><a href="#" class="btn btn-block btn-green">View wishlist</a></li>
             </ul>
         </div> <!-- End Offcanvas Mobile Menu Wrapper -->
 
@@ -355,14 +192,21 @@
         <button type="button" class="close">×</button>
         <form>
             <input type="search" placeholder="type keyword(s) here" />
-            <button type="submit" class="btn btn-lg btn-golden">Search</button>
+            <button type="submit" class="btn btn-lg btn-green">Search</button>
         </form>
     </div>
     <!-- End Offcanvas Search Bar Section -->
+
+    <!-- Offcanvas Overlay -->
+    <div class="offcanvas-overlay"></div>
+
+
+
     @section('content')
     @show
+
     <!-- Start Footer Section -->
-    <footer class="footer-section footer-bg">
+    <footer class="footer-section footer-bg section-top-gap-100">
         <div class="footer-wrapper">
             <!-- Start Footer Top -->
             <div class="footer-top">
@@ -370,7 +214,7 @@
                     <div class="row mb-n6">
                         <div class="col-lg-3 col-sm-6 mb-6">
                             <!-- Start Footer Single Item -->
-                            <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"
+                            <div class="footer-widget-single-item footer-widget-color--green" data-aos="fade-up"
                                 data-aos-delay="0">
                                 <h5 class="title">INFORMATION</h5>
                                 <ul class="footer-nav">
@@ -384,7 +228,7 @@
                         </div>
                         <div class="col-lg-3 col-sm-6 mb-6">
                             <!-- Start Footer Single Item -->
-                            <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"
+                            <div class="footer-widget-single-item footer-widget-color--green" data-aos="fade-up"
                                 data-aos-delay="200">
                                 <h5 class="title">MY ACCOUNT</h5>
                                 <ul class="footer-nav">
@@ -399,7 +243,7 @@
                         </div>
                         <div class="col-lg-3 col-sm-6 mb-6">
                             <!-- Start Footer Single Item -->
-                            <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"
+                            <div class="footer-widget-single-item footer-widget-color--green" data-aos="fade-up"
                                 data-aos-delay="400">
                                 <h5 class="title">CATEGORIES</h5>
                                 <ul class="footer-nav">
@@ -414,14 +258,14 @@
                         </div>
                         <div class="col-lg-3 col-sm-6 mb-6">
                             <!-- Start Footer Single Item -->
-                            <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"
+                            <div class="footer-widget-single-item footer-widget-color--green" data-aos="fade-up"
                                 data-aos-delay="600">
                                 <h5 class="title">ABOUT US</h5>
                                 <div class="footer-about">
                                     <p>We are a team of designers and developers that create high quality Magento,
                                         Prestashop, Opencart.</p>
 
-                                    <address class="address">
+                                    <address>
                                         <span>Address: Your address goes here.</span>
                                         <span>Email: demo@example.com</span>
                                     </address>
@@ -454,7 +298,7 @@
                                 <h4 class="title">DON'T MISS OUT ON THE LATEST</h4>
                                 <div class="form-newsletter">
                                     <form action="#" method="post">
-                                        <div class="form-fild-newsletter-single-item input-color--golden">
+                                        <div class="form-fild-newsletter-single-item input-color--green">
                                             <input type="email" placeholder="Your email address..." required>
                                             <button type="submit">SUBSCRIBE!</button>
                                         </div>
@@ -739,15 +583,15 @@
 
     <!-- ::::::::::::::All JS Files here :::::::::::::: -->
     <!-- Global Vendor, plugins JS -->
-    <!-- <script src="assets/js/vendor/modernizr-3.11.2.min.js"></script>
+    <script src="assets/js/vendor/modernizr-3.11.2.min.js"></script>
     <script src="assets/js/vendor/jquery-3.5.1.min.js"></script>
     <script src="assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
     <script src="assets/js/vendor/popper.min.js"></script>
     <script src="assets/js/vendor/bootstrap.min.js"></script>
-    <script src="assets/js/vendor/jquery-ui.min.js"></script>  -->
+    <script src="assets/js/vendor/jquery-ui.min.js"></script>
 
     <!--Plugins JS-->
-    <!-- <script src="assets/js/plugins/swiper-bundle.min.js"></script>
+    <script src="assets/js/plugins/swiper-bundle.min.js"></script>
     <script src="assets/js/plugins/material-scrolltop.js"></script>
     <script src="assets/js/plugins/jquery.nice-select.min.js"></script>
     <script src="assets/js/plugins/jquery.zoom.min.js"></script>
@@ -756,16 +600,15 @@
     <script src="assets/js/plugins/jquery.lineProgressbar.js"></script>
     <script src="assets/js/plugins/aos.min.js"></script>
     <script src="assets/js/plugins/jquery.instagramFeed.js"></script>
-    <script src="assets/js/plugins/ajax-mail.js"></script> -->
+    <script src="assets/js/plugins/ajax-mail.js"></script>
 
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
-    <script src="assets/js/vendor/vendor.min.js"></script>
-    <script src="assets/js/plugins/plugins.min.js"></script>
+    <!-- <script src="assets/js/vendor/vendor.min.js"></script>
+    <script src="assets/js/plugins/plugins.min.js"></script> -->
 
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
 </body>
-
 
 
 </html>

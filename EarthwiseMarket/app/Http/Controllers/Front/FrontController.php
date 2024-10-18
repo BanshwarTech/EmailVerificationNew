@@ -13,6 +13,7 @@ class FrontController extends Controller
         return view('Front.index');
     }
 
+
     public function myAccount()
     {
         if (session()->has('FRONT_USER_LOGIN') && session()->get('FRONT_USER_LOGIN') === true) {

@@ -15,7 +15,7 @@
                     <div class="header-top-right">
                         <div
                             class="header-top-user-link header-top-user-link-color--white header-top-user-link-hover-color--green">
-
+                            <a href="{{ url('/admin') }}">Admin</a>
                             <a href="cart.html">Cart</a>
                             @if (session()->has('FRONT_USER_LOGIN') && session('FRONT_USER_LOGIN') === true)
                                 <a href="">Wishlist</a>
@@ -267,9 +267,16 @@
             </ul>
 
             <ul class="user-link">
-                <li><a href="wishlist.html">Wishlist</a></li>
+                <li><a href="{{ url('/admin') }}">Admin Login</a></li>
                 <li><a href="cart.html">Cart</a></li>
-                <li><a href="{{ url('/login') }}">Login</a></li>
+
+                @if (session()->has('FRONT_USER_LOGIN') && session('FRONT_USER_LOGIN') === true)
+                    <li> <a href="">Wishlist</a></li>
+                    <li><a href="">My Order</a></li>
+                    <li><a href="{{ url('/logout') }}">Logout ( {{ session('FRONT_USER_EMAIL') }} )</a></li>
+                @else
+                    <li><a href="{{ url('/login') }}">Login</a></li>
+                @endif
             </ul>
         </div>
         <!-- End Mobile contact Info -->
@@ -304,9 +311,15 @@
         </ul>
 
         <ul class="user-link">
-            <li><a href="wishlist.html">Wishlist</a></li>
+            <li><a href="{{ url('/admin') }}">Admin Login</a></li>
             <li><a href="cart.html">Cart</a></li>
-            <li><a href="{{ url('/login') }}"> Login</a></li>
+            @if (session()->has('FRONT_USER_LOGIN') && session('FRONT_USER_LOGIN') === true)
+                <li> <a href="">Wishlist</a></li>
+                <li><a href="">My Order</a></li>
+                <li><a href="{{ url('/logout') }}">Logout ( {{ session('FRONT_USER_EMAIL') }} )</a></li>
+            @else
+                <li><a href="{{ url('/login') }}">Login</a></li>
+            @endif
         </ul>
     </div>
     <!-- End Mobile contact Info -->

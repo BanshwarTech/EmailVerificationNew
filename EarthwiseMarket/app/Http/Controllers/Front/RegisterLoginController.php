@@ -141,28 +141,24 @@ class RegisterLoginController extends Controller
 
             $this->sendOtp($userData);
             return redirect("/verification/" . $userData->id);
-        } else if (Auth::attempt($userCredential)) {
-            if (Hash::check($request->password, $userData->password)) {
-                if ($request->rememberme === null) {
-                    setcookie('login_email', $request->email, 100);
-                    setcookie('login_pwd', $request->password, 100);
-                } else {
-                    setcookie('login_email', $request->email, time() + 60 * 60 * 24 * 100);
-                    setcookie('login_pwd', $request->password, time() + 60 * 60 * 24 * 100);
-                }
-                $request->session()->put('FRONT_USER_LOGIN', true);
-                $request->session()->put('FRONT_USER_ID', $userData->id);
-                $request->session()->put('FRONT_USER_NAME', $userData->name);
-                $request->session()->put('FRONT_USER_EMAIL', $userData->email);
+        } else if (Hash::check($request->password, $userData->password)) {
 
-                $request->session()->flash('successMessage', 'Login Successfully....');
-                return redirect()->route('myAccount');
+            if ($request->rememberme === null) {
+                setcookie('login_email', $request->email, 100);
+                setcookie('login_pwd', $request->password, 100);
             } else {
-                $request->session()->flash('errorMessage', 'Please enter a valid password');
-                return redirect('/login');
+                setcookie('login_email', $request->email, time() + 60 * 60 * 24 * 100);
+                setcookie('login_pwd', $request->password, time() + 60 * 60 * 24 * 100);
             }
+            $request->session()->put('FRONT_USER_LOGIN', true);
+            $request->session()->put('FRONT_USER_ID', $userData->id);
+            $request->session()->put('FRONT_USER_NAME', $userData->name);
+            $request->session()->put('FRONT_USER_EMAIL', $userData->email);
+
+            $request->session()->flash('successMessage', 'Login Successfully....');
+            return redirect()->route('myAccount');
         } else {
-            $request->session()->flash('errorMessage', 'Username & Password is incorrect');
+            $request->session()->flash('errorMessage', 'Please enter a valid password');
             return redirect('/login');
         }
     }

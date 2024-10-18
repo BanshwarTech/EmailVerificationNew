@@ -11,25 +11,26 @@
     <title>@yield('page_title')</title>
 
     <!-- ::::::::::::::Favicon icon::::::::::::::-->
-    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/png">
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/png">
 
     <!-- ::::::::::::::All CSS Files here :::::::::::::: -->
     <!-- Vendor CSS -->
-    <link rel="stylesheet" href="assets/css/vendor/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/vendor/ionicons.css">
-    <link rel="stylesheet" href="assets/css/vendor/simple-line-icons.css">
-    <link rel="stylesheet" href="assets/css/vendor/jquery-ui.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/vendor/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/vendor/ionicons.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/vendor/simple-line-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/vendor/jquery-ui.min.css') }}">
 
     <!-- Plugin CSS -->
-    <link rel="stylesheet" href="assets/css/plugins/swiper-bundle.min.css">
-    <link rel="stylesheet" href="assets/css/plugins/animate.min.css">
-    <link rel="stylesheet" href="assets/css/plugins/nice-select.css">
-    <link rel="stylesheet" href="assets/css/plugins/venobox.min.css">
-    <link rel="stylesheet" href="assets/css/plugins/jquery.lineProgressbar.css">
-    <link rel="stylesheet" href="assets/css/plugins/aos.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/swiper-bundle.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/nice-select.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/venobox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/jquery.lineProgressbar.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/aos.min.css') }}">
+
 
     <!-- Main CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
 
 </head>
@@ -50,7 +51,7 @@
                 <li class="offcanvas-cart-item-single">
                     <div class="offcanvas-cart-item-block">
                         <a href="#" class="offcanvas-cart-item-image-link">
-                            <img src="assets/images/product/default/home-1/default-1.jpg" alt=""
+                            <img src="{{ asset('assets/images/product/default/home-1/default-1.jpg') }}" alt=""
                                 class="offcanvas-cart-image">
                         </a>
                         <div class="offcanvas-cart-item-content">
@@ -68,7 +69,7 @@
                 <li class="offcanvas-cart-item-single">
                     <div class="offcanvas-cart-item-block">
                         <a href="#" class="offcanvas-cart-item-image-link">
-                            <img src="assets/images/product/default/home-2/default-1.jpg" alt=""
+                            <img src="{{ asset('assets/images/product/default/home-2/default-1.jpg') }}" alt=""
                                 class="offcanvas-cart-image">
                         </a>
                         <div class="offcanvas-cart-item-content">
@@ -86,7 +87,7 @@
                 <li class="offcanvas-cart-item-single">
                     <div class="offcanvas-cart-item-block">
                         <a href="#" class="offcanvas-cart-item-image-link">
-                            <img src="assets/images/product/default/home-3/default-1.jpg" alt=""
+                            <img src="{{ asset('assets/images/product/default/home-3/default-1.jpg') }}" alt=""
                                 class="offcanvas-cart-image">
                         </a>
                         <div class="offcanvas-cart-item-content">
@@ -128,8 +129,8 @@
                 <li class="offcanvas-wishlist-item-single">
                     <div class="offcanvas-wishlist-item-block">
                         <a href="#" class="offcanvas-wishlist-item-image-link">
-                            <img src="assets/images/product/default/home-1/default-1.jpg" alt=""
-                                class="offcanvas-wishlist-image">
+                            <img src="{{ asset('assets/images/product/default/home-1/default-1.jpg') }}"
+                                alt="" class="offcanvas-wishlist-image">
                         </a>
                         <div class="offcanvas-wishlist-item-content">
                             <a href="#" class="offcanvas-wishlist-item-link">Car Wheel</a>
@@ -146,8 +147,8 @@
                 <li class="offcanvas-wishlist-item-single">
                     <div class="offcanvas-wishlist-item-block">
                         <a href="#" class="offcanvas-wishlist-item-image-link">
-                            <img src="assets/images/product/default/home-2/default-1.jpg" alt=""
-                                class="offcanvas-wishlist-image">
+                            <img src="{{ asset('assets/images/product/default/home-2/default-1.jpg') }}"
+                                alt="" class="offcanvas-wishlist-image">
                         </a>
                         <div class="offcanvas-wishlist-item-content">
                             <a href="#" class="offcanvas-wishlist-item-link">Car Vails</a>
@@ -164,8 +165,8 @@
                 <li class="offcanvas-wishlist-item-single">
                     <div class="offcanvas-wishlist-item-block">
                         <a href="#" class="offcanvas-wishlist-item-image-link">
-                            <img src="assets/images/product/default/home-3/default-1.jpg" alt=""
-                                class="offcanvas-wishlist-image">
+                            <img src="{{ asset('assets/images/product/default/home-3/default-1.jpg') }}"
+                                alt="" class="offcanvas-wishlist-image">
                         </a>
                         <div class="offcanvas-wishlist-item-content">
                             <a href="#" class="offcanvas-wishlist-item-link">Shock Absorber</a>
@@ -328,7 +329,7 @@
                         <div class="col-auto mb-6">
                             <div class="footer-payment">
                                 <div class="image">
-                                    <img src="assets/images/company-logo/payment.png" alt="">
+                                    <img src="{{ asset('assets/images/company-logo/payment.png') }}" alt="">
                                 </div>
                             </div>
                         </div>
@@ -363,8 +364,9 @@
                                     <div class="col-md-4">
                                         <div class="modal-add-cart-product-img">
                                             <img class="img-fluid"
-                                                src="assets/images/product/default/home-1/default-1.jpg"
+                                                src="{{ asset('assets/images/product/default/home-1/default-1.jpg') }}"
                                                 alt="">
+
                                         </div>
                                     </div>
                                     <div class="col-md-8">
@@ -416,27 +418,27 @@
                                     <div class="product-large-image modal-product-image-large swiper-container">
                                         <div class="swiper-wrapper">
                                             <div class="product-image-large-image swiper-slide img-responsive">
-                                                <img src="assets/images/product/default/home-1/default-1.jpg"
+                                                <img src="{{ asset('assets/images/product/default/home-1/default-1.jpg') }}"
                                                     alt="">
                                             </div>
                                             <div class="product-image-large-image swiper-slide img-responsive">
-                                                <img src="assets/images/product/default/home-1/default-2.jpg"
+                                                <img src="{{ asset('assets/images/product/default/home-1/default-2.jpg') }}"
                                                     alt="">
                                             </div>
                                             <div class="product-image-large-image swiper-slide img-responsive">
-                                                <img src="assets/images/product/default/home-1/default-3.jpg"
+                                                <img src="{{ asset('assets/images/product/default/home-1/default-3.jpg') }}"
                                                     alt="">
                                             </div>
                                             <div class="product-image-large-image swiper-slide img-responsive">
-                                                <img src="assets/images/product/default/home-1/default-4.jpg"
+                                                <img src="{{ asset('assets/images/product/default/home-1/default-4.jpg') }}"
                                                     alt="">
                                             </div>
                                             <div class="product-image-large-image swiper-slide img-responsive">
-                                                <img src="assets/images/product/default/home-1/default-5.jpg"
+                                                <img src="{{ asset('assets/images/product/default/home-1/default-5.jpg') }}"
                                                     alt="">
                                             </div>
                                             <div class="product-image-large-image swiper-slide img-responsive">
-                                                <img src="assets/images/product/default/home-1/default-6.jpg"
+                                                <img src="{{ asset('assets/images/product/default/home-1/default-6.jpg') }}"
                                                     alt="">
                                             </div>
                                         </div>
@@ -448,32 +450,32 @@
                                         <div class="swiper-wrapper">
                                             <div class="product-image-thumb-single swiper-slide">
                                                 <img class="img-fluid"
-                                                    src="assets/images/product/default/home-1/default-1.jpg"
+                                                    src="{{ asset('assets/images/product/default/home-1/default-1.jpg') }}"
                                                     alt="">
                                             </div>
                                             <div class="product-image-thumb-single swiper-slide">
                                                 <img class="img-fluid"
-                                                    src="assets/images/product/default/home-1/default-2.jpg"
+                                                    src="{{ asset('assets/images/product/default/home-1/default-2.jpg') }}"
                                                     alt="">
                                             </div>
                                             <div class="product-image-thumb-single swiper-slide">
                                                 <img class="img-fluid"
-                                                    src="assets/images/product/default/home-1/default-3.jpg"
+                                                    src="{{ asset('assets/images/product/default/home-1/default-3.jpg') }}"
                                                     alt="">
                                             </div>
                                             <div class="product-image-thumb-single swiper-slide">
                                                 <img class="img-fluid"
-                                                    src="assets/images/product/default/home-1/default-4.jpg"
+                                                    src="{{ asset('assets/images/product/default/home-1/default-4.jpg') }}"
                                                     alt="">
                                             </div>
                                             <div class="product-image-thumb-single swiper-slide">
                                                 <img class="img-fluid"
-                                                    src="assets/images/product/default/home-1/default-5.jpg"
+                                                    src="{{ asset('assets/images/product/default/home-1/default-5.jpg') }}"
                                                     alt="">
                                             </div>
                                             <div class="product-image-thumb-single swiper-slide">
                                                 <img class="img-fluid"
-                                                    src="assets/images/product/default/home-1/default-6.jpg"
+                                                    src="{{ asset('assets/images/product/default/home-1/default-6.jpg') }}"
                                                     alt="">
                                             </div>
                                         </div>
@@ -583,31 +585,36 @@
 
     <!-- ::::::::::::::All JS Files here :::::::::::::: -->
     <!-- Global Vendor, plugins JS -->
-    <script src="assets/js/vendor/modernizr-3.11.2.min.js"></script>
-    <script src="assets/js/vendor/jquery-3.5.1.min.js"></script>
-    <script src="assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
-    <script src="assets/js/vendor/popper.min.js"></script>
-    <script src="assets/js/vendor/bootstrap.min.js"></script>
-    <script src="assets/js/vendor/jquery-ui.min.js"></script>
+    <script src="{{ asset('assets/js/vendor/modernizr-3.11.2.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/jquery-3.5.1.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/jquery-migrate-3.3.0.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/jquery-ui.min.js') }}"></script>
 
     <!--Plugins JS-->
-    <script src="assets/js/plugins/swiper-bundle.min.js"></script>
-    <script src="assets/js/plugins/material-scrolltop.js"></script>
-    <script src="assets/js/plugins/jquery.nice-select.min.js"></script>
-    <script src="assets/js/plugins/jquery.zoom.min.js"></script>
-    <script src="assets/js/plugins/venobox.min.js"></script>
-    <script src="assets/js/plugins/jquery.waypoints.js"></script>
-    <script src="assets/js/plugins/jquery.lineProgressbar.js"></script>
-    <script src="assets/js/plugins/aos.min.js"></script>
-    <script src="assets/js/plugins/jquery.instagramFeed.js"></script>
-    <script src="assets/js/plugins/ajax-mail.js"></script>
+    <script src="{{ asset('assets/js/plugins/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/material-scrolltop.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/jquery.nice-select.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/jquery.zoom.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/venobox.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/jquery.waypoints.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/jquery.lineProgressbar.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/aos.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/jquery.instagramFeed.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/ajax-mail.js') }}"></script>
 
-    <!-- Use the minified version files listed below for better performance and remove the files listed above -->
-    <!-- <script src="assets/js/vendor/vendor.min.js"></script>
-    <script src="assets/js/plugins/plugins.min.js"></script> -->
+
+    {{-- <script src="{{ asset('assets/js/vendor/vendor.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/plugins.min.js') }}"></script> --}}
 
     <!-- Main JS -->
-    <script src="assets/js/main.js"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script>
+        setTimeout(function() {
+            document.querySelector('.alert').remove();
+        }, 8000);
+    </script>
 </body>
 
 

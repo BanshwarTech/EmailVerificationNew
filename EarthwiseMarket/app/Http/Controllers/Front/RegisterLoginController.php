@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\EmailVerification;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Mail;
@@ -99,7 +100,7 @@ class RegisterLoginController extends Controller
                 ]);
                 return response()->json(['success' => true, 'msg' => 'Mail has been verified']);
             } else {
-                return response()->json(['succes    s' => false, 'msg' => 'Your OTP has been Expired']);
+                return response()->json(['success' => false, 'msg' => 'Your OTP has been Expired']);
             }
         }
     }
@@ -121,6 +122,59 @@ class RegisterLoginController extends Controller
     }
     public function Login()
     {
+        if (session()->has('FRONT_USER_LOGIN') && session()->get('FRONT_USER_LOGIN') === true) {
+            return redirect('/my-account');
+        }
         return view('Front.login');
+    }
+
+    public function LoginProcess(Request $request)
+    {
+
+        Validator::make($request->all(), [
+            'email' => 'string|required|email',
+            'password' => 'string|required'
+        ]);
+        $userCredential = $request->only('email', 'password');
+        $userData = User::where('email', $request->email)->first();
+        if ($userData && $userData->is_verified == 0) {
+
+            $this->sendOtp($userData);
+            return redirect("/verification/" . $userData->id);
+        } else if (Auth::attempt($userCredential)) {
+            if (Hash::check($request->password, $userData->password)) {
+                if ($request->rememberme === null) {
+                    setcookie('login_email', $request->email, 100);
+                    setcookie('login_pwd', $request->password, 100);
+                } else {
+                    setcookie('login_email', $request->email, time() + 60 * 60 * 24 * 100);
+                    setcookie('login_pwd', $request->password, time() + 60 * 60 * 24 * 100);
+                }
+                $request->session()->put('FRONT_USER_LOGIN', true);
+                $request->session()->put('FRONT_USER_ID', $userData->id);
+                $request->session()->put('FRONT_USER_NAME', $userData->name);
+                $request->session()->put('FRONT_USER_EMAIL', $userData->email);
+
+                $request->session()->flash('successMessage', 'Login Successfully....');
+                return redirect()->route('myAccount');
+            } else {
+                $request->session()->flash('errorMessage', 'Please enter a valid password');
+                return redirect('/login');
+            }
+        } else {
+            $request->session()->flash('errorMessage', 'Username & Password is incorrect');
+            return redirect('/login');
+        }
+    }
+
+    public function Logout(Request $request)
+    {
+        session()->forget('FRONT_USER_LOGIN');
+        session()->forget('FRONT_USER_ID');
+        session()->forget('FRONT_USER_NAME');
+        session()->forget('FRONT_USER_EMAIL');
+        session()->forget('USER_TEMP_ID');
+        $request->session()->flash('successMessage', 'Logout Successfully....');
+        return redirect('/login');
     }
 }

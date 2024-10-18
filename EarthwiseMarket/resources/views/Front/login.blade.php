@@ -27,24 +27,37 @@
         <div class="container">
             <div class="row">
                 <!--login area start-->
-                <div class="col-lg-12 col-md-6">
+                <div class="col-lg-12 col-md-12">
                     <div class="account_form" data-aos="fade-up" data-aos-delay="0">
                         <h3>login</h3>
-                        <form action="#" method="POST">
+                        @if (session('successMessage'))
+                            <div class="alert alert-success">
+                                {{ session('successMessage') }}
+                            </div>
+                        @endif
+                        @if (session('errorMessage'))
+                            <div class="alert alert-danger">
+                                {{ session('errorMessage') }}
+                            </div>
+                        @endif
+                        <form action="{{ route('LoginProcess') }}" method="POST">
+                            @csrf
                             <div class="row">
                                 <div class="col-6 default-form-box">
-                                    <label>Username or email <span>*</span></label>
-                                    <input type="text">
+                                    <label>Email Address<span>*</span></label>
+                                    <input type="email" name="email" id="email"
+                                        placeholder="Enter your login email....">
                                 </div>
                                 <div class="col-6 default-form-box">
                                     <label>Passwords <span>*</span></label>
-                                    <input type="password">
+                                    <input type="password" name="password" id="password"
+                                        placeholder=" Enter your login password....">
                                 </div>
                             </div>
 
                             <div class="">
                                 <label class="checkbox-default mb-4" for="offer">
-                                    <input type="checkbox" id="offer">
+                                    <input type="checkbox" id="rememberme" name="rememberme">
                                     <span>Remember me</span>
                                 </label><br>
                                 <button class="btn btn-md btn-black-default-hover mb-4" type="submit">Login</button>
@@ -56,7 +69,7 @@
                                         Don't have an account? <a href="{{ route('Register') }}"
                                             class="text-decoration-none fw-bold text-primary">Create
                                             an
-                                            account</a> <!-- Second link inside span -->
+                                            account</a>
                                     </span>
                                 </div>
 
@@ -72,5 +85,6 @@
             </div>
         </div>
     </div> <!-- ...:::: End Customer Login Section :::... -->
+
 
 @endsection

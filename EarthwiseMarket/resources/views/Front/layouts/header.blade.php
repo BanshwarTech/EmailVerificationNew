@@ -15,9 +15,16 @@
                     <div class="header-top-right">
                         <div
                             class="header-top-user-link header-top-user-link-color--white header-top-user-link-hover-color--green">
-                            <a href="wishlist.html">Wishlist</a>
+
                             <a href="cart.html">Cart</a>
-                            <a href="{{ route('Login') }}">Login/Register</a>
+                            @if (session()->has('FRONT_USER_LOGIN') && session('FRONT_USER_LOGIN') === true)
+                                <a href="">Wishlist</a>
+                                <a href="">My Order</a>
+                                <a href="{{ url('/logout') }}">Logout ( {{ session('FRONT_USER_EMAIL') }} )</a>
+                            @else
+                                <a href="{{ url('/login') }}">Login</a>
+                            @endif
+
                         </div>
                     </div>
                 </div>
@@ -262,7 +269,7 @@
             <ul class="user-link">
                 <li><a href="wishlist.html">Wishlist</a></li>
                 <li><a href="cart.html">Cart</a></li>
-                <li><a href="{{ route('Login') }}">Login/Register</a></li>
+                <li><a href="{{ url('/login') }}">Login</a></li>
             </ul>
         </div>
         <!-- End Mobile contact Info -->
@@ -299,7 +306,7 @@
         <ul class="user-link">
             <li><a href="wishlist.html">Wishlist</a></li>
             <li><a href="cart.html">Cart</a></li>
-            <li><a href="{{ route('Login') }}"> Login/Register</a></li>
+            <li><a href="{{ url('/login') }}"> Login</a></li>
         </ul>
     </div>
     <!-- End Mobile contact Info -->

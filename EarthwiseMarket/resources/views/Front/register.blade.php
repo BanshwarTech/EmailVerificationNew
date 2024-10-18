@@ -62,7 +62,7 @@
 
                             <div class="">
                                 <button class="btn btn-md btn-black-default-hover mb-1" type="submit">Register</button><br>
-                                <span>Already have an account? <a href="{{ route('Login') }}"> Log in</a></span>
+                                <span>Already have an account? <a href="{{ url('/login') }}"> Log in</a></span>
                             </div>
                         </form>
                     </div>

@@ -1,5 +1,5 @@
 @extends('Front.layouts.app')
-@section('page_title', 'Login')
+@section('page_title', 'Verification')
 @section('content')
     <!-- ...:::: Start Breadcrumb Section:::... -->
     <div class="breadcrumb-section breadcrumb-bg-color--golden">
@@ -21,20 +21,53 @@
             </div>
         </div>
     </div> <!-- ...:::: End Breadcrumb Section:::... -->
-    <p id="message_error" style="color:red;"></p>
-    <p id="message_success" style="color:green;"></p>
-    <form method="post" id="verificationForm">
-        @csrf
-        <input type="hidden" name="email" value="{{ $email }}">
-        <input type="number" name="otp" placeholder="Enter OTP" required>
-        <br><br>
-        <input type="submit" value="Verify">
+    <div class="customer-login">
+        <div class="container">
+            <div class="row">
+                <!--login area start-->
+                <div class="col-lg-6 col-md-6">
+                    <div class="account_form" data-aos="fade-up" data-aos-delay="0">
+                        <h3>Verification Otp</h3>
+                        <p id="message_error" style="color:red;"></p>
+                        <p id="message_success" style="color:green;"></p>
+                        <form method="post" id="verificationForm">
+                            @csrf
+                            <div class="row">
+                                <div class="col-12 default-form-box">
+                                    <input type="hidden" name="email" value="{{ $email }}">
+                                    <input type="number" name="otp" placeholder="Enter OTP" required>
 
-    </form>
+                                </div>
+                            </div>
+                            <div class="login_submit">
+                                <p class="time"></p>
+                                <div class="d-flex">
+                                    <button type="submit" class="btn btn-md btn-black-default-hover mb-4"
+                                        value="Verify">Verify</button> &nbsp;&nbsp;
+                                    <button id="resendOtpVerification"
+                                        class="btn btn-md btn-black-default-hover mb-4">Resend
+                                        Verification OTP</button>
+                                </div>
 
-    <p class="time"></p>
 
-    <button id="resendOtpVerification">Resend Verification OTP</button>
+                            </div>
+
+
+
+                        </form>
+                    </div>
+                </div>
+                <!--login area start-->
+
+
+            </div>
+        </div>
+    </div> <!-- ...:::: End Customer Login Section :::... -->
+
+
+
+
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
@@ -52,7 +85,7 @@
                     success: function(res) {
                         if (res.success) {
                             alert(res.msg);
-                            window.open("/", "_self");
+                            window.open("/login", "_self");
                         } else {
                             $('#message_error').text(res.msg);
                             setTimeout(() => {

@@ -13,4 +13,11 @@ Route::post('/register', [RegisterLoginController::class, 'RegisterProcess'])->n
 Route::get('/verification/{id}', [RegisterLoginController::class, 'verification']);
 Route::post('/verified', [RegisterLoginController::class, 'verifiedOtp'])->name('verifiedOtp');
 Route::get('/resend-otp', [RegisterLoginController::class, 'resendOtp'])->name('resendOtp');
-Route::get('/login', [RegisterLoginController::class, 'Login'])->name('Login');
+
+Route::get('/login', [RegisterLoginController::class, 'Login']);
+Route::post('/login-process', [RegisterLoginController::class, 'LoginProcess'])->name('LoginProcess');
+
+Route::get('/logout', [RegisterLoginController::class, "Logout"])->name('Logout');
+
+
+Route::get('/my-account', [FrontController::class, 'myAccount'])->name('myAccount');

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\TaxController;
 use App\Http\Controllers\Front\FrontController;
@@ -78,6 +79,11 @@ Route::middleware([AdminAuth::class])->group(function () {
     Route::get('admin/tax/delete/{id}', [TaxController::class, 'delete']);
     Route::get('admin/tax/status/{status}/{id}', [TaxController::class, 'status']);
 
+    // product section
+    Route::get('admin/product', [ProductController::class, 'index']);
+    Route::get('admin/product/manage_product', [ProductController::class, 'manage_product']);
+    Route::get('admin/product/manage_product/{id}', [ProductController::class, 'manage_product']);
+    Route::post('admin/product/manage_product_process', [TaxController::class, 'manage_product_process'])->name('product.manage_product_process');
     //logout
     Route::get('admin/logout', function () {
         session()->forget('ADMIN_LOGIN');

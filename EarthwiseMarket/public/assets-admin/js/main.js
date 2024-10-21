@@ -6,7 +6,7 @@
 * License: https://bootstrapmade.com/license/
 */
 
-(function() {
+(function () {
   "use strict";
 
   /**
@@ -43,7 +43,7 @@
    * Sidebar toggle
    */
   if (select('.toggle-sidebar-btn')) {
-    on('click', '.toggle-sidebar-btn', function(e) {
+    on('click', '.toggle-sidebar-btn', function (e) {
       select('body').classList.toggle('toggle-sidebar')
     })
   }
@@ -52,7 +52,7 @@
    * Search bar toggle
    */
   if (select('.search-bar-toggle')) {
-    on('click', '.search-bar-toggle', function(e) {
+    on('click', '.search-bar-toggle', function (e) {
       select('.search-bar').classList.toggle('search-bar-show')
     })
   }
@@ -113,7 +113,7 @@
    * Initiate tooltips
    */
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-  var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
   })
 
@@ -143,31 +143,31 @@
           }],
           ["bold", "italic", "underline", "strike"],
           [{
-              color: []
-            },
-            {
-              background: []
-            }
+            color: []
+          },
+          {
+            background: []
+          }
           ],
           [{
-              script: "super"
-            },
-            {
-              script: "sub"
-            }
+            script: "super"
+          },
+          {
+            script: "sub"
+          }
           ],
           [{
-              list: "ordered"
-            },
-            {
-              list: "bullet"
-            },
-            {
-              indent: "-1"
-            },
-            {
-              indent: "+1"
-            }
+            list: "ordered"
+          },
+          {
+            list: "bullet"
+          },
+          {
+            indent: "-1"
+          },
+          {
+            indent: "+1"
+          }
           ],
           ["direction", {
             align: []
@@ -200,31 +200,31 @@
     autosave_retention: '2m',
     image_advtab: true,
     link_list: [{
-        title: 'My page 1',
-        value: 'https://www.tiny.cloud'
-      },
-      {
-        title: 'My page 2',
-        value: 'http://www.moxiecode.com'
-      }
+      title: 'My page 1',
+      value: 'https://www.tiny.cloud'
+    },
+    {
+      title: 'My page 2',
+      value: 'http://www.moxiecode.com'
+    }
     ],
     image_list: [{
-        title: 'My page 1',
-        value: 'https://www.tiny.cloud'
-      },
-      {
-        title: 'My page 2',
-        value: 'http://www.moxiecode.com'
-      }
+      title: 'My page 1',
+      value: 'https://www.tiny.cloud'
+    },
+    {
+      title: 'My page 2',
+      value: 'http://www.moxiecode.com'
+    }
     ],
     image_class_list: [{
-        title: 'None',
-        value: ''
-      },
-      {
-        title: 'Some class',
-        value: 'class-name'
-      }
+      title: 'None',
+      value: ''
+    },
+    {
+      title: 'Some class',
+      value: 'class-name'
+    }
     ],
     importcss_append: true,
     file_picker_callback: (callback, value, meta) => {
@@ -250,14 +250,14 @@
         });
       }
     },
-    height: 600,
+    height: 350,
     image_caption: true,
     quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
     noneditable_class: 'mceNonEditable',
     toolbar_mode: 'sliding',
     contextmenu: 'link image table',
     skin: useDarkMode ? 'oxide-dark' : 'oxide',
-    content_css: useDarkMode ? 'dark' : 'default',
+    content_css: useDarkMode ? 'light' : 'default',
     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
   });
 
@@ -267,8 +267,8 @@
   var needsValidation = document.querySelectorAll('.needs-validation')
 
   Array.prototype.slice.call(needsValidation)
-    .forEach(function(form) {
-      form.addEventListener('submit', function(event) {
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
         if (!form.checkValidity()) {
           event.preventDefault()
           event.stopPropagation()
@@ -286,18 +286,18 @@
     new simpleDatatables.DataTable(datatable, {
       perPageSelect: [5, 10, 15, ["All", -1]],
       columns: [{
-          select: 2,
-          sortSequence: ["desc", "asc"]
-        },
-        {
-          select: 3,
-          sortSequence: ["desc"]
-        },
-        {
-          select: 4,
-          cellClass: "green",
-          headerClass: "red"
-        }
+        select: 2,
+        sortSequence: ["desc", "asc"]
+      },
+      {
+        select: 3,
+        sortSequence: ["desc"]
+      },
+      {
+        select: 4,
+        cellClass: "green",
+        headerClass: "red"
+      }
       ]
     });
   })
@@ -308,7 +308,7 @@
   const mainContainer = select('#main');
   if (mainContainer) {
     setTimeout(() => {
-      new ResizeObserver(function() {
+      new ResizeObserver(function () {
         select('.echart', true).forEach(getEchart => {
           echarts.getInstanceByDom(getEchart).resize();
         })

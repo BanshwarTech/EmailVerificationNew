@@ -255,48 +255,70 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="{{ url('admin/dashboard') }}">
+                <a class="nav-link collapsed{{ Request::is('admin/dashboard') ? 'active' : '' }}"
+                    href="{{ url('admin/dashboard') }}">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link " href="{{ url('admin/category') }}">
-                    <i class="bi bi-grid"></i>
+                <a class="nav-link collapsed{{ Request::is('admin/category') ? 'active' : '' }}"
+                    href="{{ url('admin/category') }}">
+                    <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Category</span>
                 </a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link " href="{{ url('admin/coupon') }}">
-                    <i class="bi bi-grid"></i>
+                <a class="nav-link collapsed{{ Request::is('admin/coupon') ? 'active' : '' }}"
+                    href="{{ url('admin/coupon') }}">
+                    <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Coupon</span>
                 </a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('admin/size') }}">
-                    <i class="bi bi-grid"></i>
+                <a class="nav-link collapsed{{ Request::is('admin/size') ? 'active' : '' }}"
+                    href="{{ url('admin/size') }}">
+                    <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Size</span>
                 </a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('admin/color') }}">
-                    <i class="bi bi-grid"></i>
+                <a class="nav-link collapsed{{ Request::is('admin/color') ? 'active' : '' }}"
+                    href="{{ url('admin/color') }}">
+                    <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Color</span>
                 </a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('admin/brand') }}">
-                    <i class="bi bi-grid"></i>
+                <a class="nav-link collapsed{{ Request::is('admin/brand') ? 'active' : '' }}"
+                    href="{{ url('admin/brand') }}">
+                    <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Brand</span>
                 </a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('admin/tax') }}">
-                    <i class="bi bi-grid"></i>
+                <a class="nav-link collapsed{{ Request::is('admin/tax') ? 'active' : '' }}"
+                    href="{{ url('admin/tax') }}">
+                    <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Tax</span>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed{{ Request::is('admin/product') ? 'active' : '' }}"
+                    href="{{ url('admin/product') }}">
+                    <i class="bi bi-layout-text-window-reverse"></i>
+                    <span>Product</span>
+                </a>
+            </li>
         </ul>
+
 
     </aside><!-- End Sidebar-->
 

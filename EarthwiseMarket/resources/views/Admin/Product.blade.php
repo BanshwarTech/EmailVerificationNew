@@ -57,24 +57,24 @@
                                         <td>
                                             @if ($list->image != '')
                                                 <img width="100px"
-                                                    src="{{ asset('public/storage/media/Product/' . $list->image) }}"
+                                                    src="{{ asset('storage/media/product/' . $list->image) }}"
                                                     style="height:75px;width:75px;border-radius:50%;"
                                                     alt="{{ $list->image }}" />
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ url('admin/Product/manage_Product/') }}/{{ $list->id }}"><button
+                                            <a href="{{ url('admin/product/manage_product/') }}/{{ $list->id }}"><button
                                                     type="button" class="btn btn-success">Edit</button></a>
 
                                             @if ($list->status == 1)
-                                                <a href="{{ url('admin/Product/status/0') }}/{{ $list->id }}"><button
+                                                <a href="{{ url('admin/product/status/0') }}/{{ $list->id }}"><button
                                                         type="button" class="btn btn-primary">Active</button></a>
                                             @elseif($list->status == 0)
-                                                <a href="{{ url('admin/Product/status/1') }}/{{ $list->id }}"><button
+                                                <a href="{{ url('admin/product/status/1') }}/{{ $list->id }}"><button
                                                         type="button" class="btn btn-warning">Deactive</button></a>
                                             @endif
 
-                                            <a href="{{ url('admin/Product/delete/') }}/{{ $list->id }}"><button
+                                            <a href="{{ url('admin/product/delete/') }}/{{ $list->id }}"><button
                                                     type="button" class="btn btn-danger">Delete</button></a>
                                         </td>
                                     </tr>

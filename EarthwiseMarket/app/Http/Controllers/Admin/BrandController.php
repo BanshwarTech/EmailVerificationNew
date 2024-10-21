@@ -69,9 +69,8 @@ class BrandController extends Controller
             }
 
             $image = $request->file('image');
-            $ext = $image->extension();
-            $image_name = time() . '.' . $ext;
-            $image->storeAs('/public/media/brand', $image_name);
+            $image_name = time() . '.' . $image->getClientOriginalExtension();
+            Storage::disk('public')->putFileAs('media/brand', $image, $image_name);
             $model->image = $image_name;
         }
         $model->is_home = 0;

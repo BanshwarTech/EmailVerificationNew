@@ -59,8 +59,8 @@
                                         <td>
                                             @if ($list->category_image != '')
                                                 <img width="100px"
-                                                    src="{{ asset('public/storage/media/category/' . $list->category_image) }}"
-                                                    style="height:75px;width:75px;border-radius:50%;"
+                                                    src="{{ asset('storage/media/category/' . $list->category_image) }}"
+                                                    style="height:65px;width:65px;border-radius:10%;"
                                                     alt="{{ $list->category_image }}" />
                                             @endif
                                         </td>

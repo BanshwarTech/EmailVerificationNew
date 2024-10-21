@@ -83,7 +83,7 @@ Route::middleware([AdminAuth::class])->group(function () {
     Route::get('admin/product', [ProductController::class, 'index']);
     Route::get('admin/product/manage_product', [ProductController::class, 'manage_product']);
     Route::get('admin/product/manage_product/{id}', [ProductController::class, 'manage_product']);
-    Route::post('admin/product/manage_product_process', [TaxController::class, 'manage_product_process'])->name('product.manage_product_process');
+    Route::post('admin/product/manage_product_process', [ProductController::class, 'manage_product_process'])->name('product.manage_product_process');
     //logout
     Route::get('admin/logout', function () {
         session()->forget('ADMIN_LOGIN');

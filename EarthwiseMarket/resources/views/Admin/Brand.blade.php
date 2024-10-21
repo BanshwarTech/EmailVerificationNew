@@ -56,9 +56,8 @@
                                         <td>{{ $list->name }}</td>
                                         <td>
                                             @if ($list->image != '')
-                                                <img width="100px"
-                                                    src="{{ asset('public/storage/media/brand/' . $list->image) }}"
-                                                    style="height:75px;width:75px;border-radius:50%;"
+                                                <img width="100px" src="{{ asset('storage/media/brand/' . $list->image) }}"
+                                                    style="height:55px;width:55px;border-radius:10%;"
                                                     alt="{{ $list->image }}" />
                                             @endif
                                         </td>

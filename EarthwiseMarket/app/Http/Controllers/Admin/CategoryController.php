@@ -65,32 +65,31 @@ class CategoryController extends Controller
         }
 
         if ($request->hasfile('category_image')) {
-
             if ($request->post('id') > 0) {
                 $arrImage = DB::table('categories')->where(['id' => $request->post('id')])->get();
-                if (Storage::exists('/public/media/category/' . $arrImage[0]->category_image)) {
-                    Storage::delete('/public/media/category/' . $arrImage[0]->category_image);
+                if (Storage::exists('public/media/category/' . $arrImage[0]->category_image)) {
+                    Storage::delete('public/media/category/' . $arrImage[0]->category_image);
                 }
             }
 
             $image = $request->file('category_image');
-            $ext = $image->extension();
-            $image_name = time() . '.' . $ext;
-            $image->storeAs('/public/media/category', $image_name);
+            $image_name = time() . '.' . $image->getClientOriginalExtension();
+            Storage::disk('public')->putFileAs('media/category', $image, $image_name);
             $model->category_image = $image_name;
         }
+
         $model->category_name = $request->post('category_name');
         $model->category_slug = $request->post('category_slug');
         $model->parent_category_id = $request->post('parent_category_id');
-        $model->is_home = 0;
-        if ($request->post('is_home') !== null) {
-            $model->is_home = 1;
-        }
+        $model->is_home = $request->post('is_home') !== null ? 1 : 0;
         $model->status = 1;
         $model->save();
+
         $request->session()->flash('message', $msg);
         return redirect('admin/category');
     }
+
+
 
     public function delete(Request $request, $id)
     {

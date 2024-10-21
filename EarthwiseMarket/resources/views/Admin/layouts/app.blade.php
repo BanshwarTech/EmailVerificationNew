@@ -255,12 +255,23 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="index.html">
+                <a class="nav-link " href="{{ url('admin/dashboard') }}">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
-            </li><!-- End Dashboard Nav -->
-
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="{{ url('admin/category') }}">
+                    <i class="bi bi-grid"></i>
+                    <span>Category</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="{{ url('admin/coupon') }}">
+                    <i class="bi bi-grid"></i>
+                    <span>Coupon</span>
+                </a>
+            </li>
 
 
         </ul>
@@ -269,15 +280,7 @@
 
     <main id="main" class="main">
 
-        <div class="pagetitle">
-            <h1>Dashboard</h1>
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="">Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard</li>
-                </ol>
-            </nav>
-        </div><!-- End Page Title -->
+
         @section('admin-content')
         @show
 

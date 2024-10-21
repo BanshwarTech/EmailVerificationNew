@@ -26,7 +26,16 @@
                     <div class="card-body">
                         <h5 class="card-title"></h5>
                         <p></p>
-
+                        @if (session('successMessage'))
+                            <div class="alert alert-success">
+                                {{ session('successMessage') }}
+                            </div>
+                        @endif
+                        @if (session('errorMessage'))
+                            <div class="alert alert-danger">
+                                {{ session('errorMessage') }}
+                            </div>
+                        @endif
                         <!-- Table with stripped rows -->
                         <table class="table datatable">
                             <thead>
@@ -40,7 +49,7 @@
                             </thead>
                             <tbody>
                                 @php
-                                    $i = 0;
+                                    $i = 1;
                                 @endphp
                                 @foreach ($data as $list)
                                     <tr>
@@ -64,7 +73,7 @@
                                                     type="button" class="btn btn-danger">Delete</button></a>
                                         </td>
                                     </tr>
-                                    $i++;
+                                    {{ $i++ }}
                                 @endforeach
 
                             </tbody>

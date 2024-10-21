@@ -52,7 +52,7 @@ class CategoryController extends Controller
     {
         $request->validate([
             'category_name' => 'required',
-            'category_image' => 'mimes:jpeg,jpg,png',
+            'category_image' => 'mimes:jpeg,jpg,png,gif,svg',
             'category_slug' => 'required|unique:categories,category_slug,' . $request->post('id'),
         ]);
 

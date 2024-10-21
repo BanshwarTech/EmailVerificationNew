@@ -1,8 +1,12 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\SizeController;
+use App\Http\Controllers\Admin\TaxController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\Front\RegisterLoginController;
 use App\Http\Middleware\AdminAuth;
@@ -44,7 +48,37 @@ Route::middleware([AdminAuth::class])->group(function () {
     Route::post('admin/coupon/manage_coupon_process', [CouponController::class, 'manage_coupon_process'])->name('coupon.manage_coupon_process');
     Route::get('admin/coupon/delete/{id}', [CouponController::class, 'delete']);
     Route::get('admin/coupon/status/{status}/{id}', [CouponController::class, 'status']);
+    // size section
+    Route::get('admin/size', [SizeController::class, 'index']);
+    Route::get('admin/size/manage_size', [SizeController::class, 'manage_size']);
+    Route::get('admin/size/manage_size/{id}', [SizeController::class, 'manage_size']);
+    Route::post('admin/size/manage_size_process', [SizeController::class, 'manage_size_process'])->name('size.manage_size_process');
+    Route::get('admin/size/delete/{id}', [SizeController::class, 'delete']);
+    Route::get('admin/size/status/{status}/{id}', [SizeController::class, 'status']);
+    // color section
+    Route::get('admin/color', [ColorController::class, 'index']);
+    Route::get('admin/color/manage_color', [ColorController::class, 'manage_color']);
+    Route::get('admin/color/manage_color/{id}', [ColorController::class, 'manage_color']);
+    Route::post('admin/color/manage_color_process', [ColorController::class, 'manage_color_process'])->name('color.manage_color_process');
+    Route::get('admin/color/delete/{id}', [ColorController::class, 'delete']);
+    Route::get('admin/color/status/{status}/{id}', [ColorController::class, 'status']);
 
+    // brand section 
+    Route::get('admin/brand', [BrandController::class, 'index']);
+    Route::get('admin/brand/manage_brand', [BrandController::class, 'manage_brand']);
+    Route::get('admin/brand/manage_brand/{id}', [BrandController::class, 'manage_brand']);
+    Route::post('admin/brand/manage_brand_process', [BrandController::class, 'manage_brand_process'])->name('brand.manage_brand_process');
+    Route::get('admin/brand/delete/{id}', [BrandController::class, 'delete']);
+    Route::get('admin/brand/status/{status}/{id}', [BrandController::class, 'status']);
+    //tax section 
+    Route::get('admin/tax', [TaxController::class, 'index']);
+    Route::get('admin/tax/manage_tax', [TaxController::class, 'manage_tax']);
+    Route::get('admin/tax/manage_tax/{id}', [TaxController::class, 'manage_tax']);
+    Route::post('admin/tax/manage_tax_process', [TaxController::class, 'manage_tax_process'])->name('tax.manage_tax_process');
+    Route::get('admin/tax/delete/{id}', [TaxController::class, 'delete']);
+    Route::get('admin/tax/status/{status}/{id}', [TaxController::class, 'status']);
+
+    //logout
     Route::get('admin/logout', function () {
         session()->forget('ADMIN_LOGIN');
         session()->forget('ADMIN_ID');

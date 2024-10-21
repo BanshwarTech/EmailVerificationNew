@@ -272,8 +272,30 @@
                     <span>Coupon</span>
                 </a>
             </li>
-
-
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('admin/size') }}">
+                    <i class="bi bi-grid"></i>
+                    <span>Size</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('admin/color') }}">
+                    <i class="bi bi-grid"></i>
+                    <span>Color</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('admin/brand') }}">
+                    <i class="bi bi-grid"></i>
+                    <span>Brand</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('admin/tax') }}">
+                    <i class="bi bi-grid"></i>
+                    <span>Tax</span>
+                </a>
+            </li>
         </ul>
 
     </aside><!-- End Sidebar-->

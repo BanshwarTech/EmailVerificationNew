@@ -582,14 +582,14 @@ function applyCouponCode() {
     if (coupon_code != '') {
         jQuery.ajax({
             type: 'post',
-            url: '/apply_coupon_code',
+            url: '/apply-coupon-code',
             data: 'coupon_code=' + coupon_code + '&_token=' + jQuery("[name='_token']").val(),
             success: function (result) {
                 console.log(result.status);
                 if (result.status == 'success') {
                     jQuery('.show_coupon_box').removeClass('hide');
                     jQuery('#coupon_code_str').html(coupon_code);
-                    jQuery('#total_price').html('INR ' + result.totalPrice);
+                    jQuery('#total_price').html('&#8377;' + result.totalPrice);
                     jQuery('.apply_coupon_code_box').hide();
                 } else {
 
@@ -601,3 +601,48 @@ function applyCouponCode() {
         jQuery('#coupon_code_msg').html('Please enter coupon code');
     }
 }
+
+
+function remove_coupon_code() {
+    jQuery('#coupon_code_msg').html('');
+    var coupon_code = jQuery('#coupon_code').val();
+    jQuery('#coupon_code').val('');
+    if (coupon_code != '') {
+        jQuery.ajax({
+            type: 'post',
+            url: '/remove_coupon_code',
+            data: 'coupon_code=' + coupon_code + '&_token=' + jQuery("[name='_token']").val(),
+            success: function (result) {
+                if (result.status == 'success') {
+                    jQuery('.show_coupon_box').addClass('hide');
+                    jQuery('#coupon_code_str').html('');
+                    jQuery('#total_price').html('&#8377;' + result.totalPrice);
+                    jQuery('.apply_coupon_code_box').show();
+                } else {
+
+                }
+                jQuery('#coupon_code_msg').html(result.msg);
+            }
+        });
+    }
+}
+jQuery('#frmPlaceOrder').submit(function (e) {
+    jQuery('#order_place_msg').html("Please wait...");
+    e.preventDefault();
+    jQuery.ajax({
+        url: '/place-order',
+        data: jQuery('#frmPlaceOrder').serialize(),
+        type: 'post',
+        success: function (result) {
+            if (result.status == 'success') {
+                if (result.payment_url != '') {
+                    window.location.href = result.payment_url;
+                } else {
+                    window.location.href = "/order-placed";
+                }
+
+            }
+            jQuery('#order_place_msg').html(result.msg);
+        }
+    });
+});

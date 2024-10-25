@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('address')->default('NULL');
             $table->string('city')->default('NULL');
             $table->string('state')->default('NULL');
-            $table->string('zip')->default('NULL');
+            $table->integer('zip')->default(0);
             $table->string('company')->default('NULL');
             $table->string('gstin')->default('NULL');
             $table->integer('status');

@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\HomeBanner;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Mail;
 
 class FrontController extends Controller
 {
@@ -253,23 +257,23 @@ class FrontController extends Controller
                 $customer_info = DB::table('users')
                     ->where(['id' => $uid])
                     ->get();
-                $result['customers']['name'] = $customer_info[0]->name;
-                $result['customers']['email'] = $customer_info[0]->email;
-                $result['customers']['mobile'] = $customer_info[0]->mobile;
-                $result['customers']['address'] = $customer_info[0]->address;
-                $result['customers']['city'] = $customer_info[0]->city;
-                $result['customers']['state'] = $customer_info[0]->state;
-                $result['customers']['zip'] = $customer_info[0]->zip;
-                $result['customers']['company'] = $customer_info[0]->company;
+                $result['users']['name'] = $customer_info[0]->name;
+                $result['users']['email'] = $customer_info[0]->email;
+                $result['users']['mobile'] = $customer_info[0]->mobile;
+                $result['users']['address'] = $customer_info[0]->address;
+                $result['users']['city'] = $customer_info[0]->city;
+                $result['users']['state'] = $customer_info[0]->state;
+                $result['users']['zip'] = $customer_info[0]->zip;
+                $result['users']['company'] = $customer_info[0]->company;
             } else {
-                $result['customers']['name'] = '';
-                $result['customers']['email'] = '';
-                $result['customers']['mobile'] = '';
-                $result['customers']['address'] = '';
-                $result['customers']['city'] = '';
-                $result['customers']['state'] = '';
-                $result['customers']['zip'] = '';
-                $result['customers']['company'] = '';
+                $result['users']['name'] = '';
+                $result['users']['email'] = '';
+                $result['users']['mobile'] = '';
+                $result['users']['address'] = '';
+                $result['users']['city'] = '';
+                $result['users']['state'] = '';
+                $result['users']['zip'] = '';
+                $result['users']['company'] = '';
             }
 
             return view('front.checkout', $result);
@@ -278,6 +282,204 @@ class FrontController extends Controller
         }
     }
 
+    public function apply_coupon_code(Request $request)
+    {
+        $arr = apply_coupon_code($request->coupon_code);
+        $arr = json_decode($arr, true);
+
+        return response()->json(['status' => $arr['status'], 'msg' => $arr['msg'], 'totalPrice' => $arr['totalPrice']]);
+    }
+
+    public function remove_coupon_code(Request $request)
+    {
+        $totalPrice = 0;
+        $result = DB::table('coupons')
+            ->where(['code' => $request->coupon_code])
+            ->get();
+        $getAddToCartTotalItem = getAddToCartTotalItem();
+        $totalPrice = 0;
+        foreach ($getAddToCartTotalItem as $list) {
+            $totalPrice = $totalPrice + ($list->qty * $list->price);
+        }
+
+        return response()->json(['status' => 'success', 'msg' => 'Coupon code removed', 'totalPrice' => $totalPrice]);
+    }
+    public function placeOrder(Request $request)
+    {
+
+
+        $payment_url = '';
+        $rand_id = rand(111111111, 999999999);
+
+        if ($request->session()->has('FRONT_USER_LOGIN')) {
+        } else {
+            $valid = Validator::make($request->all(), [
+                "email" => 'required|email|unique:users,email'
+            ]);
+
+            if (!$valid->passes()) {
+                return response()->json(['status' => 'error', 'msg' => "The email has already been taken"]);
+            } else {
+                $arr = [
+                    "name" => $request->name,
+                    "email" => $request->email,
+                    "address" => $request->address,
+                    "city" => $request->city,
+                    "state" => $request->state,
+                    "zip" => $request->zip,
+                    "password" => Hash::make($rand_id),
+                    "mobile" => $request->mobile,
+                    "company" => $request->company,
+                    "status" => 1,
+                    "is_verify" => 1,
+                    "rand_id" => $rand_id,
+                    "created_at" => date('Y-m-d h:i:s'),
+                    "updated_at" => date('Y-m-d h:i:s'),
+                    "is_forgot_password" => 0
+                ];
+
+                $user_id = DB::table('users')->insertGetId($arr);
+                $request->session()->put('FRONT_USER_LOGIN', true);
+                $request->session()->put('FRONT_USER_ID', $user_id);
+                $request->session()->put('FRONT_USER_NAME', $request->name);
+
+                $data = ['name' => $request->name, 'password' => $rand_id];
+                $user['to'] = $request->email;
+                Mail::send('front/password_send', $data, function ($messages) use ($user) {
+                    $messages->to($user['to']);
+                    $messages->subject('New Password');
+                });
+
+                $getUserTempId = getUserTempId();
+                DB::table('carts')
+                    ->where(['user_id' => $getUserTempId, 'user_type' => 'Not-Reg'])
+                    ->update(['user_id' => $user_id, 'user_type' => 'Reg']);
+            }
+        }
+        $coupon_value = 0;
+        $coupon_code = $request->coupon_code;
+        if ($coupon_code != '') {
+            $arr = apply_coupon_code($request->coupon_code);
+            $arr = json_decode($arr, true);
+            if ($arr['status'] == 'success') {
+                $coupon_value = $arr['coupon_code_value'];
+            } else {
+                return response()->json(['status' => 'false', 'msg' => $arr['msg']]);
+            }
+        }
+
+
+
+        $uid = $request->session()->get('FRONT_USER_ID');
+        $totalPrice = 0;
+        $getAddToCartTotalItem = getAddToCartTotalItem();
+        foreach ($getAddToCartTotalItem as $list) {
+            $totalPrice = $totalPrice + ($list->qty * $list->price);
+        }
+        $arr = [
+            "user_id" => $uid,
+            "name" => $request->name,
+            "email" => $request->email,
+            "mobile" => $request->mobile,
+            "address" => $request->address,
+            "city" => $request->city,
+            "state" => $request->state,
+            "pincode" => $request->zip,
+            "coupon_code" => $coupon_code,
+            "coupon_value" => $coupon_value,
+            "payment_type" => $request->payment_type,
+            "payment_status" => "Pending",
+            "total_amt" => $totalPrice,
+            "order_status" => 1,
+            "added_on" => date('Y-m-d h:i:s')
+        ];
+        $order_id = DB::table('orders')->insertGetId($arr);
+
+        if ($order_id > 0) {
+            foreach ($getAddToCartTotalItem as $list) {
+                $prductDetailArr['product_id'] = $list->pid;
+                $prductDetailArr['products_attr_id'] = $list->attr_id;
+                $prductDetailArr['price'] = $list->price;
+                $prductDetailArr['qty'] = $list->qty;
+                $prductDetailArr['orders_id'] = $order_id;
+                DB::table('order_details')->insert($prductDetailArr);
+            }
+
+            if ($request->payment_type == 'Gateway') {
+                $final_amt = $totalPrice - $coupon_value;
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, 'https://test.instamojo.com/api/1.1/payment-requests/');
+                curl_setopt($ch, CURLOPT_HEADER, FALSE);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+                curl_setopt(
+                    $ch,
+                    CURLOPT_HTTPHEADER,
+                    array(
+                        "X-Api-Key:KEY",
+                        "X-Auth-Token:TOKEN"
+                    )
+                );
+                $payload = array(
+                    'purpose' => 'Buy Product',
+                    'amount' => $final_amt,
+                    'phone' => $request->mobile,
+                    'buyer_name' => $request->name,
+                    'redirect_url' => 'http://127.0.0.1:8000/instamojo_payment_redirect',
+                    'send_email' => true,
+                    'send_sms' => true,
+                    'email' => $request->email,
+                    'allow_repeated_payments' => false
+                );
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payload));
+                $response = curl_exec($ch);
+                curl_close($ch);
+                $response = json_decode($response);
+                if (isset($response->payment_request->id)) {
+                    $txn_id = $response->payment_request->id;
+                    DB::table('orders')
+                        ->where(['id' => $order_id])
+                        ->update(['txn_id' => $txn_id]);
+                    $payment_url = $response->payment_request->longurl;
+                } else {
+                    $msg = "";
+                    foreach ($response->message as $key => $val) {
+                        $msg .= strtoupper($key) . ": " . $val[0] . '<br/>';
+                    }
+                    return response()->json(['status' => 'error', 'msg' => $msg, 'payment_url' => '']);
+                }
+            }
+            DB::table('carts')->where(['user_id' => $uid, 'user_type' => 'Reg'])->delete();
+            $request->session()->put('ORDER_ID', $order_id);
+
+            $status = "success";
+            $msg = "Order placed";
+        } else {
+            $status = "false";
+            $msg = "Please try after sometime";
+        }
+        return response()->json(['status' => $status, 'msg' => $msg, 'payment_url' => $payment_url]);
+    }
+
+    public function orderPlaced(Request $request)
+    {
+        if ($request->session()->has('ORDER_ID')) {
+            return view('front.OrderPlaced');
+        } else {
+            return redirect('/');
+        }
+    }
+
+    public function order_fail(Request $request)
+    {
+        if ($request->session()->has('ORDER_ID')) {
+            return view('front.order_fail');
+        } else {
+            return redirect('/');
+        }
+    }
     public function myAccount()
     {
         if (session()->has('FRONT_USER_LOGIN') && session()->get('FRONT_USER_LOGIN') === true) {

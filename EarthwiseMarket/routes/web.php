@@ -33,7 +33,10 @@ Route::get('/product-details/{slug}', [FrontController::class, 'productdetails']
 Route::post('/add_to_cart', [FrontController::class, 'add_to_cart'])->name('add.to.cart');
 Route::get('/cart', [FrontController::class, 'cart'])->name('cart');
 Route::get('/checkout', [FrontController::class, 'checkout'])->name('checkout');
-
+Route::post('/apply-coupon-code', [FrontController::class, 'apply_coupon_code'])->name('apply_coupon_code');
+Route::post('/remove_coupon_code', [FrontController::class, 'remove_coupon_code']);
+Route::post('/place-order', [FrontController::class, 'placeOrder'])->name('place.order');
+Route::get('/order-placed', [FrontController::class, 'orderPlaced'])->name('order.placed');
 // admin 
 Route::get('admin', [AdminController::class, 'index']);
 Route::post('admin/auth', [AdminController::class, 'auth'])->name('admin.auth');

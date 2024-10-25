@@ -610,11 +610,7 @@
 
     <!-- Main JS -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
-    <script>
-        setTimeout(function() {
-            document.querySelector('.alert').remove();
-        }, 8000);
-    </script>
+
 </body>
 
 

@@ -48,12 +48,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $i = 1;
-                                @endphp
-                                @foreach ($data as $list)
+
+                                @foreach ($data as $index => $list)
                                     <tr>
-                                        <td>{{ $i }}</td>
+                                        <td>{{ $index + 1 }}</td>
                                         <td>{{ $list->category_name }}</td>
                                         <td>{{ $list->category_slug }}</td>
                                         <td>
@@ -80,7 +78,6 @@
                                                     type="button" class="btn btn-danger">Delete</button></a>
                                         </td>
                                     </tr>
-                                    {{ $i++ }}
                                 @endforeach
 
                             </tbody>

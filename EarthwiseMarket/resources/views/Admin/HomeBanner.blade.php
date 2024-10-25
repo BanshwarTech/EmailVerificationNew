@@ -1,5 +1,5 @@
 @extends('Admin.layouts.app')
-@section('page_title', 'Coupon')
+@section('page_title', 'Home Banner')
 @section('admin-content')
     <div class="pagetitle d-flex justify-content-between align-items-center">
         <div>
@@ -12,8 +12,8 @@
             </nav>
         </div>
         <div>
-            <a href="{{ url('admin/coupon/manage_coupon') }}" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> Manage Coupon
+            <a href="{{ url('admin/homebanner/manage_homebanner') }}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Manage Home Banner
             </a>
 
         </div>
@@ -42,32 +42,43 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Title</th>
-                                    <th>Code</th>
-                                    <th>Value</th>
+                                    <th>Sub Title</th>
+                                    <th>Btn Txt</th>
+                                    <th>Image</th>
+                                    <th>Btn Link</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-
-                                @foreach ($data as $index => $list)
+                                @foreach ($homebanner as $index => $list)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $list->title }}</td>
-                                        <td>{{ $list->code }}</td>
-                                        <td>{{ $list->value }}</td>
+                                        <td>{{ $list->subtitle }}</td>
+                                        <td>{{ $list->btn_txt }}</td>
                                         <td>
-                                            <a href="{{ url('admin/coupon/manage_coupon/') }}/{{ $list->id }}"><button
+                                            @if ($list->image != '')
+                                                <img width="100px"
+                                                    src="{{ asset('storage/media/banner/' . $list->image) }}"
+                                                    style="height:55px;width:55px;border-radius:10%;"
+                                                    alt="{{ $list->image }}" />
+                                            @endif
+                                        </td>
+                                        <td>{{ $list->btn_link }}</td>
+                                        <td>
+                                            <a
+                                                href="{{ url('admin/homebanner/manage_homebanner/') }}/{{ $list->id }}"><button
                                                     type="button" class="btn btn-success">Edit</button></a>
 
                                             @if ($list->status == 1)
-                                                <a href="{{ url('admin/coupon/status/0') }}/{{ $list->id }}"><button
+                                                <a href="{{ url('admin/homebanner/status/0') }}/{{ $list->id }}"><button
                                                         type="button" class="btn btn-primary">Active</button></a>
                                             @elseif($list->status == 0)
-                                                <a href="{{ url('admin/coupon/status/1') }}/{{ $list->id }}"><button
+                                                <a href="{{ url('admin/homebanner/status/1') }}/{{ $list->id }}"><button
                                                         type="button" class="btn btn-warning">Deactive</button></a>
                                             @endif
 
-                                            <a href="{{ url('admin/coupon/delete/') }}/{{ $list->id }}"><button
+                                            <a href="{{ url('admin/homebanner/delete/') }}/{{ $list->id }}"><button
                                                     type="button" class="btn btn-danger">Delete</button></a>
                                         </td>
                                     </tr>
@@ -75,7 +86,6 @@
 
                             </tbody>
                         </table>
-                        <!-- End Table with stripped rows -->
 
                     </div>
                 </div>

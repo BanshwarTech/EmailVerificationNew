@@ -18,6 +18,7 @@ class ProductController extends Controller
 
     public function manage_product(Request $request, $id = '')
     {
+
         if ($id > 0) {
             $arr = Product::where(['id' => $id])->get();
 
@@ -102,6 +103,9 @@ class ProductController extends Controller
 
     public function manage_product_process(Request $request)
     {
+        // echo '<pre>';
+        // print_r($_POST);
+        // die();
 
         if ($request->post('id') > 0) {
             $image_validation = "mimes:jpeg,jpg,png,svg,gif";
@@ -173,6 +177,7 @@ class ProductController extends Controller
         $model->is_discounted = $request->post('is_discounted');
         $model->is_tranding = $request->post('is_tranding');
         $model->status = 1;
+
         $model->save();
         $pid = $model->id;
         /*Product Attr Start*/
@@ -222,6 +227,7 @@ class ProductController extends Controller
         /*Product Images Start*/
         $piidArr = $request->post('piid');
         foreach ($piidArr as $key => $val) {
+            $productImageArr = [];
             $productImageArr['products_id'] = $pid;
             if ($request->hasFile("images.$key")) {
 
@@ -249,7 +255,44 @@ class ProductController extends Controller
 
         /*Product Images End*/
 
-        $request->session()->flash('message', $msg);
+        $request->session()->flash('successMessage', $msg);
+        return redirect('admin/product');
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $model = Product::find($id);
+        $model->delete();
+        $request->session()->flash('successMessage', 'Product deleted');
+        return redirect('admin/product');
+    }
+
+    public function product_attr_delete(Request $request, $paid, $pid)
+    {
+        $arrImage = DB::table('product_attrs')->where(['id' => $paid])->get();
+        if (Storage::exists('/public/media/' . $arrImage[0]->attr_image)) {
+            Storage::delete('/public/media/' . $arrImage[0]->attr_image);
+        }
+        DB::table('product_attrs')->where(['id' => $paid])->delete();
+        return redirect('admin/product/manage_product/' . $pid);
+    }
+
+    public function product_images_delete(Request $request, $paid, $pid)
+    {
+        $arrImage = DB::table('product_images')->where(['id' => $paid])->get();
+        if (Storage::exists('/public/media/' . $arrImage[0]->images)) {
+            Storage::delete('/public/media/' . $arrImage[0]->images);
+        }
+        DB::table('product_images')->where(['id' => $paid])->delete();
+        return redirect('admin/product/manage_product/' . $pid);
+    }
+
+    public function status(Request $request, $status, $id)
+    {
+        $model = Product::find($id);
+        $model->status = $status;
+        $model->save();
+        $request->session()->flash('successMessage', 'Product status updated');
         return redirect('admin/product');
     }
 }

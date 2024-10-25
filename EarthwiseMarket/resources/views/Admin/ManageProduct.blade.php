@@ -265,13 +265,12 @@
                                             value="{{ $pIArr['id'] }}">
                                         <div class="col-md-4 product_images_{{ $loop_count_num }}">
                                             <label for="images" class="control-label"> Image (250px * 300px)</label>
-                                            <input id="images" name="images[]" type="file" class="form-control"
-                                                required>
+                                            <input id="images" name="images[]" type="file" class="form-control">
 
                                             @if ($pIArr['images'] != '')
                                                 <a href="{{ asset('storage/media/product_images/' . $pIArr['images']) }}"
                                                     target="_blank">
-                                                    <img width="100px"
+                                                    <img width="50px"
                                                         src="{{ asset('storage/media/product_images/' . $pIArr['images']) }}" />
                                                 </a>
                                             @endif
@@ -339,7 +338,7 @@
                                         <!-- Size -->
                                         <div class="col-md-3">
                                             <label for="size_id" class="control-label mb-1">Size</label>
-                                            <select id="size_id" name="size_id[]" class="form-control">
+                                            <select id="size_id" name="size_id[]" class="form-select">
                                                 <option value="">Select</option>
                                                 @foreach ($sizes as $list)
                                                     <option value="{{ $list->id }}"
@@ -352,7 +351,7 @@
                                         <!-- Color -->
                                         <div class="col-md-3">
                                             <label for="color_id" class="control-label mb-1">Color</label>
-                                            <select id="color_id" name="color_id[]" class="form-control">
+                                            <select id="color_id" name="color_id[]" class="form-select">
                                                 <option value="">Select</option>
                                                 @foreach ($colors as $list)
                                                     <option value="{{ $list->id }}"
@@ -375,7 +374,7 @@
                                             <input id="attr_image" name="attr_image[]" type="file"
                                                 class="form-control">
                                             @if ($pAArr['attr_image'] != '')
-                                                <img width="100px"
+                                                <img width="50px"
                                                     src="{{ asset('storage/media/product_attr/' . $pAArr['attr_image']) }}" />
                                             @endif
                                         </div>
@@ -410,7 +409,7 @@
     </section>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        var loop_image_count = {{ $loop_count_num }}; // Keep track of current count
+        var loop_image_count = 1; // Keep track of current count
 
         function add_image_more() {
             loop_image_count++;

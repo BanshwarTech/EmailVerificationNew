@@ -86,5 +86,9 @@
         </div>
     </div> <!-- ...:::: End Customer Login Section :::... -->
 
-
+    <script>
+        setTimeout(function() {
+            document.querySelector('.alert').remove();
+        }, 8000);
+    </script>
 @endsection

@@ -47,18 +47,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $i = 1;
-                                @endphp
-                                @foreach ($product as $list)
+
+
+                                @foreach ($product as $index => $list)
                                     <tr>
-                                        <td>{{ $i }}</td>
+                                        <td>{{ $index + 1 }}</td>
                                         <td>{{ $list->name }}</td>
                                         <td>
                                             @if ($list->image != '')
                                                 <img width="100px"
                                                     src="{{ asset('storage/media/product/' . $list->image) }}"
-                                                    style="height:75px;width:75px;border-radius:50%;"
+                                                    style="height:55px;width:55px;border-radius:10%;"
                                                     alt="{{ $list->image }}" />
                                             @endif
                                         </td>
@@ -78,7 +77,6 @@
                                                     type="button" class="btn btn-danger">Delete</button></a>
                                         </td>
                                     </tr>
-                                    {{ $i++ }}
                                 @endforeach
 
                             </tbody>

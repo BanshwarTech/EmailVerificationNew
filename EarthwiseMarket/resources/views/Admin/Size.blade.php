@@ -46,12 +46,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $i = 1;
-                                @endphp
-                                @foreach ($size as $list)
+
+                                @foreach ($size as $index => $list)
                                     <tr>
-                                        <td>{{ $i }}</td>
+                                        <td>{{ $index + 1 }}</td>
                                         <td>{{ $list->size }}</td>
                                         <td>
                                             <a href="{{ url('admin/size/manage_size/') }}/{{ $list->id }}"><button
@@ -69,7 +67,6 @@
                                                     type="button" class="btn btn-danger">Delete</button></a>
                                         </td>
                                     </tr>
-                                    {{ $i++ }}
                                 @endforeach
 
                             </tbody>

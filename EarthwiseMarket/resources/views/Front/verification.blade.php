@@ -155,4 +155,9 @@
 
         timer();
     </script>
+    <script>
+        setTimeout(function() {
+            document.querySelector('.alert').remove();
+        }, 8000);
+    </script>
 @endsection

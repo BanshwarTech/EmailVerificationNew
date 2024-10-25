@@ -263,6 +263,14 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link collapsed{{ Request::is('admin/homebanner') ? 'active' : '' }}"
+                    href="{{ url('admin/homebanner') }}">
+                    <i class="bi bi-layout-text-window-reverse"></i>
+                    <span>Banner</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link collapsed{{ Request::is('admin/category') ? 'active' : '' }}"
                     href="{{ url('admin/category') }}">
                     <i class="bi bi-layout-text-window-reverse"></i>

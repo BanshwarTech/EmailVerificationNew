@@ -5,12 +5,14 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\HomeBannerController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\TaxController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\Front\RegisterLoginController;
 use App\Http\Middleware\AdminAuth;
+use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/register', [RegisterLoginController::class, 'Register'])->name('Register');
@@ -27,6 +29,10 @@ Route::get('/logout', [RegisterLoginController::class, "Logout"])->name('Logout'
 
 Route::get('/', [FrontController::class, 'index'])->name('index');
 Route::get('/my-account', [FrontController::class, 'myAccount'])->name('myAccount');
+Route::get('/product-details/{slug}', [FrontController::class, 'productdetails'])->name('product.details');
+Route::post('/add_to_cart', [FrontController::class, 'add_to_cart'])->name('add.to.cart');
+Route::get('/cart', [FrontController::class, 'cart'])->name('cart');
+Route::get('/checkout', [FrontController::class, 'checkout'])->name('checkout');
 
 // admin 
 Route::get('admin', [AdminController::class, 'index']);
@@ -35,6 +41,13 @@ Route::get('admin/updatePassword', [AdminController::class, 'updatePassword']);
 
 Route::middleware([AdminAuth::class])->group(function () {
     Route::get('admin/dashboard', [AdminController::class, 'Dashboard'])->name('Dashboard');
+    // homebanner section
+    Route::get('admin/homebanner', [HomeBannerController::class, 'index']);
+    Route::get('admin/homebanner/manage_homebanner', [HomeBannerController::class, 'manage_homebanner']);
+    Route::get('admin/homebanner/manage_homebanner/{id}', [HomeBannerController::class, 'manage_homebanner']);
+    Route::post('admin/homebanner/manage_homebanner_process', [HomeBannerController::class, 'manage_homebanner_process'])->name('homebanner.manage_homebanner_process');
+    Route::get('admin/homebanner/delete/{id}', [HomeBannerController::class, 'delete']);
+    Route::get('admin/homebanner/status/{status}/{id}', [HomeBannerController::class, 'status']);
     // categories section
     Route::get('admin/category', [CategoryController::class, 'index']);
     Route::get('admin/category/manage_category', [CategoryController::class, 'manage_category']);
@@ -84,6 +97,12 @@ Route::middleware([AdminAuth::class])->group(function () {
     Route::get('admin/product/manage_product', [ProductController::class, 'manage_product']);
     Route::get('admin/product/manage_product/{id}', [ProductController::class, 'manage_product']);
     Route::post('admin/product/manage_product_process', [ProductController::class, 'manage_product_process'])->name('product.manage_product_process');
+    Route::get('admin/product/delete/{id}', [ProductController::class, 'delete']);
+    Route::get('admin/product/status/{status}/{id}', [ProductController::class, 'status']);
+    Route::get('admin/product/product_attr_delete/{paid}/{pid}', [ProductController::class, 'product_attr_delete']);
+    Route::get('admin/product/product_images_delete/{paid}/{pid}', [ProductController::class, 'product_images_delete']);
+
+
     //logout
     Route::get('admin/logout', function () {
         session()->forget('ADMIN_LOGIN');

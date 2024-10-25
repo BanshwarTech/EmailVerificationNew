@@ -62,7 +62,8 @@
 
                             <div class="">
                                 <button class="btn btn-md btn-black-default-hover mb-1" type="submit">Register</button><br>
-                                <span>Already have an account? <a href="{{ url('/login') }}"> Log in</a></span>
+                                <span>Already have an account? <a href="{{ url('/login') }}" class="text-primary"> Log
+                                        in</a></span>
                             </div>
                         </form>
                     </div>
@@ -71,5 +72,9 @@
             </div>
         </div>
     </div> <!-- ...:::: End Customer Login Section :::... -->
-
+    <script>
+        setTimeout(function() {
+            document.querySelector('.alert').remove();
+        }, 8000);
+    </script>
 @endsection

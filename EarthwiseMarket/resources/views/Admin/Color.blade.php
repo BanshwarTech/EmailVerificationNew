@@ -46,12 +46,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $i = 1;
-                                @endphp
-                                @foreach ($color as $list)
+
+                                @foreach ($color as $index => $list)
                                     <tr>
-                                        <td>{{ $i }}</td>
+                                        <td>{{ $index + 1 }}</td>
                                         <td>{{ $list->color }}</td>
                                         <td>
                                             <a href="{{ url('admin/color/manage_color/') }}/{{ $list->id }}"><button
@@ -69,7 +67,6 @@
                                                     type="button" class="btn btn-danger">Delete</button></a>
                                         </td>
                                     </tr>
-                                    {{ $i++ }}
                                 @endforeach
 
                             </tbody>

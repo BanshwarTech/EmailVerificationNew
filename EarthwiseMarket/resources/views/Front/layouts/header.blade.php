@@ -16,7 +16,7 @@
                         <div
                             class="header-top-user-link header-top-user-link-color--white header-top-user-link-hover-color--green">
                             <a href="{{ url('/admin') }}">Admin</a>
-                            <a href="cart.html">Cart</a>
+                            <a href="{{ route('cart') }}">Cart</a>
                             @if (session()->has('FRONT_USER_LOGIN') && session('FRONT_USER_LOGIN') === true)
                                 <a href="">Wishlist</a>
                                 <a href="">My Order</a>
@@ -83,12 +83,7 @@
                                         </div>
                                     </li>
 
-                                    <li>
-                                        <a href="about-us.html">About Us</a>
-                                    </li>
-                                    <li>
-                                        <a href="contact-us.html">Contact Us</a>
-                                    </li>
+
                                 </ul>
                             </nav>
                         </div>
@@ -210,7 +205,7 @@
                             <li>
                                 <a href="#">Shop Pages</a>
                                 <ul class="mobile-sub-menu">
-                                    <li><a href="cart.html">Cart</a></li>
+                                    <li><a href="{{ route('cart') }}">Cart</a></li>
                                     <li><a href="empty-cart.html">Empty Cart</a></li>
                                     <li><a href="wishlist.html">Wishlist</a></li>
                                     <li><a href="compare.html">Compare</a></li>
@@ -241,8 +236,7 @@
                     </li>
 
 
-                    <li><a href="about-us.html">About Us</a></li>
-                    <li><a href="contact-us.html">Contact Us</a></li>
+
                 </ul>
             </div> <!-- End Mobile Menu Nav -->
         </div> <!-- End Mobile Menu -->
@@ -268,7 +262,7 @@
 
             <ul class="user-link">
                 <li><a href="{{ url('/admin') }}">Admin Login</a></li>
-                <li><a href="cart.html">Cart</a></li>
+                <li><a href="{{ route('cart') }}">Cart</a></li>
 
                 @if (session()->has('FRONT_USER_LOGIN') && session('FRONT_USER_LOGIN') === true)
                     <li> <a href="">Wishlist</a></li>
@@ -312,7 +306,7 @@
 
         <ul class="user-link">
             <li><a href="{{ url('/admin') }}">Admin Login</a></li>
-            <li><a href="cart.html">Cart</a></li>
+            <li><a href="{{ route('cart') }}">Cart</a></li>
             @if (session()->has('FRONT_USER_LOGIN') && session('FRONT_USER_LOGIN') === true)
                 <li> <a href="">Wishlist</a></li>
                 <li><a href="">My Order</a></li>

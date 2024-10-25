@@ -1,4 +1,4 @@
-(function($) {
+(function ($) {
     "use strict";
 
     /*****************************
@@ -10,7 +10,7 @@
     /****************************
      * Sticky Menu
      *****************************/
-    $(window).on('scroll', function() {
+    $(window).on('scroll', function () {
         var scroll = $(window).scrollTop();
         if (scroll < 100) {
             $(".sticky-header").removeClass("sticky");
@@ -19,7 +19,7 @@
         }
     });
 
-    $(window).on('scroll', function() {
+    $(window).on('scroll', function () {
         var scroll = $(window).scrollTop();
         if (scroll < 100) {
             $(".seperate-sticky-bar").removeClass("sticky");
@@ -31,14 +31,14 @@
     /************************************************
      * Modal Search 
      ***********************************************/
-    $('a[href="#search"]').on('click', function(event) {
+    $('a[href="#search"]').on('click', function (event) {
         event.preventDefault();
         $('#search').addClass('open');
         $('#search > form > input[type="search"]').focus();
     });
 
-    $('#search, #search button.close').on('click', function(event) {
-        if ( event.target.className == 'close' ) {
+    $('#search, #search button.close').on('click', function (event) {
+        if (event.target.className == 'close') {
             $(this).removeClass('open');
         }
     });
@@ -46,12 +46,12 @@
     /*****************************
      * Off Canvas Function
      *****************************/
-    (function() {
+    (function () {
         var $offCanvasToggle = $('.offcanvas-toggle'),
             $offCanvas = $('.offcanvas'),
             $offCanvasOverlay = $('.offcanvas-overlay'),
             $mobileMenuToggle = $('.mobile-menu-toggle');
-        $offCanvasToggle.on('click', function(e) {
+        $offCanvasToggle.on('click', function (e) {
             e.preventDefault();
             var $this = $(this),
                 $target = $this.attr('href');
@@ -62,7 +62,7 @@
                 $this.addClass('close');
             }
         });
-        $('.offcanvas-close, .offcanvas-overlay').on('click', function(e) {
+        $('.offcanvas-close, .offcanvas-overlay').on('click', function (e) {
             e.preventDefault();
             $body.removeClass('offcanvas-open');
             $offCanvas.removeClass('offcanvas-open');
@@ -83,7 +83,7 @@
         $offCanvasNavSubMenu.parent().prepend('<div class="offcanvas-menu-expand"></div>');
 
         /*Category Sub Menu Toggle*/
-        $offCanvasNav.on('click', 'li a, .offcanvas-menu-expand', function(e) {
+        $offCanvasNav.on('click', 'li a, .offcanvas-menu-expand', function (e) {
             var $this = $(this);
             if ($this.attr('href') === '#' || $this.hasClass('offcanvas-menu-expand')) {
                 e.preventDefault();
@@ -392,16 +392,16 @@
         watchSlidesVisibility: true,
         watchSlidesProgress: true,
         navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
         },
-      });
+    });
 
-      var modalGalleryTop = new Swiper('.modal-product-image-large', { 
+    var modalGalleryTop = new Swiper('.modal-product-image-large', {
         thumbs: {
-          swiper: modalGalleryThumbs
+            swiper: modalGalleryThumbs
         }
-      });
+    });
 
     /********************************
      * Blog List Slider - Single Slide
@@ -431,7 +431,7 @@
         min: 0,
         max: 500,
         values: [75, 300],
-        slide: function(event, ui) {
+        slide: function (event, ui) {
             $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
         }
     });
@@ -444,17 +444,17 @@
      * Animate on Scroll
      ***********************************************/
     AOS.init({
-       
-        duration: 1000, 
-        once: true, 
+
+        duration: 1000,
+        once: true,
         easing: 'ease',
     });
-    window.addEventListener('load', AOS.refresh);    
+    window.addEventListener('load', AOS.refresh);
 
     /************************************************
      * Video  Popup
      ***********************************************/
-    $('.video-play-btn').venobox(); 
+    $('.video-play-btn').venobox();
 
     /************************************************
      * Scroll Top
@@ -463,3 +463,141 @@
 
 
 })(jQuery);
+
+function showColor(size) {
+
+    jQuery('#size_id').val(size);
+
+    jQuery('.product_color').hide();
+
+    jQuery('.size_' + size).show();
+
+    jQuery('.size_link').css('border', '1px solid #ddd');
+
+    jQuery('#size_' + size).css('border', '1px solid black');
+}
+
+function change_product_color_image(img, color) {
+    jQuery('#color_id').val(color);
+    jQuery('.simpleLens-big-image-container').html('<a class="product-image-large-image swiper-slide zoom-image-hover img-responsive"><img src="' + img + '" ></a>');
+}
+function home_add_to_cart(id, size_str_id, color_str_id) {
+    jQuery('#color_id').val(color_str_id);
+
+    jQuery('#size_id').val(size_str_id);
+
+    add_to_cart(id, size_str_id, color_str_id);
+
+
+}
+
+function add_to_cart(id, size_str_id, color_str_id) {
+
+    jQuery('#add_to_cart_msg').html('');
+    var color_id = jQuery('#color_id').val();
+    var size_id = jQuery('#size_id').val();
+
+    if (size_str_id == 0) {
+        size_id = 'no';
+    }
+    if (color_str_id == 0) {
+        color_id = 'no';
+    }
+    if (size_id == '' && size_id != 'no') {
+        jQuery('#add_to_cart_msg').html(`
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>  Please select a size</strong> 
+                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `);
+    } else if (color_id == '' && color_id != 'no') {
+        jQuery('#add_to_cart_msg').html(`
+           <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>  Please select a color</strong> 
+                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `);
+    }
+    else {
+        // alert('Thaks');
+        jQuery('#product_id').val(id);
+        jQuery('#pqty').val(jQuery('#qty').val());
+        jQuery.ajax({
+            url: '/add_to_cart',
+            data: jQuery('#frmAddToCart').serialize(),
+            type: 'post',
+            success: function (result) {
+                // alert('Product' + result.msg);
+                var totalPrice = 0;
+
+                if (result.msg == 'not_avaliable') {
+                    alert(result.data);
+                } else {
+                    alert("Product " + result.msg);
+                    if (result.totalItem == 0) {
+                        jQuery('.aa-cart-notify').html('0');
+                        jQuery('.aa-cartbox-summary').remove();
+                    } else {
+
+                        jQuery('.aa-cart-notify').html(result.totalItem);
+                        var html = '<ul>';
+                        jQuery.each(result.data, function (arrKey, arrVal) {
+                            totalPrice = parseInt(totalPrice) + (parseInt(arrVal.qty) * parseInt(arrVal.price));
+                            html += '<li><a class="aa-cartbox-img" href="#"><img src="' + PRODUCT_IMAGE + '/' + arrVal.image + '" alt="img"></a><div class="aa-cartbox-info"><h4><a href="#">' + arrVal.name + '</a></h4><p> ' + arrVal.qty + ' * Rs  ' + arrVal.price + '</p></div></li>';
+                        });
+
+                    }
+                    html += '<li><span class="aa-cartbox-total-title">Total</span><span class="aa-cartbox-total-price">Rs ' + totalPrice + '</span></li>';
+                    html += '</ul><a class="aa-cartbox-checkout aa-primary-btn" href="cart">Cart</a>';
+                    console.log(html);
+                    jQuery('.aa-cartbox-summary').html(html);
+                }
+            }
+        });
+    }
+}
+
+function deleteCartProduct(pid, size, color, attr_id) {
+    jQuery('#color_id').val(color);
+    jQuery('#size_id').val(size);
+    jQuery('#qty').val(0)
+    add_to_cart(pid, size, color);
+    //jQuery('#total_price_'+attr_id).html('Rs '+qty*price);
+    jQuery('#cart_box' + attr_id).hide();
+}
+
+function updateQty(pid, size, color, attr_id, price) {
+    jQuery('#color_id').val(color);
+    jQuery('#size_id').val(size);
+    var qty = jQuery('#qty' + attr_id).val();
+    jQuery('#qty').val(qty)
+    add_to_cart(pid, size, color);
+    jQuery('#total_price_' + attr_id).html('Rs ' + qty * price);
+}
+
+function applyCouponCode() {
+    jQuery('#coupon_code_msg').html('');
+    jQuery('#order_place_msg').html('');
+    var coupon_code = jQuery('#coupon_code').val();
+    if (coupon_code != '') {
+        jQuery.ajax({
+            type: 'post',
+            url: '/apply_coupon_code',
+            data: 'coupon_code=' + coupon_code + '&_token=' + jQuery("[name='_token']").val(),
+            success: function (result) {
+                console.log(result.status);
+                if (result.status == 'success') {
+                    jQuery('.show_coupon_box').removeClass('hide');
+                    jQuery('#coupon_code_str').html(coupon_code);
+                    jQuery('#total_price').html('INR ' + result.totalPrice);
+                    jQuery('.apply_coupon_code_box').hide();
+                } else {
+
+                }
+                jQuery('#coupon_code_msg').html(result.msg);
+            }
+        });
+    } else {
+        jQuery('#coupon_code_msg').html('Please enter coupon code');
+    }
+}

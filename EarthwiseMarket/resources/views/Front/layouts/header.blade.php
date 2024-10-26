@@ -98,9 +98,14 @@
                                 </a>
                             </li>
                             <li>
+                                @php
+                                    $getAddToCartTotalItem = getAddToCartTotalItem();
+                                    $totalCartItem = count($getAddToCartTotalItem);
+                                    $totalPrice = 0;
+                                @endphp
                                 <a href="#offcanvas-add-cart" class="offcanvas-toggle">
                                     <i class="icon-bag"></i>
-                                    <span class="item-count">3</span>
+                                    <span class="item-count">{{ $totalCartItem }}</span>
                                 </a>
                             </li>
                             <li>
@@ -152,9 +157,14 @@
                             </a>
                         </li>
                         <li>
+                            @php
+                                $getAddToCartTotalItem = getAddToCartTotalItem();
+                                $totalCartItem = count($getAddToCartTotalItem);
+                                $totalPrice = 0;
+                            @endphp
                             <a href="#offcanvas-add-cart" class="offcanvas-toggle">
                                 <i class="icon-bag"></i>
-                                <span class="item-count">3</span>
+                                <span class="item-count">{{ $totalCartItem }}</span>
                             </a>
                         </li>
                         <li>
@@ -318,3 +328,54 @@
     </div>
     <!-- End Mobile contact Info -->
 </div> <!-- ...:::: End Offcanvas Mobile Menu Section:::... -->
+<!-- Start Offcanvas Addcart Section -->
+<div id="offcanvas-add-cart" class="offcanvas offcanvas-rightside offcanvas-add-cart-section">
+    <!-- Start Offcanvas Header -->
+    <div class="offcanvas-header text-right">
+        <button class="offcanvas-close"><i class="ion-android-close"></i></button>
+    </div> <!-- End Offcanvas Header -->
+
+    <!-- Start  Offcanvas Addcart Wrapper -->
+    <div class="offcanvas-add-cart-wrapper">
+        <h4 class="offcanvas-title">Shopping Cart</h4>
+        @if ($totalCartItem > 0)
+            <ul class="offcanvas-cart">
+                @foreach ($getAddToCartTotalItem as $cartItem)
+                    @php
+                        $totalPrice = $totalPrice + $cartItem->qty * $cartItem->price;
+                    @endphp
+                    <li class="offcanvas-cart-item-single">
+                        <div class="offcanvas-cart-item-block">
+                            <a href="#" class="offcanvas-cart-item-image-link">
+                                <img src="{{ asset('storage/media/product/' . $cartItem->image) }}" alt=""
+                                    class="offcanvas-cart-image">
+                            </a>
+                            <div class="offcanvas-cart-item-content">
+                                <a href="#" class="offcanvas-cart-item-link">{{ $cartItem->name }}</a>
+                                <div class="offcanvas-cart-item-details">
+                                    <span class="offcanvas-cart-item-details-quantity">{{ $cartItem->qty }} x
+                                    </span>
+                                    <span
+                                        class="offcanvas-cart-item-details-price">&#8377;{{ $cartItem->price }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="offcanvas-cart-item-delete text-right">
+                            <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+
+            <div class="offcanvas-cart-total-price">
+                <span class="offcanvas-cart-total-price-text">Subtotal:</span>
+                <span class="offcanvas-cart-total-price-value">&#8377;{{ $totalPrice }}</span>
+            </div>
+            <ul class="offcanvas-cart-action-button">
+                <li><a href="{{ route('cart') }}" class="btn btn-block btn-green">View Cart</a></li>
+                <li><a href="{{ route('checkout') }}" class=" btn btn-block btn-green mt-5">Checkout</a></li>
+            </ul>
+        @endif
+    </div> <!-- End  Offcanvas Addcart Wrapper -->
+
+</div> <!-- End  Offcanvas Addcart Section -->

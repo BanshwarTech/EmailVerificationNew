@@ -21,4 +21,20 @@
             </div>
         </div>
     </div> <!-- ...:::: End Breadcrumb Section:::... -->
+    <div class="customer-login">
+        <div class="container">
+            <div class="row">
+                <!--login area start-->
+                <div class="col-lg-12 col-md-12">
+                    <img src="https://cdni.iconscout.com/illustration/premium/thumb/order-confirm-illustration-download-in-svg-png-gif-file-formats--online-booking-placed-shopping-pack-e-commerce-illustrations-5902811.png?f=webp"
+                        alt="" style="text-align: center">
+                    <h2>Order Id:- {{ session()->get('ORDER_ID') }}</h2>
+                </div>
+                <!--login area start-->
+
+
+            </div>
+        </div>
+    </div> <!-- ...:::: End Customer Login Section :::... -->
+
 @endsection

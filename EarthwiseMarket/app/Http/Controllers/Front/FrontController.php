@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Mail;
+use PhpParser\Node\Stmt\Else_;
 
 class FrontController extends Controller
 {
@@ -356,26 +357,37 @@ class FrontController extends Controller
                     ->update(['user_id' => $user_id, 'user_type' => 'Reg']);
             }
         }
+
         $coupon_value = 0;
-        $coupon_code = $request->coupon_code;
-        if ($coupon_code != '') {
+
+        // Check if a coupon code was provided
+        if (!empty($request->coupon_code)) {
             $arr = apply_coupon_code($request->coupon_code);
             $arr = json_decode($arr, true);
+
+            // Check for a successful response from the coupon application
             if ($arr['status'] == 'success') {
                 $coupon_value = $arr['coupon_code_value'];
             } else {
+                // Return JSON response if the coupon is invalid or any error occurs
                 return response()->json(['status' => 'false', 'msg' => $arr['msg']]);
             }
         }
 
-
-
+        // Retrieve user ID from session and check if logged in
         $uid = $request->session()->get('FRONT_USER_ID');
+        if (!$uid) {
+            return response()->json(['status' => 'false', 'msg' => 'User not logged in']);
+        }
+
+        // Calculate total price from the cart items
         $totalPrice = 0;
         $getAddToCartTotalItem = getAddToCartTotalItem();
         foreach ($getAddToCartTotalItem as $list) {
-            $totalPrice = $totalPrice + ($list->qty * $list->price);
+            $totalPrice += ($list->qty * $list->price);
         }
+
+        // Prepare order details array
         $arr = [
             "user_id" => $uid,
             "name" => $request->name,
@@ -385,7 +397,6 @@ class FrontController extends Controller
             "city" => $request->city,
             "state" => $request->state,
             "pincode" => $request->zip,
-            "coupon_code" => $coupon_code,
             "coupon_value" => $coupon_value,
             "payment_type" => $request->payment_type,
             "payment_status" => "Pending",
@@ -393,6 +404,17 @@ class FrontController extends Controller
             "order_status" => 1,
             "added_on" => date('Y-m-d h:i:s')
         ];
+
+        // Add coupon code only if it exists in the request
+        if (!empty($request->coupon_code)) {
+            $arr['coupon_code'] = $request->coupon_code;
+        }
+
+
+        // echo '<pre>';
+        // print_r($arr);
+        // die();
+
         $order_id = DB::table('orders')->insertGetId($arr);
 
         if ($order_id > 0) {

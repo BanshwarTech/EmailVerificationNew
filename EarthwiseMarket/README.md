@@ -1,1 +1,0 @@
-" {{ Request::is('admin/tax') ? 'active' : '' }}" :: this is used for the select menu are is highlighted according the url .

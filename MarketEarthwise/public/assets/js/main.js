@@ -540,29 +540,21 @@ function add_to_cart(id, size_str_id, color_str_id) {
                     });
 
                 } else {
-                    if (confirm("Are you sure you want to add/update this product in the cart?")) {
-                        // Proceed with the action and show the Toastr success notification
-                        toastr.success(
-                            'Product ' + result.msg,
-                            'Success',
-                            {
-                                positionClass: 'toast-top-right', // Position the toast at the top right
-                                closeButton: true,
-                                progressBar: true
-                            }
-                        );
-                        // Reload the page after a short delay to allow the notification to display
-                        setTimeout(function () {
-                            location.reload();
-                        }, 1000); // Adjust delay as needed
-                    } else {
-                        // Optional: You could add an action here if the user cancels
-                        toastr.info('Action canceled', 'Info', {
-                            positionClass: 'toast-top-right',
+
+                    toastr.success(
+                        'Product ' + result.msg,
+                        'Success',
+                        {
+                            positionClass: 'toast-top-right', // Position the toast at the top right
                             closeButton: true,
                             progressBar: true
-                        });
-                    }
+                        }
+                    );
+                    // Reload the page after a short delay to allow the notification to display
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000); // Adjust delay as needed
+
 
                     if (result.totalItem == 0) {
                         jQuery('.aa-cart-notify').html('0');

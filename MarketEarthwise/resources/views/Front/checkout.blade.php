@@ -274,6 +274,7 @@
 
                                                 &#8377;{{ number_format($totalPriceWithGst, 2) }}
                                             </strong></td>
+                                        <input type="hidden" value="{{ $totalPriceWithGst }}" name="totalPrice">
                                     </tr>
                                 </tfoot>
                             </table>
@@ -339,9 +340,4 @@
             font-size: 0.9em;
         }
     </style>
-
-
-
-
-
 @endsection

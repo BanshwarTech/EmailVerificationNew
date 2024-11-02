@@ -384,7 +384,7 @@ class FrontController extends Controller
             "coupon_value" => $coupon_value,
             "payment_type" => $request->payment_type,
             "payment_status" => "Pending",
-            "total_amt" => $totalPrice,
+            "total_amt" => $request->post('totalPrice'),
             "order_status" => 1,
             "added_on" => date('Y-m-d h:i:s')
         ];
@@ -406,7 +406,7 @@ class FrontController extends Controller
             }
 
             if ($request->payment_type == 'Gateway') {
-                $final_amt = $totalPrice - $coupon_value;
+                $final_amt = $request->post('totalPrice');
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, 'https://test.instamojo.com/api/1.1/payment-requests/');
                 curl_setopt($ch, CURLOPT_HEADER, FALSE);
@@ -710,6 +710,7 @@ class FrontController extends Controller
 
     public function blog()
     {
-        return view('Front.blog');
+        $result['blog'] = DB::table('blogs')->where(['status' => 1])->paginate(1);
+        return view('Front.blog', $result);
     }
 }

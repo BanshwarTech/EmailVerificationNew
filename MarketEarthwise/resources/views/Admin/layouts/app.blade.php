@@ -261,16 +261,22 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-
             <li class="nav-item">
-                <a class="nav-link collapsed{{ Request::is('admin/homebanner') ? 'active' : '' }}"
+                <a class="nav-link collapsed{{ Request::is('admin/blog') || Request::is('admin/blog/manage_blog') ? 'active' : '' }}"
+                    href="{{ url('admin/blog') }}">
+                    <i class="bi bi-layout-text-window-reverse"></i>
+                    <span>Blog</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed{{ Request::is('admin/homebanner') || Request::is('admin/homebanner/manage_homebanner') ? 'active' : '' }}"
                     href="{{ url('admin/homebanner') }}">
                     <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Slider</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed{{ Request::is('admin/banner') ? 'active' : '' }}"
+                <a class="nav-link collapsed{{ Request::is('admin/banner') || Request::is('admin/banner/manage_banner') ? 'active' : '' }}"
                     href="{{ url('admin/banner') }}">
                     <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Banner</span>
@@ -278,7 +284,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed{{ Request::is('admin/category') ? 'active' : '' }}"
+                <a class="nav-link collapsed{{ Request::is('admin/category') || Request::is('admin/category/manage_category') ? 'active' : '' }}"
                     href="{{ url('admin/category') }}">
                     <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Category</span>
@@ -286,7 +292,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed{{ Request::is('admin/coupon') ? 'active' : '' }}"
+                <a class="nav-link collapsed{{ Request::is('admin/coupon') || Request::is('admin/coupon/manage_coupon') ? 'active' : '' }}"
                     href="{{ url('admin/coupon') }}">
                     <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Coupon</span>
@@ -294,7 +300,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed{{ Request::is('admin/size') ? 'active' : '' }}"
+                <a class="nav-link collapsed{{ Request::is('admin/size') || Request::is('admin/size/manage_size') ? 'active' : '' }}"
                     href="{{ url('admin/size') }}">
                     <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Size</span>
@@ -302,7 +308,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed{{ Request::is('admin/color') ? 'active' : '' }}"
+                <a class="nav-link collapsed{{ Request::is('admin/color') || Request::is('admin/color/manage_color') ? 'active' : '' }}"
                     href="{{ url('admin/color') }}">
                     <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Color</span>
@@ -310,7 +316,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed{{ Request::is('admin/brand') ? 'active' : '' }}"
+                <a class="nav-link collapsed{{ Request::is('admin/brand') || Request::is('admin/brand/manage_brand') ? 'active' : '' }}"
                     href="{{ url('admin/brand') }}">
                     <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Brand</span>
@@ -318,7 +324,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed{{ Request::is('admin/tax') ? 'active' : '' }}"
+                <a class="nav-link collapsed{{ Request::is('admin/tax') || Request::is('admin/tax/manage_tax') ? 'active' : '' }}"
                     href="{{ url('admin/tax') }}">
                     <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Tax</span>
@@ -326,12 +332,13 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed{{ Request::is('admin/product') ? 'active' : '' }}"
+                <a class="nav-link collapsed{{ Request::is('admin/product') || Request::is('admin/product/manage_product') ? 'active' : '' }}"
                     href="{{ url('admin/product') }}">
                     <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Product</span>
                 </a>
             </li>
+
         </ul>
 
 

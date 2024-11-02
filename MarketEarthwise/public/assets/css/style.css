@@ -5294,8 +5294,8 @@ fieldset:disabled .btn {
 .page-item.active .page-link {
     z-index: 3;
     color: #FFF;
-    background-color: #0D6EFD;
-    border-color: #0D6EFD;
+    background-color: #b19361;
+    border-color: #b19361;
 }
 
 .page-item.disabled .page-link {
@@ -20035,7 +20035,7 @@ Pages - Contact
 /*Footer Bottom*/
 .footer-bottom {
     padding-top: 35px;
-    padding-bottom: 35px;
+    padding-bottom: 13px;
 }
 
 .footer-copyright {

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
@@ -123,6 +124,7 @@ Route::middleware([AdminAuth::class])->group(function () {
     Route::get('admin/product/status/{status}/{id}', [ProductController::class, 'status']);
     Route::get('admin/product/product_attr_delete/{paid}/{pid}', [ProductController::class, 'product_attr_delete']);
     Route::get('admin/product/product_images_delete/{paid}/{pid}', [ProductController::class, 'product_images_delete']);
+
     //banner section
     Route::get('admin/banner', [BannerController::class, 'index']);
     Route::get('admin/banner/manage_banner', [BannerController::class, 'manage_banner']);
@@ -130,7 +132,13 @@ Route::middleware([AdminAuth::class])->group(function () {
     Route::post('admin/banner/manage_banner_process', [BannerController::class, 'manage_banner_process'])->name('banner.manage_banner_process');
     Route::get('admin/banner/delete/{id}', [BannerController::class, 'delete']);
     Route::get('admin/banner/status/{status}/{id}', [BannerController::class, 'status']);
-
+    //blog section
+    Route::get('admin/blog', [BlogController::class, 'index']);
+    Route::get('admin/blog/manage_blog', [BlogController::class, 'manage_blog']);
+    Route::get('admin/blog/manage_blog/{id}', [BlogController::class, 'manage_blog']);
+    Route::post('admin/blog/manage_blog_process', [BlogController::class, 'manage_blog_process'])->name('blog.manage_blog_process');
+    Route::get('admin/blog/delete/{id}', [BlogController::class, 'delete']);
+    Route::get('admin/blog/status/{status}/{id}', [BlogController::class, 'status']);
     //logout
     Route::get('admin/logout', function () {
         session()->forget('ADMIN_LOGIN');

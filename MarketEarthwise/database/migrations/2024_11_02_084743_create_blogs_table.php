@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('image');
-            $table->text('content_before_blockquote_content');
-            $table->text('blockquote_content');
-            $table->text('content_after_blockquote_content');
+            $table->text('content_before_blockquote');
+            $table->text('blockquote');
+            $table->text('content_after_blockquote');
             $table->string('postedBy')->default('ADMIN');
+            $table->integer('status');
             $table->date('addedOn');
         });
     }

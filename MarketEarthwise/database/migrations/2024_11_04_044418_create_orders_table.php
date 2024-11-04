@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('mobile');
             $table->string('address');
+            $table->string('country');
             $table->string('city');
             $table->string('state');
             $table->string('pincode');
@@ -30,6 +31,7 @@ return new class extends Migration
             $table->string("txn_id")->default("NULL");
             $table->integer("total_amt");
             $table->text("track_details")->default("NULL");
+            $table->string('order_id');
             $table->string("added_on");
         });
     }

@@ -299,7 +299,7 @@ class FrontController extends Controller
 
         $payment_url = '';
         $rand_id = rand(111111111, 999999999);
-
+        $orderId = generateOrderId();
         if ($request->session()->has('FRONT_USER_LOGIN')) {
         } else {
             $valid = Validator::make($request->all(), [
@@ -316,11 +316,11 @@ class FrontController extends Controller
                     "city" => $request->city,
                     "state" => $request->state,
                     "zip" => $request->zip,
-                    "password" => Hash::make($rand_id),
+                    "password" => Hash::make($request->password),
                     "mobile" => $request->mobile,
                     "company" => $request->company,
                     "status" => 1,
-                    "is_verify" => 1,
+                    "is_verified" => 1,
                     "rand_id" => $rand_id,
                     "created_at" => date('Y-m-d h:i:s'),
                     "updated_at" => date('Y-m-d h:i:s'),
@@ -331,10 +331,11 @@ class FrontController extends Controller
                 $request->session()->put('FRONT_USER_LOGIN', true);
                 $request->session()->put('FRONT_USER_ID', $user_id);
                 $request->session()->put('FRONT_USER_NAME', $request->name);
-
-                $data = ['name' => $request->name, 'password' => $rand_id];
+                $request->session()->put('FRONT_USER_EMAIL', $request->email);
+                $data = ['name' => $request->name, 'password' => $request->password];
                 $user['to'] = $request->email;
-                Mail::send('front/password_send', $data, function ($messages) use ($user) {
+
+                Mail::send('Front.passwordSend', $data, function ($messages) use ($user) {
                     $messages->to($user['to']);
                     $messages->subject('New Password');
                 });
@@ -377,6 +378,7 @@ class FrontController extends Controller
             "name" => $request->name,
             "email" => $request->email,
             "mobile" => $request->mobile,
+            "country" => $request->country,
             "address" => $request->address,
             "city" => $request->city,
             "state" => $request->state,
@@ -386,6 +388,7 @@ class FrontController extends Controller
             "payment_status" => "Pending",
             "total_amt" => $request->post('totalPrice'),
             "order_status" => 1,
+            "order_id" => $orderId,
             "added_on" => date('Y-m-d h:i:s')
         ];
 
@@ -452,7 +455,7 @@ class FrontController extends Controller
                 }
             }
             DB::table('carts')->where(['user_id' => $uid, 'user_type' => 'Reg'])->delete();
-            $request->session()->put('ORDER_ID', $order_id);
+            $request->session()->put('ORDER_ID', $orderId);
 
             $status = "success";
             $msg = "Order placed";

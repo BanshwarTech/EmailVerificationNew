@@ -208,7 +208,7 @@
                                     <div id="newAccountPassword" class="collapse mt-3" data-parent="#newAccountPassword">
                                         <div class="card-body1 default-form-box">
                                             <label> Account password <span style="color:red;">*</span></label>
-                                            <input placeholder="password" type="password">
+                                            <input placeholder="password" type="password" name="password">
                                         </div>
                                     </div>
                                 </div>

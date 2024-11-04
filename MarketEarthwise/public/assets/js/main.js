@@ -480,7 +480,7 @@ function showColor(size) {
 function change_product_color_image(img, color, qty, mrp, price) {
     jQuery('#color_id').val(color);
     jQuery('.simpleLens-big-image-container').html('<a class="product-image-large-image swiper-slide zoom-image-hover img-responsive"><img src="' + img + '" ></a>');
-    jQuery('.product-stock').html('<span class="product-stock-in"><i class="ion-checkmark-circled"></i></span><span>' + qty + '</span>');
+    jQuery('.product-stock').html('<span class="product-stock-in"><i class="ion-checkmark-circled"></i></span> <span>' + qty + '</span> IN STOCK');
     jQuery('.price-row').html(
         '<div class="price">&#8377;' + price + '</div>' +
         '<div style="margin-top: 14px;">' +

@@ -20,8 +20,6 @@
                             <a href="{{ route('wishlist') }}">Wishlist</a>
                             @if (session()->has('FRONT_USER_LOGIN') && session('FRONT_USER_LOGIN') === true)
                                 <a href="{{ route('myAccount') }}">My Account</a>
-
-                                <a href="">My Order</a>
                                 <a href="{{ url('/logout') }}">Logout ( {{ session('FRONT_USER_EMAIL') }} )</a>
                             @else
                                 <a href="{{ url('/login') }}">Login</a>
@@ -246,7 +244,6 @@
                 <li><a href="{{ route('cart') }}">Cart</a></li>
                 <li> <a href="{{ route('wishlist') }}">Wishlist</a></li>
                 @if (session()->has('FRONT_USER_LOGIN') && session('FRONT_USER_LOGIN') === true)
-                    <li><a href="">My Order</a></li>
                     <li><a href="{{ url('/logout') }}">Logout ( {{ session('FRONT_USER_EMAIL') }} )</a></li>
                 @else
                     <li><a href="{{ url('/login') }}">Login</a></li>
@@ -268,7 +265,8 @@
     <!-- Start Mobile contact Info -->
     <div class="mobile-contact-info">
         <div class="logo">
-            <a href="{{ route('index') }}"><img src="assets/images/logo/logo_white.png" alt=""></a>
+            <a href="{{ route('index') }}"><img src="{{ asset('assets/images/logo/logo_white.png') }}"
+                    alt=""></a>
         </div>
 
         <address class="address">
@@ -291,7 +289,6 @@
             @if (session()->has('FRONT_USER_LOGIN') && session('FRONT_USER_LOGIN') === true)
                 <li><a href="{{ route('myAccount') }}">My Account</a></li>
 
-                <li><a href="">My Order</a></li>
                 <li><a href="{{ url('/logout') }}">Logout ( {{ session('FRONT_USER_EMAIL') }} )</a></li>
             @else
                 <li><a href="{{ url('/login') }}">Login</a></li>

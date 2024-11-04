@@ -88,6 +88,13 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="page-pagination text-center aos-init aos-animate" data-aos="fade-up"
+                                    data-aos-delay="0">
+                                    <ul>
+                                        {{ $orders->links('pagination::bootstrap-5') }}
+
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="downloads">
@@ -123,10 +130,15 @@
                             <p>The following addresses will be used on the checkout page by default.</p>
                             <h5 class="billing-address">Billing address</h5>
                             <a href="#" class="view">Edit</a>
-                            <p><strong>Bobby Jackson</strong></p>
-                            <address>
-                                Address: Your address goes here.
-                            </address>
+
+                            @foreach ($addresses as $add)
+                                <p><strong>{{ $add->name }}
+                                    </strong></p>
+                                <address style="margin-top: -20px !important;">
+                                    {{ $add->address }}
+
+                                </address>
+                            @endforeach
                         </div>
                         <div class="tab-pane fade" id="account-details">
                             <h3>Account details </h3>

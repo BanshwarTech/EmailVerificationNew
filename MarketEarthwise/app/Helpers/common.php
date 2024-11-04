@@ -266,3 +266,15 @@ function getAvaliableQty($product_id, $attr_id)
 
     return $result;
 }
+
+function generateOrderId($length = 16)
+{
+    $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $orderId = '';
+
+    for ($i = 0; $i < $length; $i++) {
+        $orderId .= $characters[rand(0, strlen($characters) - 1)];
+    }
+
+    return $orderId;
+}

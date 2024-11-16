@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\HomeBannerController;
+use App\Http\Controllers\Admin\MailController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\TaxController;
@@ -25,7 +26,7 @@ Route::get('/', function () {
 Route::get('/register', [RegisterLoginController::class, 'Register'])->name('Register');
 Route::post('/register', [RegisterLoginController::class, 'RegisterProcess'])->name('RegisterProcess');
 
-Route::get('/verification/{id}', [RegisterLoginController::class, 'verification']);
+Route::get('/verification/{id}', [RegisterLoginController::class, 'verification'])->name('verification');
 Route::post('/verified', [RegisterLoginController::class, 'verifiedOtp'])->name('verifiedOtp');
 Route::get('/resend-otp', [RegisterLoginController::class, 'resendOtp'])->name('resendOtp');
 
@@ -33,6 +34,15 @@ Route::get('/login', [RegisterLoginController::class, 'Login']);
 Route::post('/login-process', [RegisterLoginController::class, 'LoginProcess'])->name('LoginProcess');
 
 Route::get('/logout', [RegisterLoginController::class, "Logout"])->name('Logout');
+
+Route::get('/forgot-password', [RegisterLoginController::class, "forgotPassword"])->name("forgot.Password");
+Route::post('/forgot-password-process', [RegisterLoginController::class, "forgotPasswordProcess"])->name("forgot.Password.Process");
+//
+Route::get('/hello', [RegisterLoginController::class, "Hello"]);
+//
+Route::get('/forgot-password-change/{id}', [RegisterLoginController::class, 'forgotPasswordChange']);
+Route::post('forgot_password_change_process', [RegisterLoginController::class, 'forgot_password_change_process']);
+
 Route::get('/my-account', [RegisterLoginController::class, 'myAccount'])->name('myAccount');
 Route::post('/update-account-details', [RegisterLoginController::class, 'updateAccountDetails'])->name('update.AccountDetails');
 
@@ -139,6 +149,9 @@ Route::middleware([AdminAuth::class])->group(function () {
     Route::post('admin/blog/manage_blog_process', [BlogController::class, 'manage_blog_process'])->name('blog.manage_blog_process');
     Route::get('admin/blog/delete/{id}', [BlogController::class, 'delete']);
     Route::get('admin/blog/status/{status}/{id}', [BlogController::class, 'status']);
+
+    //mail section
+    Route::get('admin/mail-config', [MailController::class, 'index']);
     //logout
     Route::get('admin/logout', function () {
         session()->forget('ADMIN_LOGIN');

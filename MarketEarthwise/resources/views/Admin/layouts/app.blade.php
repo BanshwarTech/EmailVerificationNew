@@ -339,6 +339,14 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link collapsed{{ Request::is('admin/mail-config') || Request::is('admin/product/manage_product') ? 'active' : '' }}"
+                    href="{{ url('admin/mail-config') }}">
+                    <i class="bi bi-layout-text-window-reverse"></i>
+                    <span>Mail Configuration</span>
+                </a>
+            </li>
+
         </ul>
 
 

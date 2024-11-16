@@ -54,7 +54,8 @@
                                 <button class="btn btn-md btn-black-default-hover mb-4" type="submit">Login</button>
 
                                 <div class="d-flex justify-content-between align-items-center ">
-                                    <a href="#" class="text-primary">Lost your password?</a> <!-- First link -->
+                                    <a href="{{ url('/forgot-password') }}" class="text-primary">Lost your password?</a>
+                                    <!-- First link -->
 
                                     <span class="text-dark">
                                         Don't have an account? <a href="{{ route('Register') }}"

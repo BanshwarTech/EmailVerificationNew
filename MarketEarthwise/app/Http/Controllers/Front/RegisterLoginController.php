@@ -84,6 +84,7 @@ class RegisterLoginController extends Controller
             $message->to($data['email'])->subject($data['title']);
         });
     }
+
     public function verifiedOtp(Request $request)
     {
         $user = User::where('email', $request->email)->first();
@@ -95,7 +96,7 @@ class RegisterLoginController extends Controller
             $currentTime = time();
             $time = $otpData->created_at;
 
-            if ($currentTime >= $time && $time >= $currentTime - (90 + 5)) { //90 seconds
+            if ($currentTime >= $time && $time >= $currentTime - (120 + 5)) {
                 User::where('id', $user->id)->update([
                     'is_verified' => 1
                 ]);
@@ -113,7 +114,7 @@ class RegisterLoginController extends Controller
         $currentTime = time();
         $time = $otpData->created_at;
 
-        if ($currentTime >= $time && $time >= $currentTime - (90 + 5)) { //90 seconds
+        if ($currentTime >= $time && $time >= $currentTime - (120 + 5)) {
             return response()->json(['success' => false, 'msg' => 'Please try after some time']);
         } else {
 
@@ -121,6 +122,7 @@ class RegisterLoginController extends Controller
             return response()->json(['success' => true, 'msg' => 'OTP has been sent']);
         }
     }
+
     public function Login()
     {
         if (session()->has('FRONT_USER_LOGIN') && session()->get('FRONT_USER_LOGIN') === true) {
@@ -182,6 +184,69 @@ class RegisterLoginController extends Controller
         return redirect('/login');
     }
 
+    public function forgotPassword()
+    {
+        return view('Front.forgotPassword');
+    }
+
+    public function forgotPasswordProcess(Request $request)
+    {
+        $result = DB::table('users')
+            ->where('email', $request->str_forgot_email)
+            ->get();
+
+        $rand_id = rand(111111111, 999999999);
+
+        if (isset($result[0])) {
+            $userId = $result[0]->id;
+
+            DB::table('users')
+                ->where('email', $request->str_forgot_email)
+                ->update([
+                    'is_forgot_password' => 1,
+                    'rand_id' => $rand_id,
+                ]);
+
+            $data = ['name' => $result[0]->name, 'rand_id' => $rand_id];
+            $user['to'] = $request->str_forgot_email;
+            Mail::send('Front.forgotEmail', $data, function ($messages) use ($user) {
+                $messages->to($user['to']);
+                $messages->subject("Forgot Password");
+            });
+            return response()->json(['status' => 'success', 'msg' => 'Please check your email for password']);
+        } else {
+            return response()->json(['status' => 'error', 'msg' => 'Email id not registered']);
+        }
+    }
+
+    public function forgotPasswordChange(Request $request, $id)
+    {
+        $result = DB::table('users')
+            ->where(['rand_id' => $id])
+            ->where(['is_forgot_password' => 1])
+            ->get();
+        if (isset($result[0])) {
+            $request->session()->put('FORGOT_PASSWORD_USER_ID', $result[0]->id);
+
+            return view('Front.forgot-password-change');
+        } else {
+            return redirect('/');
+        }
+    }
+    public function forgot_password_change_process(Request $request)
+    {
+        DB::table('users')
+            ->where(['id' => $request->session()->get('FORGOT_PASSWORD_USER_ID')])
+            ->update(
+                [
+                    'is_forgot_password' => 0,
+                    'password' => Hash::make($request->password),
+                    // 'rand_id' => ''
+                ]
+            );
+        return redirect('/login');
+    }
+
     public function myAccount(Request $request)
     {
         if (session()->has('FRONT_USER_LOGIN') && session()->get('FRONT_USER_LOGIN') === true) {
@@ -239,5 +304,10 @@ class RegisterLoginController extends Controller
         } else {
             return redirect('/login');
         }
+    }
+
+    public function Hello()
+    {
+        return view('Front/forgot-password-change');
     }
 }

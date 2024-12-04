@@ -241,6 +241,7 @@
                                     @foreach ($cart_data as $list)
                                         @php
                                             $totalPrice = $totalPrice + $list->price * $list->qty;
+                                            $gst = $list->tax_value;
                                         @endphp
                                         <tr>
                                             <td>
@@ -255,12 +256,12 @@
                                         </tr>
                                     @endforeach
                                     @php
-                                        $gstRate = 0.18;
+                                        $gstRate = $gst / 100;
                                         $gstAmount = $totalPrice * $gstRate;
                                         $totalPriceWithGst = $totalPrice + $gstAmount;
                                     @endphp
                                     <tr class="order_total">
-                                        <td>GST(18%)</td>
+                                        <td>GST({{ $gst }}%) </td>
                                         <td id="total_price" style="text-align: center;"><strong>
                                                 &#8377;{{ number_format($gstAmount, 2) }}</strong>
                                         </td>
@@ -328,6 +329,7 @@
 
             countrySelect.appendChild(option);
         });
+        countrySelect.style.backgroundColor = 'lightblue';
     </script>
 
     <style>

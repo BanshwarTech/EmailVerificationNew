@@ -66,7 +66,6 @@
                                     <thead>
                                         <tr>
                                             <th>Order Id</th>
-                                            <th>Order Status</th>
                                             <th>Payment Status</th>
                                             <th>Total Amt</th>
                                             <th>Payment ID</th>
@@ -77,12 +76,13 @@
                                         @foreach ($orders as $list)
                                             <tr>
                                                 <td class="order_id_btn"><a
-                                                        href="{{ url('order_detail') }}/{{ $list->id }}">{{ $list->id }}</a>
+                                                        href="{{ url('order_detail') }}/{{ $list->id }}"
+                                                        class="text-primary">{{ $list->order_id }}</a>
                                                 </td>
-                                                <td>{{ $list->order_status }}</td>
                                                 <td>{{ $list->payment_status }}</td>
                                                 <td>{{ $list->total_amt }}</td>
                                                 <td>{{ $list->payment_id }}</td>
+
                                                 <td>{{ $list->added_on }}</td>
                                             </tr>
                                         @endforeach
@@ -183,15 +183,19 @@
                                                 <textarea rows="1" style="height: 80px;" name="address">{{ $address }}</textarea>
                                             </div>
                                             <div class="row">
-                                                <div class="col-4 default-form-box mb-20">
+                                                <div class="col-3 default-form-box mb-20">
+                                                    <label>Country</label>
+                                                    <input type="text" name="country" value="{{ $country }}">
+                                                </div>
+                                                <div class="col-3 default-form-box mb-20">
                                                     <label>City</label>
                                                     <input type="text" name="city" value="{{ $city }}">
                                                 </div>
-                                                <div class="col-4 default-form-box mb-20">
+                                                <div class="col-3 default-form-box mb-20">
                                                     <label>State</label>
                                                     <input type="text" name="state" value="{{ $state }}">
                                                 </div>
-                                                <div class="col-4 default-form-box mb-20">
+                                                <div class="col- default-form-box mb-20">
                                                     <label>ZipCode</label>
                                                     <input type="number" name="zip" value="{{ $zip }}">
                                                 </div>

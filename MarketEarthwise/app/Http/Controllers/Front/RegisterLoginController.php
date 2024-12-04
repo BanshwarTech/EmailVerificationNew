@@ -271,6 +271,7 @@ class RegisterLoginController extends Controller
             $result['dob'] = $arr['0']->dob;
             $result['gender'] = $arr['0']->gender;
             $result['address'] = $arr['0']->address;
+            $result['country'] = $arr['0']->country;
             $result['city'] = $arr['0']->city;
             $result['state'] = $arr['0']->state;
             $result['zip'] = $arr['0']->zip;
@@ -294,6 +295,7 @@ class RegisterLoginController extends Controller
                 $model->dob = date('Y-m-d', strtotime($request->post('dob')));
                 $model->gender = $request->post('gender');
                 $model->address = $request->post('address');
+                $model->country = $request->post('country');
                 $model->city = $request->post('city');
                 $model->state = $request->post('state');
                 $model->zip = $request->post('zip');
@@ -305,6 +307,8 @@ class RegisterLoginController extends Controller
             return redirect('/login');
         }
     }
+
+
 
     public function Hello()
     {

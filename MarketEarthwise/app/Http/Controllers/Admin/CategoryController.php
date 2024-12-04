@@ -85,7 +85,7 @@ class CategoryController extends Controller
         $model->status = 1;
         $model->save();
 
-        $request->session()->flash('message', $msg);
+        $request->session()->flash('successMessage', $msg);
         return redirect('admin/category');
     }
 
@@ -95,7 +95,7 @@ class CategoryController extends Controller
     {
         $model = Category::find($id);
         $model->delete();
-        $request->session()->flash('message', 'Category deleted');
+        $request->session()->flash('successMessage', 'Category deleted');
         return redirect('admin/category');
     }
 
@@ -104,7 +104,7 @@ class CategoryController extends Controller
         $model = Category::find($id);
         $model->status = $status;
         $model->save();
-        $request->session()->flash('message', 'Category status updated');
+        $request->session()->flash('successMessage', 'Category status updated');
         return redirect('admin/category');
     }
 }

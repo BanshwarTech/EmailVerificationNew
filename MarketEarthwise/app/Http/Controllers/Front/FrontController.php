@@ -249,6 +249,7 @@ class FrontController extends Controller
                 $result['users']['email'] = $customer_info[0]->email;
                 $result['users']['mobile'] = $customer_info[0]->mobile;
                 $result['users']['address'] = $customer_info[0]->address;
+                $result['users']['country'] = $customer_info[0]->country;
                 $result['users']['city'] = $customer_info[0]->city;
                 $result['users']['state'] = $customer_info[0]->state;
                 $result['users']['zip'] = $customer_info[0]->zip;
@@ -258,6 +259,7 @@ class FrontController extends Controller
                 $result['users']['email'] = '';
                 $result['users']['mobile'] = '';
                 $result['users']['address'] = '';
+                $result['users']['country'] = '';
                 $result['users']['city'] = '';
                 $result['users']['state'] = '';
                 $result['users']['zip'] = '';
@@ -360,7 +362,6 @@ class FrontController extends Controller
             }
         }
 
-        // Retrieve user ID from session and check if logged in
         $uid = $request->session()->get('FRONT_USER_ID');
         if (!$uid) {
             return response()->json(['status' => 'false', 'msg' => 'User not logged in']);
@@ -715,5 +716,26 @@ class FrontController extends Controller
     {
         $result['blog'] = DB::table('blogs')->where(['status' => 1])->paginate(1);
         return view('Front.blog', $result);
+    }
+
+    public function OrderDetails(Request $req, $id)
+    {
+        $result['orders_details'] =
+            DB::table('order_details')
+            ->select('orders.*', 'order_details.price', 'order_details.qty', 'products.name as pname', 'product_attrs.attr_image', 'sizes.size', 'colors.color', 'order_status.orders_status')
+            ->leftJoin('orders', 'orders.id', '=', 'order_details.orders_id')
+            ->leftJoin('product_attrs', 'product_attrs.id', '=', 'order_details.products_attr_id')
+            ->leftJoin('products', 'products.id', '=', 'product_attrs.products_id')
+            ->leftJoin('sizes', 'sizes.id', '=', 'product_attrs.size_id')
+            ->leftJoin('order_status', 'order_status.id', '=', 'orders.order_status')
+            ->leftJoin('colors', 'colors.id', '=', 'product_attrs.color_id')
+            ->where(['orders.id' => $id])
+            ->where(['orders.user_id' => $req->session()->get('FRONT_USER_ID')])
+            ->get();
+
+        if (!isset($result['orders_details'][0])) {
+            return redirect('/');
+        }
+        return view('Front.order-detail', $result);
     }
 }

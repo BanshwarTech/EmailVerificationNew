@@ -61,7 +61,7 @@ class CouponController extends Controller
         $model->min_order_amt = $request->post('min_order_amt');
         $model->is_one_time = $request->post('is_one_time');
         $model->save();
-        $request->session()->flash('message', $msg);
+        $request->session()->flash('successMessage', $msg);
         return redirect('admin/coupon');
     }
 
@@ -69,7 +69,7 @@ class CouponController extends Controller
     {
         $model = Coupon::find($id);
         $model->delete();
-        $request->session()->flash('message', 'Category deleted');
+        $request->session()->flash('successMessage', 'Category deleted');
         return redirect('admin/coupon');
     }
     public function status(Request $request, $status, $id)
@@ -77,7 +77,7 @@ class CouponController extends Controller
         $model = Coupon::find($id);
         $model->status = $status;
         $model->save();
-        $request->session()->flash('message', 'Category status updated');
+        $request->session()->flash('successMessage', 'Category status updated');
         return redirect('admin/coupon');
     }
 }

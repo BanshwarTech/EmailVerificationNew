@@ -26,16 +26,7 @@
                     <div class="card-body">
                         <h5 class="card-title"></h5>
                         <p></p>
-                        @if (session('successMessage'))
-                            <div class="alert alert-success">
-                                {{ session('successMessage') }}
-                            </div>
-                        @endif
-                        @if (session('errorMessage'))
-                            <div class="alert alert-danger">
-                                {{ session('errorMessage') }}
-                            </div>
-                        @endif
+
                         <!-- Table with stripped rows -->
                         <table class="table datatable">
                             <thead>
@@ -66,8 +57,7 @@
                                         </td>
                                         <td>{{ $list->btn_link }}</td>
                                         <td>
-                                            <a
-                                                href="{{ url('admin/homebanner/manage_homebanner/') }}/{{ $list->id }}"><button
+                                            <a href="{{ url('admin/homebanner/manage_homebanner/') }}/{{ $list->id }}"><button
                                                     type="button" class="btn btn-success">Edit</button></a>
 
                                             @if ($list->status == 1)

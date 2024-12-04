@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -21,11 +22,27 @@ class AdminController extends Controller
     }
     public function auth(Request $request)
     {
+
+        $rules = [
+            'useremail' => 'required|email',
+            'password' => 'required',
+            'remember' => 'accepted'
+        ];
+
+        $messages = [
+            'useremail.required' => 'Please enter your email!',
+            'password.required' => 'Please enter your password!',
+            'remember.accepted' => 'Please check the "Remember Me" option.'
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $email = $request->post('useremail');
         $password = $request->post('password');
-        // echo '<pre>';
-        // print_r($email);
-        // die();
         $result = Admin::where(['email' => $email])->first();
         if ($result) {
             if (Hash::check($password, $result->password)) {
@@ -43,13 +60,10 @@ class AdminController extends Controller
             return redirect('admin');
         }
     }
-
     public function Dashboard()
     {
         return view('Admin.Dashboard');
     }
-
-
     public function updatePassword()
     {
         $pwd = Admin::find(1);

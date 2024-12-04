@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\HomeBannerController;
 use App\Http\Controllers\Admin\MailController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\TaxController;
@@ -66,97 +67,139 @@ Route::get('/blog', [FrontController::class, 'blog'])->name('blog');
 Route::get('/add_to_wishlist/{id}/{size}/{color}', [WishlistController::class, 'add_to_wishlist'])->name('add.to.wishlist');
 Route::get('/wishlist', [WishlistController::class, "wishlist"])->name('wishlist');
 Route::get('/remove/{id}', [WishlistController::class, "removeWishlist"])->name('remove.wishlist');
-
+Route::get('/order_detail/{id}', [FrontController::class, "OrderDetails"])->name('order.detail');
 // admin 
 Route::get('admin', [AdminController::class, 'index']);
 Route::post('admin/auth', [AdminController::class, 'auth'])->name('admin.auth');
 Route::get('admin/updatePassword', [AdminController::class, 'updatePassword']);
 
 Route::middleware([AdminAuth::class])->group(function () {
-    Route::get('admin/dashboard', [AdminController::class, 'Dashboard'])->name('Dashboard');
-    // homebanner section
-    Route::get('admin/homebanner', [HomeBannerController::class, 'index']);
-    Route::get('admin/homebanner/manage_homebanner', [HomeBannerController::class, 'manage_homebanner']);
-    Route::get('admin/homebanner/manage_homebanner/{id}', [HomeBannerController::class, 'manage_homebanner']);
-    Route::post('admin/homebanner/manage_homebanner_process', [HomeBannerController::class, 'manage_homebanner_process'])->name('homebanner.manage_homebanner_process');
-    Route::get('admin/homebanner/delete/{id}', [HomeBannerController::class, 'delete']);
-    Route::get('admin/homebanner/status/{status}/{id}', [HomeBannerController::class, 'status']);
-    // categories section
-    Route::get('admin/category', [CategoryController::class, 'index']);
-    Route::get('admin/category/manage_category', [CategoryController::class, 'manage_category']);
-    Route::get('admin/category/manage_category/{id}', [CategoryController::class, 'manage_category']);
-    Route::post('admin/category/manage_category_process', [CategoryController::class, 'manage_category_process'])->name('category.manage_category_process');
-    Route::get('admin/category/delete/{id}', [CategoryController::class, 'delete']);
-    Route::get('admin/category/status/{status}/{id}', [CategoryController::class, 'status']);
-    // coupons section
-    Route::get('admin/coupon', [CouponController::class, 'index']);
-    Route::get('admin/coupon/manage_coupon', [CouponController::class, 'manage_coupon']);
-    Route::get('admin/coupon/manage_coupon/{id}', [CouponController::class, 'manage_coupon']);
-    Route::post('admin/coupon/manage_coupon_process', [CouponController::class, 'manage_coupon_process'])->name('coupon.manage_coupon_process');
-    Route::get('admin/coupon/delete/{id}', [CouponController::class, 'delete']);
-    Route::get('admin/coupon/status/{status}/{id}', [CouponController::class, 'status']);
-    // size section
-    Route::get('admin/size', [SizeController::class, 'index']);
-    Route::get('admin/size/manage_size', [SizeController::class, 'manage_size']);
-    Route::get('admin/size/manage_size/{id}', [SizeController::class, 'manage_size']);
-    Route::post('admin/size/manage_size_process', [SizeController::class, 'manage_size_process'])->name('size.manage_size_process');
-    Route::get('admin/size/delete/{id}', [SizeController::class, 'delete']);
-    Route::get('admin/size/status/{status}/{id}', [SizeController::class, 'status']);
-    // color section
-    Route::get('admin/color', [ColorController::class, 'index']);
-    Route::get('admin/color/manage_color', [ColorController::class, 'manage_color']);
-    Route::get('admin/color/manage_color/{id}', [ColorController::class, 'manage_color']);
-    Route::post('admin/color/manage_color_process', [ColorController::class, 'manage_color_process'])->name('color.manage_color_process');
-    Route::get('admin/color/delete/{id}', [ColorController::class, 'delete']);
-    Route::get('admin/color/status/{status}/{id}', [ColorController::class, 'status']);
+    // Dashboard
+    Route::controller(AdminController::class)->group(function () {
+        Route::get('admin/dashboard', 'Dashboard')->name('Dashboard');
+    });
 
-    // brand section 
-    Route::get('admin/brand', [BrandController::class, 'index']);
-    Route::get('admin/brand/manage_brand', [BrandController::class, 'manage_brand']);
-    Route::get('admin/brand/manage_brand/{id}', [BrandController::class, 'manage_brand']);
-    Route::post('admin/brand/manage_brand_process', [BrandController::class, 'manage_brand_process'])->name('brand.manage_brand_process');
-    Route::get('admin/brand/delete/{id}', [BrandController::class, 'delete']);
-    Route::get('admin/brand/status/{status}/{id}', [BrandController::class, 'status']);
-    //tax section 
-    Route::get('admin/tax', [TaxController::class, 'index']);
-    Route::get('admin/tax/manage_tax', [TaxController::class, 'manage_tax']);
-    Route::get('admin/tax/manage_tax/{id}', [TaxController::class, 'manage_tax']);
-    Route::post('admin/tax/manage_tax_process', [TaxController::class, 'manage_tax_process'])->name('tax.manage_tax_process');
-    Route::get('admin/tax/delete/{id}', [TaxController::class, 'delete']);
-    Route::get('admin/tax/status/{status}/{id}', [TaxController::class, 'status']);
+    // HomeBanner section
+    Route::prefix('admin/homebanner')->controller(HomeBannerController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('manage_homebanner', 'manage_homebanner');
+        Route::get('manage_homebanner/{id}', 'manage_homebanner');
+        Route::post('manage_homebanner_process', 'manage_homebanner_process')->name('homebanner.manage_homebanner_process');
+        Route::get('delete/{id}', 'delete');
+        Route::get('status/{status}/{id}', 'status');
+    });
 
-    // product section
-    Route::get('admin/product', [ProductController::class, 'index']);
-    Route::get('admin/product/manage_product', [ProductController::class, 'manage_product']);
-    Route::get('admin/product/manage_product/{id}', [ProductController::class, 'manage_product']);
-    Route::post('admin/product/manage_product_process', [ProductController::class, 'manage_product_process'])->name('product.manage_product_process');
-    Route::get('admin/product/delete/{id}', [ProductController::class, 'delete']);
-    Route::get('admin/product/status/{status}/{id}', [ProductController::class, 'status']);
-    Route::get('admin/product/product_attr_delete/{paid}/{pid}', [ProductController::class, 'product_attr_delete']);
-    Route::get('admin/product/product_images_delete/{paid}/{pid}', [ProductController::class, 'product_images_delete']);
+    // Categories section
+    Route::prefix('admin/category')->controller(CategoryController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('manage_category', 'manage_category');
+        Route::get('manage_category/{id}', 'manage_category');
+        Route::post('manage_category_process', 'manage_category_process')->name('category.manage_category_process');
+        Route::get('delete/{id}', 'delete');
+        Route::get('status/{status}/{id}', 'status');
+    });
 
-    //banner section
-    Route::get('admin/banner', [BannerController::class, 'index']);
-    Route::get('admin/banner/manage_banner', [BannerController::class, 'manage_banner']);
-    Route::get('admin/banner/manage_banner/{id}', [BannerController::class, 'manage_banner']);
-    Route::post('admin/banner/manage_banner_process', [BannerController::class, 'manage_banner_process'])->name('banner.manage_banner_process');
-    Route::get('admin/banner/delete/{id}', [BannerController::class, 'delete']);
-    Route::get('admin/banner/status/{status}/{id}', [BannerController::class, 'status']);
-    //blog section
-    Route::get('admin/blog', [BlogController::class, 'index']);
-    Route::get('admin/blog/manage_blog', [BlogController::class, 'manage_blog']);
-    Route::get('admin/blog/manage_blog/{id}', [BlogController::class, 'manage_blog']);
-    Route::post('admin/blog/manage_blog_process', [BlogController::class, 'manage_blog_process'])->name('blog.manage_blog_process');
-    Route::get('admin/blog/delete/{id}', [BlogController::class, 'delete']);
-    Route::get('admin/blog/status/{status}/{id}', [BlogController::class, 'status']);
+    // Coupons section
+    Route::prefix('admin/coupon')->controller(CouponController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('manage_coupon', 'manage_coupon');
+        Route::get('manage_coupon/{id}', 'manage_coupon');
+        Route::post('manage_coupon_process', 'manage_coupon_process')->name('coupon.manage_coupon_process');
+        Route::get('delete/{id}', 'delete');
+        Route::get('status/{status}/{id}', 'status');
+    });
 
-    //mail section
-    Route::get('admin/mail-config', [MailController::class, 'index']);
-    //logout
+    // Sizes section
+    Route::prefix('admin/size')->controller(SizeController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('manage_size', 'manage_size');
+        Route::get('manage_size/{id}', 'manage_size');
+        Route::post('manage_size_process', 'manage_size_process')->name('size.manage_size_process');
+        Route::get('delete/{id}', 'delete');
+        Route::get('status/{status}/{id}', 'status');
+    });
+
+    // Colors section
+    Route::prefix('admin/color')->controller(ColorController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('manage_color', 'manage_color');
+        Route::get('manage_color/{id}', 'manage_color');
+        Route::post('manage_color_process', 'manage_color_process')->name('color.manage_color_process');
+        Route::get('delete/{id}', 'delete');
+        Route::get('status/{status}/{id}', 'status');
+    });
+
+    // Brands section
+    Route::prefix('admin/brand')->controller(BrandController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('manage_brand', 'manage_brand');
+        Route::get('manage_brand/{id}', 'manage_brand');
+        Route::post('manage_brand_process', 'manage_brand_process')->name('brand.manage_brand_process');
+        Route::get('delete/{id}', 'delete');
+        Route::get('status/{status}/{id}', 'status');
+    });
+
+    // Taxes section
+    Route::prefix('admin/tax')->controller(TaxController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('manage_tax', 'manage_tax');
+        Route::get('manage_tax/{id}', 'manage_tax');
+        Route::post('manage_tax_process', 'manage_tax_process')->name('tax.manage_tax_process');
+        Route::get('delete/{id}', 'delete');
+        Route::get('status/{status}/{id}', 'status');
+    });
+
+    // Products section
+    Route::prefix('admin/product')->controller(ProductController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('manage_product', 'manage_product');
+        Route::get('manage_product/{id}', 'manage_product');
+        Route::post('manage_product_process', 'manage_product_process')->name('product.manage_product_process');
+        Route::get('delete/{id}', 'delete');
+        Route::get('status/{status}/{id}', 'status');
+        Route::get('product_attr_delete/{paid}/{pid}', 'product_attr_delete');
+        Route::get('product_images_delete/{paid}/{pid}', 'product_images_delete');
+    });
+
+    // Banners section
+    Route::prefix('admin/banner')->controller(BannerController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('manage_banner', 'manage_banner');
+        Route::get('manage_banner/{id}', 'manage_banner');
+        Route::post('manage_banner_process', 'manage_banner_process')->name('banner.manage_banner_process');
+        Route::get('delete/{id}', 'delete');
+        Route::get('status/{status}/{id}', 'status');
+    });
+
+    // Blogs section
+    Route::prefix('admin/blog')->controller(BlogController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('manage_blog', 'manage_blog');
+        Route::get('manage_blog/{id}', 'manage_blog');
+        Route::post('manage_blog_process', 'manage_blog_process')->name('blog.manage_blog_process');
+        Route::get('delete/{id}', 'delete');
+        Route::get('status/{status}/{id}', 'status');
+    });
+
+    // Mail configuration
+    Route::controller(MailController::class)->group(function () {
+        Route::get('admin/mail-config', 'index');
+    });
+
+    //order section 
+    Route::prefix('admin/order')->controller(OrderController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('/order_detail/{id}', 'order_details');
+        Route::post('/order_detail/{id}', 'update_track_detail');
+        Route::get('/update_payemnt_status/{status}/{id}', 'update_payemnt_status');
+        Route::get('/update_order_status/{status}/{id}', 'update_order_status');
+    });
+
+    // Logout
     Route::get('admin/logout', function () {
         session()->forget('ADMIN_LOGIN');
         session()->forget('ADMIN_ID');
-        session()->flash('successMessage', 'Logout sucessfully');
+        session()->flash('successMessage', 'Logout successfully');
         return redirect('admin');
     });
 });

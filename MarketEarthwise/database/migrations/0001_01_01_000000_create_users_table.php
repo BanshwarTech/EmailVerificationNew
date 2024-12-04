@@ -19,6 +19,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->text('address')->default('NULL');
+            $table->string('country')->default('NULL');
             $table->string('city')->default('NULL');
             $table->string('state')->default('NULL');
             $table->integer('zip')->default(0);

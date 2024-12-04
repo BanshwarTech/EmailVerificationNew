@@ -71,6 +71,7 @@ function buildTreeView($arr, $parent, $level = 0, $prelevel = -1)
 
     return $html;
 }
+
 function getTopNavigationMobileCategories()
 {
     $categories = DB::table('categories')
@@ -153,9 +154,10 @@ function getAddToCartTotalItem()
         ->leftJoin('product_attrs', 'product_attrs.id', '=', 'carts.product_attr_id')
         ->leftJoin('sizes', 'sizes.id', '=', 'product_attrs.size_id')
         ->leftJoin('colors', 'colors.id', '=', 'product_attrs.color_id')
+        ->leftJoin('taxes', 'taxes.id', '=', 'products.tax_id')
         ->where(['user_id' => $uid])
         ->where(['user_type' => $user_type])
-        ->select('carts.qty', 'products.name', 'products.image', 'sizes.size', 'colors.color', 'product_attrs.price', 'products.slug', 'products.id as pid', 'product_attrs.id as attr_id', 'product_attrs.attr_image as attr_image')
+        ->select('carts.qty', 'products.name', 'products.image', 'sizes.size', 'colors.color', 'product_attrs.price', 'products.slug', 'products.id as pid', 'product_attrs.id as attr_id', 'product_attrs.attr_image as attr_image', 'taxes.tax_value')
         ->get();
 
     return $result;

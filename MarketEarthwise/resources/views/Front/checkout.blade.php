@@ -297,7 +297,7 @@
                             </div>
                             <span class="error-message" id="paymentTypeError"></span>
                             <div class="order_button pt-3">
-                                <div id="order_place_msg"></div>
+                                <div id="order_place_msg" style="color: red;"></div>
                                 <button class="btn btn-md btn-black-default-hover" type="Submit" class="aa-browse-btn"
                                     id="btnPlaceOrder">Place Order</button>
                             </div>

@@ -33,9 +33,26 @@
         <link href="{{ asset('assets-admin/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
         <link href="{{ asset('assets-admin/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
         <link href="{{ asset('assets-admin/vendor/simple-datatables/style.css') }}" rel="stylesheet">
-
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
         <!-- Template Main CSS File -->
         <link href="{{ asset('assets-admin/css/style.css') }}" rel="stylesheet">
+
+
+        <style>
+            .error-message {
+                font-size: 10px;
+                color: red;
+                font-weight: bold;
+            }
+
+            .form-floating .eye-icon {
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+                cursor: pointer;
+            }
+        </style>
     </head>
 
     <body>
@@ -264,35 +281,35 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed{{ Request::is('admin/dashboard') ? 'active' : '' }}"
                         href="{{ url('admin/dashboard') }}">
-                        <i class="bi bi-grid"></i>
+                        <i class="fa fa-tachometer-alt"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link collapsed{{ Request::is('admin/order') || Request::is('admin/order/order_detail') || Request::is('admin/order/order_detail/{id}') ? 'active' : '' }}"
                         href="{{ url('admin/order') }}">
-                        <i class="bi bi-grid"></i>
+                        <i class="fa fa-box"></i>
                         <span>Orders</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link collapsed{{ Request::is('admin/blog') || Request::is('admin/blog/manage_blog') ? 'active' : '' }}"
                         href="{{ url('admin/blog') }}">
-                        <i class="bi bi-layout-text-window-reverse"></i>
+                        <i class="fa fa-pen"></i>
                         <span>Blog</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link collapsed{{ Request::is('admin/homebanner') || Request::is('admin/homebanner/manage_homebanner') ? 'active' : '' }}"
                         href="{{ url('admin/homebanner') }}">
-                        <i class="bi bi-layout-text-window-reverse"></i>
+                        <i class="fa fa-sliders-h"></i>
                         <span>Slider</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link collapsed{{ Request::is('admin/banner') || Request::is('admin/banner/manage_banner') ? 'active' : '' }}"
                         href="{{ url('admin/banner') }}">
-                        <i class="bi bi-layout-text-window-reverse"></i>
+                        <i class="fa fa-image"></i>
                         <span>Banner</span>
                     </a>
                 </li>
@@ -300,7 +317,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed{{ Request::is('admin/category') || Request::is('admin/category/manage_category') ? 'active' : '' }}"
                         href="{{ url('admin/category') }}">
-                        <i class="bi bi-layout-text-window-reverse"></i>
+                        <i class="fa fa-th-large"></i>
                         <span>Category</span>
                     </a>
                 </li>
@@ -308,7 +325,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed{{ Request::is('admin/coupon') || Request::is('admin/coupon/manage_coupon') ? 'active' : '' }}"
                         href="{{ url('admin/coupon') }}">
-                        <i class="bi bi-layout-text-window-reverse"></i>
+                        <i class="fa fa-ticket-alt"></i>
                         <span>Coupon</span>
                     </a>
                 </li>
@@ -316,7 +333,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed{{ Request::is('admin/size') || Request::is('admin/size/manage_size') ? 'active' : '' }}"
                         href="{{ url('admin/size') }}">
-                        <i class="bi bi-layout-text-window-reverse"></i>
+                        <i class="fa fa-ruler"></i>
                         <span>Size</span>
                     </a>
                 </li>
@@ -324,7 +341,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed{{ Request::is('admin/color') || Request::is('admin/color/manage_color') ? 'active' : '' }}"
                         href="{{ url('admin/color') }}">
-                        <i class="bi bi-layout-text-window-reverse"></i>
+                        <i class="fa fa-palette"></i>
                         <span>Color</span>
                     </a>
                 </li>
@@ -332,7 +349,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed{{ Request::is('admin/brand') || Request::is('admin/brand/manage_brand') ? 'active' : '' }}"
                         href="{{ url('admin/brand') }}">
-                        <i class="bi bi-layout-text-window-reverse"></i>
+                        <i class="fa fa-cogs"></i>
                         <span>Brand</span>
                     </a>
                 </li>
@@ -340,7 +357,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed{{ Request::is('admin/tax') || Request::is('admin/tax/manage_tax') ? 'active' : '' }}"
                         href="{{ url('admin/tax') }}">
-                        <i class="bi bi-layout-text-window-reverse"></i>
+                        <i class="fa fa-percent"></i>
                         <span>Tax</span>
                     </a>
                 </li>
@@ -348,7 +365,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed{{ Request::is('admin/product') || Request::is('admin/product/manage_product') ? 'active' : '' }}"
                         href="{{ url('admin/product') }}">
-                        <i class="bi bi-layout-text-window-reverse"></i>
+                        <i class="fa fa-cube"></i>
                         <span>Product</span>
                     </a>
                 </li>
@@ -356,8 +373,16 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed{{ Request::is('admin/mail-config') || Request::is('admin/product/manage_product') ? 'active' : '' }}"
                         href="{{ url('admin/mail-config') }}">
-                        <i class="bi bi-layout-text-window-reverse"></i>
+                        <i class="fa fa-cogs"></i>
                         <span>Mail Configuration</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed{{ Request::is('admin/razor-pay') ? 'active' : '' }}"
+                        href="{{ url('admin/razor-pay') }}">
+                        <i class="fa fa-credit-card"></i>
+                        <span>Razorpay Configuration</span>
                     </a>
                 </li>
 
@@ -440,6 +465,16 @@
                 });
                 toastList.forEach(toast => toast.show());
             });
+
+
+            function togglePassword() {
+                const passwordInput = document.getElementById('MAIL_PASSWORD');
+                const toggleIcon = document.getElementById('toggleIcon');
+                const isPassword = passwordInput.type === 'password';
+
+                passwordInput.type = isPassword ? 'text' : 'password';
+                toggleIcon.className = isPassword ? 'bi bi-eye' : 'bi bi-eye-slash';
+            }
         </script>
     </body>
 

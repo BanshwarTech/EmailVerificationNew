@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\ConfigurationController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\HomeBannerController;
 use App\Http\Controllers\Admin\MailController;
@@ -69,7 +70,7 @@ Route::get('/wishlist', [WishlistController::class, "wishlist"])->name('wishlist
 Route::get('/remove/{id}', [WishlistController::class, "removeWishlist"])->name('remove.wishlist');
 Route::get('/order_detail/{id}', [FrontController::class, "OrderDetails"])->name('order.detail');
 // admin 
-Route::get('admin', [AdminController::class, 'index']);
+Route::get('admin', [AdminController::class, 'index'])->name('login');
 Route::post('admin/auth', [AdminController::class, 'auth'])->name('admin.auth');
 Route::get('admin/updatePassword', [AdminController::class, 'updatePassword']);
 
@@ -77,6 +78,7 @@ Route::middleware([AdminAuth::class])->group(function () {
     // Dashboard
     Route::controller(AdminController::class)->group(function () {
         Route::get('admin/dashboard', 'Dashboard')->name('Dashboard');
+        Route::post('admin/profile-update', 'profileUpdate')->name('profile-update');
     });
 
     // HomeBanner section
@@ -182,8 +184,11 @@ Route::middleware([AdminAuth::class])->group(function () {
     });
 
     // Mail configuration
-    Route::controller(MailController::class)->group(function () {
-        Route::get('admin/mail-config', 'index');
+    Route::prefix('admin')->controller(ConfigurationController::class)->group(function () {
+        Route::get('/mail-config', 'MailConfig')->name('Mail.Config');
+        Route::post('/mail-config', "MailConfigProcess")->name("Mail.Config.Process");
+        Route::get('/razor-pay', "RazorpayConfig")->name("Razorpay.Config");
+        Route::post('/razor-pay', "RazorpayConfigProcess")->name("Razorpay.Config.Process");
     });
 
     //order section 

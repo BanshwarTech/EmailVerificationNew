@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mail_cofigs', function (Blueprint $table) {
+        Schema::create('razorpay_configs', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string("RAZORPAY_KEY");
+            $table->string('RAZORPAY_SECRET');
         });
     }
 
@@ -22,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mail_cofigs');
+        Schema::dropIfExists('razorpay_configs');
     }
 };

@@ -412,7 +412,7 @@ class FrontController extends Controller
             if ($request->payment_type == 'Gateway') {
                 $final_amt = $request->post('totalPrice');
                 $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, 'https://test.instamojo.com/api/1.1/payment-requests/');
+                curl_setopt($ch, CURLOPT_URL, 'https://checkout.razorpay.com/v1/checkout.js');
                 curl_setopt($ch, CURLOPT_HEADER, FALSE);
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -430,7 +430,7 @@ class FrontController extends Controller
                     'amount' => $final_amt,
                     'phone' => $request->mobile,
                     'buyer_name' => $request->name,
-                    'redirect_url' => 'http://127.0.0.1:8000/instamojo_payment_redirect',
+                    'redirect_url' => 'http://127.0.0.1:8000/store',
                     'send_email' => true,
                     'send_sms' => true,
                     'email' => $request->email,

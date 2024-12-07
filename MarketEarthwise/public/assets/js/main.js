@@ -647,26 +647,7 @@ function remove_coupon_code() {
         });
     }
 }
-jQuery('#frmPlaceOrder').submit(function (e) {
-    jQuery('#order_place_msg').html("Please wait...");
-    e.preventDefault();
-    jQuery.ajax({
-        url: '/place-order',
-        data: jQuery('#frmPlaceOrder').serialize(),
-        type: 'post',
-        success: function (result) {
-            if (result.status == 'success') {
-                if (result.payment_url != '') {
-                    window.location.href = result.payment_url;
-                } else {
-                    window.location.href = "/order-placed";
-                }
 
-            }
-            jQuery('#order_place_msg').html(result.msg);
-        }
-    });
-});
 
 function setColor(color, type) {
     var color_str = jQuery('#color_filter').val();

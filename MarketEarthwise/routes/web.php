@@ -60,7 +60,11 @@ Route::get('/checkout', [FrontController::class, 'checkout'])->name('checkout');
 Route::post('/apply-coupon-code', [FrontController::class, 'apply_coupon_code'])->name('apply_coupon_code');
 Route::post('/remove_coupon_code', [FrontController::class, 'remove_coupon_code']);
 Route::post('/place-order', [FrontController::class, 'placeOrder'])->name('place.order');
+
+Route::get('/razorpay-checkout', [FrontController::class, 'razorpay_checkout'])->name('razorpay.checkout');
+
 Route::get('/order-placed', [FrontController::class, 'orderPlaced'])->name('order.placed');
+Route::get('/order-fail', [FrontController::class, 'orderFail'])->name('order.failed');
 Route::get('/category/{slug}', [FrontController::class, 'category'])->name('category');
 Route::get('/search/{str}', [FrontController::class, 'search']);
 Route::get('/blog', [FrontController::class, 'blog'])->name('blog');
@@ -78,7 +82,7 @@ Route::middleware([AdminAuth::class])->group(function () {
     // Dashboard
     Route::controller(AdminController::class)->group(function () {
         Route::get('admin/dashboard', 'Dashboard')->name('Dashboard');
-        Route::post('admin/profile-update', 'profileUpdate')->name('profile-update');
+        Route::post('admin/profile-update', 'profileUpdate')->name('profile.update');
     });
 
     // HomeBanner section

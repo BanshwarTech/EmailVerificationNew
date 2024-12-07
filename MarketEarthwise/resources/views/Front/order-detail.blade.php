@@ -73,7 +73,7 @@
                                         @foreach ($orders_details as $list)
                                             @php
                                                 $totalAmt = $totalAmt + $list->price * $list->qty;
-                                                echo $totalAmt;
+                                                // echo $totalAmt;
                                             @endphp
                                             <tr>
                                                 <td>{{ $list->pname }}</td>
@@ -112,6 +112,13 @@
                                                 <td colspan="4">&nbsp;</td>
                                                 <td colspan="2"><b>Final Total</b></td>
                                                 <td><strong>{{ $finalTotalAmt }}</strong></td>
+
+                                            </tr>
+                                        @else
+                                            <tr>
+                                                <td colspan="4">&nbsp;</td>
+                                                <td colspan="2"><b>Final Total</b></td>
+                                                <td><strong>{{ $totalAmt }}</strong></td>
 
                                             </tr>
                                         @endif

@@ -77,9 +77,7 @@ class AdminController extends Controller
     public function profileUpdate(Request $request)
     {
         // Debug input (for testing)
-        // print_r($request->all());
-
-        // Validation rules
+        print_r($request->all());
         $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $request->input('id'),
@@ -105,9 +103,13 @@ class AdminController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
-        // Fetch the user record
-        $model = Admin::find($request->post('id')); // Use find() to get a single record
+        if ($request->post('id') > 0) {
+            $model = Admin::find($request->post('id'));
+            $msg = "Profile updated successfully. Please log in again.";
+        } else {
+            $model = new Admin();
+            $msg = "Admin Details added";
+        }
 
         if (!$model) {
             return redirect()->back()->withErrors(['errorMessage' => 'User not found'])->withInput();
@@ -131,10 +133,11 @@ class AdminController extends Controller
         if ($request->filled('password')) {
             $model->password = Hash::make($request->post('password'));
         }
+        dd($model);
         $model->save();
 
         // Session handling and redirection
-        $request->session()->flash('successMessage', 'Profile updated successfully. Please log in again.');
+        $request->session()->flash('successMessage', $msg);
         $request->session()->forget(['ADMIN_LOGIN', 'ADMIN_ID']);
         return redirect()->route('login');
     }

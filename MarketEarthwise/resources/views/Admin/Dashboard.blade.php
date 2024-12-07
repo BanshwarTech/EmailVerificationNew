@@ -83,8 +83,13 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="card-title">User Details</div>
+                                @php
+                                    foreach ($data as $results) {
+                                        print_r($results);
+                                    }
 
-                                <form class="row g-3" method="post" action="{{ route('profile-update') }}"
+                                @endphp
+                                <form class="row g-3" method="post" action="{{ route('profile.update') }}"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" value="{{ $data[0]->id }}" name="id">
@@ -132,6 +137,11 @@
                                             <input type="file" class="form-control" name="profile" id="profile">
                                             <label for="profile" class="form-label ms-1">User Profile</label>
                                         </div>
+                                        @error('profile')
+                                            <div class="error-message">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                     <div class="col-12 col-md-6 col-xxl-6 form-floating">
                                         <input type="submit" value="Update" class="btn btn-primary btn-sm">

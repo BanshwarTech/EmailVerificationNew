@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Mail;
 use PhpParser\Node\Stmt\Else_;
+use Razorpay\Api\Api;
 
 class FrontController extends Controller
 {
@@ -295,13 +296,15 @@ class FrontController extends Controller
         return response()->json(['status' => 'success', 'msg' => 'Coupon code removed', 'totalPrice' => $totalPrice]);
     }
 
+    // place order 
     public function placeOrder(Request $request)
     {
 
-
-        $payment_url = '';
+        $payment_url = "";
         $rand_id = rand(111111111, 999999999);
         $orderId = generateOrderId();
+
+        $paymentOption = $request->post('paymentOption');
         if ($request->session()->has('FRONT_USER_LOGIN')) {
         } else {
             $valid = Validator::make($request->all(), [
@@ -346,6 +349,8 @@ class FrontController extends Controller
                 DB::table('carts')
                     ->where(['user_id' => $getUserTempId, 'user_type' => 'Not-Reg'])
                     ->update(['user_id' => $user_id, 'user_type' => 'Reg']);
+
+                dd($arr);
             }
         }
 
@@ -385,9 +390,9 @@ class FrontController extends Controller
             "state" => $request->state,
             "pincode" => $request->zip,
             "coupon_value" => $coupon_value,
-            "payment_type" => $request->payment_type,
+            "payment_type" => $request->paymentOption,
             "payment_status" => "Pending",
-            "total_amt" => $request->post('totalPrice'),
+            "total_amt" =>  $request->post('totalPrice'),
             "order_status" => 1,
             "order_id" => $orderId,
             "added_on" => date('Y-m-d h:i:s')
@@ -396,9 +401,8 @@ class FrontController extends Controller
         if (!empty($request->coupon_code)) {
             $arr['coupon_code'] = $request->coupon_code;
         }
-
+        $razor = '';
         $order_id = DB::table('orders')->insertGetId($arr);
-
         if ($order_id > 0) {
             foreach ($getAddToCartTotalItem as $list) {
                 $prductDetailArr['product_id'] = $list->pid;
@@ -409,77 +413,95 @@ class FrontController extends Controller
                 DB::table('order_details')->insert($prductDetailArr);
             }
 
-            if ($request->payment_type == 'Gateway') {
+            if ($paymentOption == 'gateway') {
+                // echo $paymentOption;
                 $final_amt = $request->post('totalPrice');
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, 'https://checkout.razorpay.com/v1/checkout.js');
-                curl_setopt($ch, CURLOPT_HEADER, FALSE);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-                curl_setopt(
-                    $ch,
-                    CURLOPT_HTTPHEADER,
-                    array(
-                        "X-Api-Key:KEY",
-                        "X-Auth-Token:TOKEN"
-                    )
-                );
-                $payload = array(
-                    'purpose' => 'Buy Product',
-                    'amount' => $final_amt,
-                    'phone' => $request->mobile,
-                    'buyer_name' => $request->name,
-                    'redirect_url' => 'http://127.0.0.1:8000/store',
-                    'send_email' => true,
-                    'send_sms' => true,
-                    'email' => $request->email,
-                    'allow_repeated_payments' => false
-                );
-                curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payload));
-                $response = curl_exec($ch);
-                curl_close($ch);
-                $response = json_decode($response);
-                if (isset($response->payment_request->id)) {
-                    $txn_id = $response->payment_request->id;
-                    DB::table('orders')
-                        ->where(['id' => $order_id])
-                        ->update(['txn_id' => $txn_id]);
-                    $payment_url = $response->payment_request->longurl;
-                } else {
-                    $msg = "";
-                    foreach ($response->message as $key => $val) {
-                        $msg .= strtoupper($key) . ": " . $val[0] . '<br/>';
-                    }
-                    return response()->json(['status' => 'error', 'msg' => $msg, 'payment_url' => '']);
-                }
-            }
-            DB::table('carts')->where(['user_id' => $uid, 'user_type' => 'Reg'])->delete();
-            $request->session()->put('ORDER_ID', $orderId);
 
-            $status = "success";
-            $msg = "Order placed";
+                if (is_numeric($final_amt)) {
+                    $decimal_part = $final_amt - floor($final_amt);
+
+                    $final_amt = ($decimal_part >= 0.50) ? ceil($final_amt) : floor($final_amt);
+                } else {
+                    $final_amt = 0;
+                }
+                // echo $final_amt;
+                $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+
+                try {
+                    // Create the Razorpay order
+                    $razor = $api->order->create([
+                        'receipt' => uniqid(),
+                        'amount' => $final_amt * 100, // Convert to paise
+                        'currency' => 'INR',
+                    ]);
+
+                    // Store the order ID in the session or pass to the view
+                    $request->session()->put('razorpay_order_id', $razor['id']);
+                    $request->session()->put('razorpay_amount', $final_amt * 100);
+                    $request->session()->put('payment_name',  $request->name);
+                    $request->session()->put('payment_email',  $request->email);
+                    $request->session()->put('payment_status',  "success");
+                    $request->session()->put('ORDER_ID', $orderId);
+                    DB::table('carts')->where(['user_id' => $uid, 'user_type' => 'Reg'])->delete();
+
+                    return redirect()->route('razorpay.checkout');
+                } catch (\Exception $e) {
+                    return back()->with('error', 'Error creating Razorpay order: ' . $e->getMessage());
+                }
+            } else {
+                $request->session()->put('ORDER_ID', $orderId);
+                DB::table('carts')->where(['user_id' => $uid, 'user_type' => 'Reg'])->delete();
+                return redirect()->route('order.placed')->with('message', 'Order placed with Cash on Delivery option.');
+            }
         } else {
             $status = "false";
             $msg = "Please try after sometime";
         }
-        return response()->json(['status' => $status, 'msg' => $msg, 'payment_url' => $payment_url]);
+    }
+
+    public function razorpay_checkout(Request $request)
+    {
+        if ($request->has(['oid', 'rp_payment_id', 'rp_signature', 'rp_order_id', 'payment_status'])) {
+            $oid = $request->input('oid');
+            $rp_payment_id = $request->input('rp_payment_id', null);
+            $rp_signature = $request->input('rp_signature', null);
+            $rp_order_id = $request->input('rp_order_id', null);
+            $payment_status = $request->input('payment_status', null);
+
+            DB::table('orders')
+                ->where('order_id', $oid)
+                ->update([
+                    'payment_status' => $payment_status,
+                    'payment_id' => $rp_payment_id,
+                    'txn_id' =>   $rp_order_id
+                ]);
+
+            return redirect('/order-placed');
+        } else {
+            return view('front.razorpay_checkout');
+        }
     }
 
     public function orderPlaced(Request $request)
     {
         if ($request->session()->has('ORDER_ID')) {
-            return view('front.OrderPlaced');
+
+            $orderId = $request->session()->get('ORDER_ID');
+
+            $result['data'] = DB::table('orders')
+                ->where('order_id', $orderId)
+                ->get();
+            // dd($result);
+            return view('front.OrderPlaced', $result);
         } else {
             return redirect('/');
         }
     }
 
-    public function order_fail(Request $request)
+    public function orderFail(Request $request)
     {
         if ($request->session()->has('ORDER_ID')) {
-            return view('front.order_fail');
+            return view('Front.orderFail');
         } else {
             return redirect('/');
         }

@@ -73,7 +73,15 @@
                                         @foreach ($orders_details as $list)
                                             @php
                                                 $totalAmt = $totalAmt + $list->price * $list->qty;
-                                                // echo $totalAmt;
+                                                $tax_id = $list->tax_id;
+                                                $tax_value = $list->tax_value;
+                                                $tax_desc = $list->tax_desc;
+                                                // % price
+                                                $perPrice = round(($totalAmt * $tax_value) / 100);
+                                                if ($tax_id !== null && $tax_value !== null) {
+                                                    $totalAmt += $perPrice;
+                                                }
+
                                             @endphp
                                             <tr>
                                                 <td>{{ $list->pname }}</td>
@@ -84,11 +92,28 @@
                                                 <td>{{ $list->color }}</td>
                                                 <td>{{ $list->price }}</td>
                                                 <td>{{ $list->qty }}</td>
-                                                <td>{{ $list->price * $list->qty }}</td>
+                                                <td>₹{{ number_format($list->price * $list->qty) }}</td>
                                             </tr>
                                         @endforeach
 
-                                        @if ($orders_details[0]->coupon_value > 0)
+                                        @if ($orders_details[0]->coupon_code > 0)
+                                            @php
+                                                $type = $orders_details[0]->type;
+                                                $couponValue = 0;
+                                                $finalAmt = 0;
+                                                $type_sign = '';
+                                                if ($type == 'value') {
+                                                    $finalAmt = $totalAmt - $couponValue;
+                                                    $couponValue = '₹' . $orders_details[0]->coupon_value;
+                                                } elseif ($type == 'per') {
+                                                    $discount = ($totalAmt * $orders_details[0]->coupon_value) / 100;
+                                                    $finalAmt = $totalAmt - $discount;
+                                                    $couponValue = $orders_details[0]->coupon_value . '%';
+                                                } else {
+                                                    $finalAmt = $totalAmt;
+                                                    $couponValue = 0;
+                                                }
+                                            @endphp
                                             <tr>
                                                 <td colspan="4">&nbsp;</td>
                                                 <td colspan="2">
@@ -97,29 +122,34 @@
                                                             class="coupon_apply_txt">({{ $orders_details[0]->coupon_code }})</span>
                                                     </b>
                                                 </td>
-                                                <td>{{ $orders_details[0]->coupon_value }}</td>
+                                                <td><strong>{{ $couponValue }}</strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">&nbsp;</td>
+                                                <td colspan="2"><strong>TAX({{ $tax_desc }})</strong></td>
+                                                <td><strong>₹{{ number_format($perPrice) }}</strong></td>
                                             </tr>
                                             <tr>
                                                 <td colspan="4">&nbsp;</td>
                                                 <td colspan="2"><b>Total</b></td>
-                                                <td><strong>{{ $list->total_amt }}</strong></td>
+                                                <td><strong>₹{{ number_format($list->total_amt) }}</strong></td>
                                             </tr>
-                                            @php
-
-                                                $finalTotalAmt = $list->total_amt - $orders_details[0]->coupon_value;
-                                            @endphp
                                             <tr>
                                                 <td colspan="4">&nbsp;</td>
-                                                <td colspan="2"><b>Final Total</b></td>
-                                                <td><strong>{{ $finalTotalAmt }}</strong></td>
-
+                                                <td colspan="2"><strong>Final Total</strong></td>
+                                                <td><strong>₹{{ number_format($finalAmt) }}</strong></td>
                                             </tr>
                                         @else
                                             <tr>
                                                 <td colspan="4">&nbsp;</td>
+                                                <td colspan="2"><strong>TAX({{ $tax_desc }})</strong></td>
+                                                <td><strong>₹{{ number_format($perPrice) }}</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">&nbsp;</td>
                                                 <td colspan="2"><b>Final Total</b></td>
-                                                <td><strong>{{ $totalAmt }}</strong></td>
-
+                                                <td><strong>₹{{ number_format($totalAmt) }}</strong></td>
                                             </tr>
                                         @endif
 

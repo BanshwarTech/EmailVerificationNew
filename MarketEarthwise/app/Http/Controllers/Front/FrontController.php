@@ -744,13 +744,15 @@ class FrontController extends Controller
     {
         $result['orders_details'] =
             DB::table('order_details')
-            ->select('orders.*', 'order_details.price', 'order_details.qty', 'products.name as pname', 'product_attrs.attr_image', 'sizes.size', 'colors.color', 'order_status.orders_status')
+            ->select('orders.*', 'order_details.price', 'order_details.qty', 'products.name as pname', 'product_attrs.attr_image', 'sizes.size', 'colors.color', 'order_status.orders_status', 'products.tax_id', 'taxes.tax_value', 'taxes.tax_desc', 'coupons.*')
             ->leftJoin('orders', 'orders.id', '=', 'order_details.orders_id')
             ->leftJoin('product_attrs', 'product_attrs.id', '=', 'order_details.products_attr_id')
             ->leftJoin('products', 'products.id', '=', 'product_attrs.products_id')
             ->leftJoin('sizes', 'sizes.id', '=', 'product_attrs.size_id')
             ->leftJoin('order_status', 'order_status.id', '=', 'orders.order_status')
+            ->leftJoin('taxes', 'taxes.id', '=', 'products.tax_id')
             ->leftJoin('colors', 'colors.id', '=', 'product_attrs.color_id')
+            ->leftJoin('coupons', 'coupons.code', '=', 'orders.coupon_code')
             ->where(['orders.id' => $id])
             ->where(['orders.user_id' => $req->session()->get('FRONT_USER_ID')])
             ->get();

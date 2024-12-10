@@ -200,7 +200,7 @@ Route::middleware([AdminAuth::class])->group(function () {
         Route::get('/', 'index');
         Route::get('/order_detail/{id}', 'order_details');
         Route::post('/order_detail/{id}', 'update_track_detail');
-        Route::get('/update_payemnt_status/{status}/{id}', 'update_payemnt_status');
+        Route::get('/update_payment_status/{status}/{id}', 'update_payment_status');
         Route::get('/update_order_status/{status}/{id}', 'update_order_status');
     });
 

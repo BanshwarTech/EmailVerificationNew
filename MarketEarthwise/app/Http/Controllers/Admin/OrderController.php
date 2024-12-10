@@ -21,7 +21,7 @@ class OrderController extends Controller
     {
         $result['orders_details'] =
             DB::table('order_details')
-            ->select('orders.*', 'order_details.price', 'order_details.qty', 'products.name as pname', 'product_attrs.attr_image', 'sizes.size', 'colors.color', 'order_status.orders_status', 'products.tax_id', 'taxes.tax_value', 'taxes.tax_desc', 'coupons.*')
+            ->select('orders.*', 'orders.id', 'order_details.price', 'order_details.qty', 'products.name as pname', 'product_attrs.attr_image', 'sizes.size', 'colors.color', 'order_status.orders_status', 'products.tax_id', 'taxes.tax_value', 'taxes.tax_desc', 'coupons.*')
             ->leftJoin('orders', 'orders.id', '=', 'order_details.orders_id')
             ->leftJoin('product_attrs', 'product_attrs.id', '=', 'order_details.products_attr_id')
             ->leftJoin('products', 'products.id', '=', 'product_attrs.products_id')
@@ -37,14 +37,16 @@ class OrderController extends Controller
             DB::table('order_status')
             ->get();
         $result['payment_status'] = ['Pending', 'Success', 'Fail'];
+
         return view('Admin.OrderDetails', $result);
     }
 
-    public function update_payemnt_status(Request $request, $status, $id)
+    public function update_payment_status(Request $request, $status, $id)
     {
         DB::table('orders')
             ->where(['id' => $id])
             ->update(['payment_status' => $status]);
+        $request->session()->flash('successMessage', 'Payment Status Updated Successfully....');
         return redirect('/admin/order/order_detail/' . $id);
     }
 
@@ -53,6 +55,7 @@ class OrderController extends Controller
         DB::table('orders')
             ->where(['id' => $id])
             ->update(['order_status' => $status]);
+        $request->session()->flash('successMessage', "Order Status Updated Successfully....");
         return redirect('/admin/order/order_detail/' . $id);
     }
 
@@ -62,6 +65,7 @@ class OrderController extends Controller
         DB::table('orders')
             ->where(['id' => $id])
             ->update(['track_details' => $track_details]);
+        $request->session()->flash('successMessage', "Tracking Details Updated Successfully....");
         return redirect('/admin/order/order_detail/' . $id);
     }
 }

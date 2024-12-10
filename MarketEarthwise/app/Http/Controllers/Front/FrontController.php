@@ -440,7 +440,7 @@ class FrontController extends Controller
                     $request->session()->put('razorpay_amount', $final_amt * 100);
                     $request->session()->put('payment_name',  $request->name);
                     $request->session()->put('payment_email',  $request->email);
-                    $request->session()->put('payment_status',  "success");
+                    $request->session()->put('payment_status',  "Success");
                     $request->session()->put('ORDER_ID', $orderId);
                     DB::table('carts')->where(['user_id' => $uid, 'user_type' => 'Reg'])->delete();
 

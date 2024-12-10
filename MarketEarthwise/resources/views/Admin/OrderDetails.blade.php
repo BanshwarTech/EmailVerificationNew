@@ -8,16 +8,17 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Admin</a></li>
                     <li class="breadcrumb-item">@yield('page_title')</li>
-                    <li class="breadcrumb-item">Order - {{ $orders_details[0]->order_id }}</li>
+                    <li class="breadcrumb-item">Order - {{ $orders_details[0]->order_id }} </li>
+
                 </ol>
             </nav>
         </div>
-        {{-- <div>
-        <a href="{{ url('admin/banner/manage_banner') }}" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> Manage Banner
-        </a>
+        <div>
+            <a href="{{ url('admin/order') }}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Back
+            </a>
 
-    </div> --}}
+        </div>
     </div>
 
 
@@ -30,18 +31,17 @@
                             <h5 class="h5 text-black fw-bold">Update Order Status </h5>
                         </div>
                         <div class="form-floating">
-                            <select class="form-control m-b-10 mt-4 " id="order_status"
+
+                            <select class="form-control m-b-10 mt-4" id="order_status_value"
                                 onchange="update_order_status({{ $orders_details[0]->id }})">
-                                <?php
-                                foreach ($order_status as $list) {
-                                    if ($orders_details[0]->order_status == $list->id) {
-                                        echo "<option value='" . $list->id . "' selected>" . $list->orders_status . '</option>';
-                                    } else {
-                                        echo "<option value='$list->id'>" . $list->orders_status . '</option>';
-                                    }
-                                }
-                                ?>
+                                <?php foreach ($order_status as $list): ?>
+                                <option value="<?= htmlspecialchars($list->id, ENT_QUOTES, 'UTF-8') ?>"
+                                    <?= $orders_details[0]->order_status == $list->id ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($list->orders_status, ENT_QUOTES, 'UTF-8') ?>
+                                </option>
+                                <?php endforeach; ?>
                             </select>
+
                             <label for="form-label">Update Order Status</label>
                         </div>
                     </div>
@@ -52,18 +52,16 @@
                             <h5 class="h5 text-black fw-bold">Update Payment Status </h5>
                         </div>
                         <div class="form-floating mt-4">
-                            <select class="form-control  m-b-10" id="payment_status"
-                                onchange="update_payemnt_status({{ $orders_details[0]->id }})">
-                                <?php
-                                foreach ($payment_status as $list) {
-                                    if ($orders_details[0]->payment_status == $list) {
-                                        echo "<option value='$list' selected>$list</option>";
-                                    } else {
-                                        echo "<option value='$list'>$list</option>";
-                                    }
-                                }
-                                ?>
+                            <select class="form-control m-b-10" id="payment_status"
+                                onchange="update_payment_status({{ $orders_details[0]->id }})">
+                                <?php foreach ($payment_status as $status): ?>
+                                <option value="<?= htmlspecialchars($status, ENT_QUOTES, 'UTF-8') ?>"
+                                    <?= $orders_details[0]->payment_status == $status ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($status, ENT_QUOTES, 'UTF-8') ?>
+                                </option>
+                                <?php endforeach; ?>
                             </select>
+
                             <label for="form-label">Update Payment Status</label>
                         </div>
                     </div>
@@ -90,9 +88,6 @@
                 </div>
 
                 <div class="card">
-
-
-
                     <div class="card-body">
                         <div class="card-header">
                             <h5 class="h5 text-black fw-bold">Order Details</h5>

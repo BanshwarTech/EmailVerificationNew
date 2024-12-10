@@ -317,3 +317,37 @@
   }
 
 })();
+
+
+function update_payment_status(id) {
+  console.log("Order ID:", id);
+  var check = confirm('Are you sure you want to update the payment status?');
+  var payment_status = jQuery('#payment_status').val();
+
+  console.log("Selected Payment Status:", payment_status);
+
+  if (check) {
+    if (payment_status) {
+      // Redirect to the URL with payment_status and id
+      window.location.href = '/admin/order/update_payment_status/' + payment_status + '/' + id;
+    } else {
+      alert('Please select a payment status before proceeding.');
+    }
+  }
+}
+
+function update_order_status(id) {
+  var check = confirm('Are you sure you want to update the order status?');
+  var order_status = jQuery('#order_status_value').val();
+
+  console.log("Order Status:", order_status);
+
+  if (check) {
+    if (order_status) {
+      // Redirect to the server-side handler with encoded values
+      window.location.href = '/admin/order/update_order_status/' + order_status + '/' + id;
+    } else {
+      alert('Please select an order status before proceeding.');
+    }
+  }
+}

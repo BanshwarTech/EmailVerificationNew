@@ -30,6 +30,7 @@
                             <table class="table datatable">
                                 <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>Order ID</th>
                                         <th>Customer Details</th>
                                         <th>Amt</th>
@@ -40,15 +41,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($orders as $list)
+                                    @foreach ($orders as $index => $list)
                                         <tr>
+                                            <td>{{ $loop->iteration }}</td> <!-- Display the count -->
                                             <td>
                                                 <a href="{{ url('/admin/order/order_detail/' . $list->id) }}"
                                                     class="btn btn-secondary btn-sm " title="View Order Details">
-                                                    <i class="bi bi-eye-fill"></i> {{ $list->id }}
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <i class="bi bi-eye-fill"></i>&nbsp;{{ $list->order_id }}
+
+                                                    </div>
                                                 </a>
                                             </td>
-
                                             <td>
                                                 {{ $list->name }}<br />
                                                 {{ $list->email }}<br />

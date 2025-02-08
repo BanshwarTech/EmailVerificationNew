@@ -73,15 +73,25 @@
                                         @foreach ($orders_details as $list)
                                             @php
                                                 $totalAmt = $totalAmt + $list->price * $list->qty;
+
                                                 $tax_id = $list->tax_id;
                                                 $tax_value = $list->tax_value;
                                                 $tax_desc = $list->tax_desc;
+                                                // echo $totalAmt .
+                                                //     '<br/>' .
+                                                //     $tax_id .
+                                                //     '<br/>' .
+                                                //     $tax_value .
+                                                //     '<br/>' .
+                                                //     $tax_desc .
+                                                //     '<br/>';
                                                 // % price
                                                 $perPrice = round(($totalAmt * $tax_value) / 100);
+                                                // echo 'tax Price' . $perPrice . '<br/>';
                                                 if ($tax_id !== null && $tax_value !== null) {
                                                     $totalAmt += $perPrice;
                                                 }
-
+                                                // echo 'TOtal Prrice with tax : ' . $perPrice . '<br/>';
                                             @endphp
                                             <tr>
                                                 <td>{{ $list->pname }}</td>
@@ -90,13 +100,13 @@
                                                 </td>
                                                 <td>{{ $list->size }}</td>
                                                 <td>{{ $list->color }}</td>
-                                                <td>{{ $list->price }}</td>
+                                                <td>₹{{ $list->price }}</td>
                                                 <td>{{ $list->qty }}</td>
                                                 <td>₹{{ number_format($list->price * $list->qty) }}</td>
                                             </tr>
                                         @endforeach
 
-                                        @if ($orders_details[0]->coupon_code > 0)
+                                        @if ($orders_details[0]->coupon_value > 0)
                                             @php
                                                 $type = $orders_details[0]->type;
                                                 $couponValue = 0;
@@ -128,7 +138,7 @@
                                             <tr>
                                                 <td colspan="4">&nbsp;</td>
                                                 <td colspan="2"><strong>TAX({{ $tax_desc }})</strong></td>
-                                                <td><strong>₹{{ number_format($perPrice) }}</strong></td>
+                                                <td><strong>₹{{ number_format($perPrice, 2) }}</strong></td>
                                             </tr>
                                             <tr>
                                                 <td colspan="4">&nbsp;</td>
@@ -144,7 +154,7 @@
                                             <tr>
                                                 <td colspan="4">&nbsp;</td>
                                                 <td colspan="2"><strong>TAX({{ $tax_desc }})</strong></td>
-                                                <td><strong>₹{{ number_format($perPrice) }}</strong></td>
+                                                <td><strong>₹{{ number_format(round($perPrice, 2), 2) }}</strong></td>
                                             </tr>
                                             <tr>
                                                 <td colspan="4">&nbsp;</td>

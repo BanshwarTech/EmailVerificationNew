@@ -13,6 +13,7 @@ class OrderController extends Controller
         $result['orders'] = DB::table('orders')
             ->select('orders.*', 'order_status.orders_status')
             ->leftJoin('order_status', 'order_status.id', '=', 'orders.order_status')
+            ->orderBy('orders.added_on', 'desc')
             ->get();
         return view('Admin.Order', $result);
     }

@@ -255,6 +255,7 @@ class RegisterLoginController extends Controller
                 ->select('orders.*', 'order_status.orders_status')
                 ->leftJoin('order_status', 'order_status.id', '=', 'orders.order_status')
                 ->where(['orders.user_id' => $request->session()->get('FRONT_USER_ID')])
+                ->orderBy('orders.added_on', 'desc')
                 ->paginate(10);
             $result['addresses'] = DB::table('orders')
                 ->select('address', 'name') // Specify the address column you want to fetch

@@ -59,6 +59,16 @@ class DashboardController extends Controller
         }
     }
 
+    public function logout()
+    {
+        session()->forget('ADMIN_LOGIN');
+        session()->forget('ADMIN_ID');
+        session()->forget('ADMIN_NAME');
+        session()->forget('ADMIN_EMAIL');
+        session()->flush();
+        return redirect('admin')->with('success', 'Logout successful!');
+    }
+
     public function dashboard()
     {
         return view('admin.dashboard');

@@ -161,9 +161,4 @@ class IndexController extends Controller
 
         return redirect()->back()->with('success', 'Record added successfully.....');
     }
-
-    public function about()
-    {
-        return view('admin.about');
-    }
 }

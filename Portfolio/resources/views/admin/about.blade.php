@@ -14,121 +14,75 @@
                         <div class="card-header">
                             Introduction
                         </div>
-                        <div class="card-body">
-                            <form action="">
-                                <div class="row">
 
-                                    <div class="form-floating ms-0 col-lg-4">
-                                        <input type="text" name="name" id="name" class="form-control"
-                                            placeholder="Name">
-                                        <label for="name" class="ms-0">Name</label>
+                        <div class="card-body">
+                            @foreach ($about as $ab)
+                                <div class="row align-items-center">
+                                    <!-- Form Section (Left Side) -->
+                                    <div class="col-lg-10 col-md-10 col-12">
+                                        <form action="{{ route('admin.about.manage.about', $ab->id) }}" method="POST"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="text" name="id" value="{{ $ab->id }}" hidden>
+                                            <div class="row g-3">
+                                                <div class="form-floating col-lg-4">
+                                                    <input type="text" name="name" id="name" class="form-control"
+                                                        placeholder="Name" value="{{ $ab->name }}">
+                                                    <label for="name">Name</label>
+                                                    @error('name')
+                                                        <div class="message">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-floating col-lg-4">
+                                                    <input type="file" name="profile" id="profile" class="form-control"
+                                                        placeholder="Profile">
+                                                    <label for="profile">Profile</label>
+                                                    @error('profile')
+                                                        <div class="message">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-floating col-lg-4">
+                                                    <input type="text" name="role" id="role" class="form-control"
+                                                        placeholder="Role" value="{{ $ab->role }}">
+                                                    <label for="role">Role</label>
+                                                    @error('role')
+                                                        <div class="message">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-floating col-lg-6">
+                                                    <input type="number" name="experience" id="experience"
+                                                        class="form-control" placeholder="Experience"
+                                                        value="{{ $ab->experience }}">
+                                                    <label for="experience">Experience</label>
+                                                    @error('experience')
+                                                        <div class="message">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-floating col-lg-6">
+                                                    <textarea name="tagline" id="tagline" class="form-control" placeholder="Tagline">{{ $ab->tagline }}</textarea>
+                                                    <label for="tagline">Tagline</label>
+                                                    @error('tagline')
+                                                        <div class="message">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <input type="submit" class="btn btn-primary mt-2" value="Submit">
+                                        </form>
                                     </div>
-                                    <div class="form-floating ms-0 col-lg-4">
-                                        <input type="file" name="profile" id="profile" class="form-control"
-                                            placeholder="Profile    ">
-                                        <label for="profile" class="ms-0">Name</label>
-                                    </div>
-                                    <div class="form-floating ms-0 col-lg-4">
-                                        <input type="text" name="role" id="role" class="form-control"
-                                            placeholder="role">
-                                        <label for="role" class="ms-0">Role</label>
-                                    </div>
-                                    <div class="form-floating ms-0 col-lg-4 mt-3">
-                                        <input type="text" name="experience" id="experience" class="form-control"
-                                            placeholder="experience">
-                                        <label for="experience" class="ms-0">Experience</label>
-                                    </div>
-                                    <div class="form-floating ms-0 col-lg-4 mt-3">
-                                        <textarea name="tagline" id="tagline" cols="30" rows="10" class="form-control" placeholder="Tagline"></textarea>
-                                        <label for="tagline" class="ms-0">Tagline</label>
+
+                                    <!-- Image Section (Right Side) -->
+                                    <div class="col-lg-2 col-md-2 col-12 text-center h-75">
+                                        <img src="{{ asset('storage/uploads/about/' . $ab->profile_image) }}"
+                                            alt="{{ $ab->profile_image }}" class="img-fluid rounded w-75">
                                     </div>
                                 </div>
-                                <input type="submit" class="btn btn-primary ms-2 me-2 col-3 mt-3" value="Submit" />
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            Background & Experience
-                        </div>
-                        <div class="card-body">
+                            @endforeach
 
                         </div>
 
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            Technical Skills </div>
-                        <div class="card-body">
-
-                            <form action="">
-                                <div class="row">
-                                    <!-- Skill Name -->
-                                    <div class="form-floating ms-0 col-lg-4 mt-3">
-                                        <input type="text" name="skill_name" id="skill_name" class="form-control"
-                                            placeholder="Skill Name">
-                                        <label for="skill_name" class="ms-0">Skill Name</label>
-                                    </div>
-
-                                    <!-- Proficiency -->
-                                    <div class="form-floating ms-0 col-lg-4 mt-3">
-                                        <select name="proficiency" id="proficiency" class="form-control">
-                                            <option value="">Select Proficiency</option>
-                                            <option value="Beginner">Beginner</option>
-                                            <option value="Intermediate">Intermediate</option>
-                                            <option value="Advanced">Advanced</option>
-                                            <option value="Expert">Expert</option>
-                                        </select>
-                                        <label for="proficiency" class="ms-0">Proficiency</label>
-                                    </div>
-
-                                    <!-- Experience (Years) -->
-                                    <div class="form-floating ms-0 col-lg-4 mt-3">
-                                        <input type="number" name="experience_years" id="experience_years"
-                                            class="form-control" placeholder="Experience (Years)">
-                                        <label for="experience_years" class="ms-0">Experience (Years)</label>
-                                    </div>
-
-                                    <!-- Category -->
-                                    <div class="form-floating ms-0 col-lg-4 mt-3">
-                                        <input type="text" name="category" id="category" class="form-control"
-                                            placeholder="Category">
-                                        <label for="category" class="ms-0">Category</label>
-                                    </div>
-                                </div>
-
-                                <input type="submit" class="btn btn-primary ms-2 me-2 col-3 mt-3" value="Submit" />
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            What You Offer </div>
-                        <div class="card-body">
-
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            Personal Interests </div>
-                        <div class="card-body">
-
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-12">
+                {{-- <div class="col-md-12">
                     <div class="card mb-4">
                         <div class="card-header">
                             Call to Action </div>
@@ -137,8 +91,7 @@
                         </div>
 
                     </div>
-                </div>
-
+                </div> --}}
             </div>
         </div>
         <!-- / Content -->

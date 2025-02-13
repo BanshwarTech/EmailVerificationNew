@@ -8,27 +8,32 @@
     <title>Admin Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/97ebc2bc67.js" crossorigin="anonymous"></script>
-    <!-- Toastr CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <!-- Include jQuery (Required for Toastr) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <!-- Toastr JS -->
+    <!-- Toastr CSS & JS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>
-        toastr.options = {
-            "progressBar": true,
-            "positionClass": "toast-bottom-left",
-            "closeButton": true
-        };
+        $(document).ready(function() {
+            toastr.options = {
+                "progressBar": true,
+                "positionClass": "toast-bottom-left",
+                "closeButton": true,
+                "timeOut": "5000" // 5 seconds
+            };
 
-        @if (session('success'))
-            toastr.success("{{ session('success') }}");
-        @endif
+            @if (session()->has('success'))
+                toastr.success("{{ session('success') }}");
+            @endif
 
-        @if (session('error'))
-            toastr.error("{{ session('error') }}");
-        @endif
+            @if (session()->has('error'))
+                toastr.error("{{ session('error') }}");
+            @endif
+        });
     </script>
+
 
     <style>
         .divider:after,

@@ -47,6 +47,7 @@
                 left: 15px;
             }
         </style>
+
     </head>
 
     <body>
@@ -139,11 +140,39 @@
                             </a>
                         </li>
 
-                        <li class="menu-item {{ Request::is('admin/home/about') ? 'active' : '' }}">
-                            <a href="{{ route('admin.about') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                                <div data-i18n="Analytics">About</div>
+                        <li
+                            class="menu-item {{ in_array(Request::path(), ['admin/about', 'admin/about/experience', 'admin/about/tech-skill', 'admin/about/offer', 'admin/about/interests']) ? 'active' : '' }} open">
+                            <a href="javascript:void(0);" class="menu-link menu-toggle ">
+                                <i class='menu-icon tf-icons  bx bx-user-pin'></i>
+                                <div data-i18n="About Settings">About Settings</div>
                             </a>
+                            <ul class="menu-sub">
+                                <li class="menu-item {{ Request::is('admin/about') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.about') }}" class="menu-link">
+                                        <div data-i18n="About">About</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item {{ Request::is('admin/about/experience') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.about.experience') }}" class="menu-link">
+                                        <div data-i18n="Background & Experience">Background & Experience</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item {{ Request::is('admin/about/tech-skill') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.about.tech.skill') }}" class="menu-link">
+                                        <div data-i18n="Technical Skills">Technical Skills</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item {{ Request::is('admin/about/offer') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.about.offer') }}" class="menu-link">
+                                        <div data-i18n="What You Offer">What You Offer</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item {{ Request::is('admin/about/interests') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.about.interests') }}" class="menu-link">
+                                        <div data-i18n="Personal Interests">Personal Interests</div>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
 
 
@@ -287,6 +316,32 @@
 
         <!-- Place this tag in your head or just before your close body tag. -->
         <script async defer src="https://buttons.github.io/buttons')}}"></script>
+        <!-- Include jQuery (Required for Toastr) -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <!-- Toastr CSS & JS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                toastr.options = {
+                    "progressBar": true,
+                    "positionClass": "toast-bottom-left",
+                    "closeButton": true,
+                    "timeOut": "5000" // 5 seconds
+                };
+
+                @if (session()->has('success'))
+                    toastr.success("{{ session('success') }}");
+                @endif
+
+                @if (session()->has('error'))
+                    toastr.error("{{ session('error') }}");
+                @endif
+            });
+        </script>
+
     </body>
 
     </html>

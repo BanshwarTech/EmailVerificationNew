@@ -75,7 +75,7 @@
                                     @else
                                         <tr>
                                             <td colspan="8" class="text-center  fw-bold">
-                                                No Experience Data Found
+                                                No Data Found
                                             </td>
                                         </tr>
                                     @endif

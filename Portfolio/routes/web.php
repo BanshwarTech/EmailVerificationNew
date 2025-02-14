@@ -26,8 +26,10 @@ Route::middleware([AdminAuth::class])->group(function () {
         Route::get('/', 'getHomeData')->name('admin.home.data');
         Route::post('/update', 'updateHomeData')->name('admin.home.update');
         Route::get('connection', 'getConnection')->name('admin.home.connection');
-        Route::get('/account', 'account')->name('admin.account');
+
+        Route::get('/account/{id?}', 'account')->name('admin.account');
         Route::post('/account/add', 'addAccount')->name('admin.account.add');
+        Route::get('/del-account/{id}', 'delAccount')->name('admin.account.delete');
     });
 
     Route::prefix('admin/about')->controller(AboutUsController::class)->group(function () {

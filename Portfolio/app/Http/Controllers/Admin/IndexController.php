@@ -92,73 +92,109 @@ class IndexController extends Controller
     public function getConnection()
     {
         $result['accounts'] = DB::table('accounts')->get();
-        $result['social'] = DB::table('social_accounts')->get();
         return view('admin.connection', $result);
     }
 
     // define account connection 
-    public function account()
+    public function account(request $request, $id = null)
     {
-        return view('admin.accounts');
+        $arr = Accounts::where('id', $id)->first();
+
+        if ($arr) {
+            $result['account_related_image'] = $arr->account_related_image;
+            $result['account_name'] = $arr->account_name;
+            $result['account_id'] = $arr->account_id;
+            $result['account_link'] = $arr->account_link;
+            $result['account_type'] = $arr->account_type;
+            $result['id'] = $arr->id;
+        } else {
+            $result['account_related_image'] = '';
+            $result['account_name'] = '';
+            $result['account_id'] = '';
+            $result['account_link'] = '';
+            $result['account_type'] = '';
+            $result['id'] = 0;
+        }
+
+        $result['account'] = Accounts::paginate(10);
+        return view('admin.accounts', $result);
     }
 
-    public function addAccount(request $request)
+    public function addAccount(request $request, $id = null)
     {
+        try {
+            // Image validation rule (optional for update)
+            $image_validation = "nullable|mimes:jpeg,jpg,png,svg,gif|max:2048";
 
-        // Image validation rule (optional for update)
-        $image_validation = "nullable|mimes:jpeg,jpg,png,svg,gif|max:2048";
+            // Validation rules
+            $rules = [
+                'account_name' => 'required',
+                'account_id' => 'required',
+                'account_type' => 'required',
+                'account_related_image' => $image_validation
+            ];
 
-        // Validation rules
-        $rules = [
-            'account_name' => 'required',
-            'account_id' => 'required',
-            'account_type' => 'required',
-            'account_related_image' => $image_validation
-        ];
+            // Custom error messages
+            $messages = [
+                'account_name.required' => 'Please enter account name!',
+                'account_id.required' => 'Please enter account id!',
+                'account_type.required' => 'Please select account type!',
+                'account_related_image.mimes' => 'Only JPEG, JPG, PNG, SVG, and GIF formats are allowed!',
+                'account_related_image.max' => 'The image size should not exceed 2MB!',
+            ];
 
-        // Custom error messages
-        $messages = [
-            'account_name.required' => 'Please enter account name!',
-            'account_id.required' => 'Please enter account id!',
-            'account_type.required' => 'Please select account type!',
-            'account_related_image.mimes' => 'Only JPEG, JPG, PNG, SVG, and GIF formats are allowed!',
-            'account_related_image.max' => 'The image size should not exceed 2MB!',
-        ];
+            // Validate request
+            $validator = Validator::make($request->all(), $rules, $messages);
 
-        // Validate request
-        $validator = Validator::make($request->all(), $rules, $messages);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-
-        // Update fields
-        $account = Accounts::create();
-        $account->account_name = $request->post('account_name');
-        $account->account_id = $request->post('account_id');
-        $account->account_type = $request->post('account_type');
-        $account->is_del = false;
-        // Handle profile image upload (if provided)
-        // Handle profile image upload (if provided)
-        if ($request->hasFile('account_related_image')) {
-            // Delete old image if it exists
-            if ($account->account_related_image && Storage::exists('public/uploads/account/' . $account->account_related_image)) {
-                Storage::delete('public/uploads/account/' . $account->image);
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
             }
-            // Upload new image to storage/app/public/uploads
-            $image = $request->file('account_related_image');
-            $image_name = time() . '.' . $image->getClientOriginalExtension();
-            Storage::disk('public')->putFileAs('uploads/account/', $image, $image_name);
 
-            // Save new file name
-            $account->account_related_image = $image_name;
+            if ($request->post('id') > 0) {
+                $account = Accounts::find($request->post('id'));
+                $msg = "Record  Updated successfully....";
+            } else {
+                // Update fields
+                $account = Accounts::create();
+                $msg = 'Record added  successfully.....';
+            }
+
+
+            $account->account_name = $request->post('account_name');
+            $account->account_id = $request->post('account_id');
+            $account->account_type = $request->post('account_type');
+            $account->account_link = $request->post('account_link');
+            $account->is_del = false;
+            // Handle profile image upload (if provided)
+            // Handle profile image upload (if provided)
+            if ($request->hasFile('account_related_image')) {
+                // Delete old image if it exists
+                if ($account->account_related_image && Storage::exists('public/uploads/account/' . $account->account_related_image)) {
+                    Storage::delete('public/uploads/account/' . $account->image);
+                }
+                // Upload new image to storage/app/public/uploads
+                $image = $request->file('account_related_image');
+                $image_name = time() . '.' . $image->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('uploads/account/', $image, $image_name);
+
+                // Save new file name
+                $account->account_related_image = $image_name;
+            }
+
+
+            // Save updated data
+            $account->save();
+
+            return redirect()->route('admin.account')->with('success', $msg);
+        } catch (\Exception $e) {
+            return redirect()->route('admin.account')->with('error', $e->getMessage());
         }
+    }
 
-
-        // Save updated data
-        $account->save();
-
-        return redirect()->back()->with('success', 'Record added successfully.....');
+    public function delAccount($id)
+    {
+        $account = Accounts::findOrFail($id);
+        $account->delete();
+        return redirect()->route('admin.account')->with('success', 'deleted successfully.....');
     }
 }

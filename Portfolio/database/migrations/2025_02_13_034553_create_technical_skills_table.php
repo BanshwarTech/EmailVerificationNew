@@ -18,7 +18,9 @@ return new class extends Migration
             $table->enum('proficiency', ['Beginner', 'Intermediate', 'Advanced', 'Expert']);
             $table->integer('experience_years')->nullable();
             $table->string('category', 255)->nullable();
+            $table->boolean('is_del')->default('0');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('account_type', ['other', 'social'])->nullable();
             $table->boolean('is_del')->default('0');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

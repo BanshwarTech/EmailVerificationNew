@@ -72,54 +72,68 @@
                             <input type="submit" class="btn btn-primary col-3 mt-2"
                                 value="{{ isset($id) && $id > 0 ? 'Update' : 'Submit' }}" />
                         </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="table-responsive text-nowrap">
-                        <table class="table table-striped">
-                            <thead class="table-dark">
-                                <tr>
-                                    <td class="text-white">#</td>
-                                    <th class="text-white">Skill Name</th>
-                                    <th class="text-white">Proficiency</th>
-                                    <th class="text-white">Experience Years</th>
-                                    <th class="text-white">Category</th>
-                                    <th class="text-white">Action</th>
-                                </tr>
-                            <tbody>
-                                @foreach ($tech_skill as $index => $skills)
+                        <hr>
+                        <div class="table-responsive text-nowrap">
+                            <table class="table table-striped">
+                                <thead class="table-dark">
                                     <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $skills->skill_name }}</td>
-                                        <td>{{ $skills->proficiency }}</td>
-                                        <td>{{ $skills->experience_years }}</td>
-                                        <td>{{ $skills->category }}
-                                        </td>
-
-                                        <td>
-                                            <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                    data-bs-toggle="dropdown">
-                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item"
-                                                        href="{{ route('admin.about.tech.skill', $skills->id) }}"><i
-                                                            class="bx bx-edit-alt me-1"></i> Edit</a>
-                                                    <a class="dropdown-item" href="javascript:void(0);"><i
-                                                            class="bx bx-trash me-1"></i> Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        <td class="text-white">#</td>
+                                        <th class="text-white">Skill Name</th>
+                                        <th class="text-white">Proficiency</th>
+                                        <th class="text-white">Experience Years</th>
+                                        <th class="text-white">Category</th>
+                                        <th class="text-white">Action</th>
                                     </tr>
-                                @endforeach
+                                </thead>
+                                <tbody>
+                                    @if ($tech_skill->count() > 0)
+                                        @foreach ($tech_skill as $index => $skills)
+                                            <tr>
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>{{ $skills->skill_name }}</td>
+                                                <td>{{ $skills->proficiency }}</td>
+                                                <td>{{ $skills->experience_years }}</td>
+                                                <td>{{ $skills->category }}
+                                                </td>
 
-                            </tbody>
-                            </thead>
-                        </table>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                            data-bs-toggle="dropdown">
+                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('admin.about.tech.skill', $skills->id) }}"><i
+                                                                    class="bx bx-edit-alt me-1"></i> Edit</a>
+                                                            <a class="dropdown-item delete-btn"
+                                                                data-url="{{ route('admin.about.tech.skill.del', ['id' => $skills->id]) }}">
+                                                                <i class="bx bx-trash me-1"></i> Delete
+                                                            </a>
+
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="8" class="text-center  fw-bold">
+                                                No Experience Data Found
+                                            </td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                            <div class=" mt-2">
+                                {{ $tech_skill->links('pagination::bootstrap-5') }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 @endsection

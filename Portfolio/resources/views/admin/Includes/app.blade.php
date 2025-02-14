@@ -324,6 +324,8 @@
         <!-- Toastr CSS & JS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <!-- SweetAlert2 CSS & JS -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script>
             $(document).ready(function() {
@@ -343,6 +345,59 @@
                 @endif
             });
         </script>
+
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                document.querySelectorAll(".delete-btn").forEach(function(button) {
+                    button.addEventListener("click", function(event) {
+                        event.preventDefault(); // Stop normal link behavior
+                        let deleteUrl = this.getAttribute("data-url"); // Get the delete URL
+
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "This action cannot be undone!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#d33",
+                            cancelButtonColor: "#3085d6",
+                            confirmButtonText: "Yes, delete it!",
+                            customClass: {
+                                popup: "custom-swal-size"
+                            }
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = deleteUrl; // Redirect to delete URL
+                            }
+                        });
+                    });
+                });
+            });
+        </script>
+
+        <style>
+            /* Custom SweetAlert Size */
+            .custom-swal-size {
+                width: 400px !important;
+                /* Set width */
+                height: 300px !important;
+                /* Adjust padding */
+                font-size:
+            }
+
+            div:where(.swal2-container) div:where(.swal2-html-container) {
+                font-size: 0.9em;
+            }
+
+            div:where(.swal2-container) h2:where(.swal2-title) {
+                padding: 0px !important;
+            }
+
+            div:where(.swal2-container) div:where(.swal2-popup) {
+                font-size: 0.9em;
+            }
+        </style>
+
 
     </body>
 

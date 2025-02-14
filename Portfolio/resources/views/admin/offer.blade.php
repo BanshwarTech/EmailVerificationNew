@@ -69,42 +69,55 @@
 
                                         <th class="text-white">Action</th>
                                     </tr>
+                                </thead>
                                 <tbody>
-                                    @foreach ($offer as $index => $services)
-                                        <tr>
-                                            <td>{{ $index + 1 }}</td>
-                                            <td>{{ $services->title }}</td>
-                                            <td>{{ $services->description }}</td>
-                                            <td>{{ $services->price }}</td>
-                                            <td>
-                                                @if ($services->status == 'Active')
-                                                    <span class="badge bg-label-success me-1 text-success">Active</span>
-                                                @else
-                                                    <span class="badge bg-label-danger me-1">Inactive</span>
-                                                @endif
-                                            </td>
+                                    @if ($offer->count() > 0)
 
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                        data-bs-toggle="dropdown">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item"
-                                                            href="{{ route('admin.about.offer', $services->id) }}"><i
-                                                                class="bx bx-edit-alt me-1"></i> Edit</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="bx bx-trash me-1"></i> Delete</a>
+                                        @foreach ($offer as $index => $services)
+                                            <tr>
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>{{ $services->title }}</td>
+                                                <td>{{ $services->description }}</td>
+                                                <td>{{ $services->price }}</td>
+                                                <td>
+                                                    @if ($services->status == 'Active')
+                                                        <span class="badge bg-label-success me-1 text-success">Active</span>
+                                                    @else
+                                                        <span class="badge bg-label-danger me-1">Inactive</span>
+                                                    @endif
+                                                </td>
+
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                            data-bs-toggle="dropdown">
+                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('admin.about.offer', $services->id) }}"><i
+                                                                    class="bx bx-edit-alt me-1"></i> Edit</a>
+                                                            <a class="dropdown-item delete-btn"
+                                                                data-url="{{ route('admin.about.offer.delete', ['id' => $services->id]) }}">
+                                                                <i class="bx bx-trash me-1"></i> Delete
+                                                            </a>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="8" class="text-center  fw-bold">
+                                                No Experience Data Found
                                             </td>
                                         </tr>
-                                    @endforeach
-
+                                    @endif
                                 </tbody>
-                                </thead>
                             </table>
+                            <div class=" mt-2">
+                                {{ $offer->links('pagination::bootstrap-5') }}
+                            </div>
                         </div>
                     </div>
 

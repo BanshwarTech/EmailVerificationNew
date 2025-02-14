@@ -80,7 +80,7 @@
                             </style>
                         @endif
 
-                        <div class="table-responsove">
+                        <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead class="table-dark">
                                     <tr>
@@ -93,37 +93,51 @@
                                         <th class="text-white">Description</th>
                                         <th class="text-white">Action</th>
                                     </tr>
+                                </thead>
                                 <tbody>
-                                    @foreach ($experiences as $index => $exp)
-                                        <tr>
-                                            <td>{{ $index + 1 }}</td>
-                                            <td>{{ $exp->job_title }}</td>
-                                            <td>{{ $exp->company_name }}</td>
-                                            <td>{{ $exp->location }}</td>
-                                            <td>{{ $exp->start_date }}</td>
-                                            <td>{{ $exp->end_date }}</td>
-                                            <td>{{ $exp->description }}</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                        data-bs-toggle="dropdown">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item"
-                                                            href="{{ route('admin.about.experience', $exp->id) }}">
-                                                            <i class="bx bx-edit-alt me-1"></i> Edit
-                                                        </a>
+                                    @if ($experiences->count() > 0)
+                                        @foreach ($experiences as $index => $exp)
+                                            <tr>
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>{{ $exp->job_title }}</td>
+                                                <td>{{ $exp->company_name }}</td>
+                                                <td>{{ $exp->location }}</td>
+                                                <td>{{ $exp->start_date }}</td>
+                                                <td>{{ $exp->end_date }}</td>
+                                                <td>{{ $exp->description }}</td>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                            data-bs-toggle="dropdown">
+                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('admin.about.experience', $exp->id) }}">
+                                                                <i class="bx bx-edit-alt me-1"></i> Edit
+                                                            </a>
 
-                                                        <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="bx bx-trash me-1"></i> Delete</a>
+                                                            <a class="dropdown-item delete-btn"
+                                                                data-url="{{ route('admin.about.exp.delete', ['id' => $exp->id]) }}">
+                                                                <i class="bx bx-trash me-1"></i> Delete
+                                                            </a>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="8" class="text-center  fw-bold">
+                                                No Experience Data Found
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @endif
                                 </tbody>
-                                </thead>
+                            </table>
+                            <div class=" mt-2">
+                                {{ $experiences->links('pagination::bootstrap-5') }}
+                            </div>
                         </div>
                     </div>
                 </div>

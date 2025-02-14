@@ -19,7 +19,9 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date')->nullable(); // Nullable for current jobs
             $table->text('description')->nullable();
+            $table->boolean('is_del')->default('0');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

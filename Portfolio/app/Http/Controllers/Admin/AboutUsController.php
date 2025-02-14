@@ -114,7 +114,7 @@ class AboutUsController extends Controller
             $result['id'] = 0;
         }
 
-        $result['experiences'] = Experience::all();
+        $result['experiences'] = Experience::paginate(10);
         return view('admin.experiences', $result);
     }
 
@@ -162,6 +162,14 @@ class AboutUsController extends Controller
             return redirect()->route('admin.about.experience')->with('error', $e->getMessage());
         }
     }
+
+    public function delExp($id)
+    {
+        $exp = experience::findOrFail($id);
+        $exp->delete(); // Soft delete (moves to trash)
+
+        return redirect()->route('admin.about.experience')->with('success', 'deleted successfully...');
+    }
     public function tech_skill(Request $request, $id = null)
     {
         $arr = technical_skill::where('id', $id)->first();
@@ -180,7 +188,7 @@ class AboutUsController extends Controller
             $result['id'] = 0;
         }
 
-        $result['tech_skill'] = DB::table('technical_skills')->get();
+        $result['tech_skill'] = technical_skill::paginate(10);
         return view('admin.technicalSkill', $result);
     }
 
@@ -225,6 +233,14 @@ class AboutUsController extends Controller
             return redirect()->route('admin.about.tech.skill')->with('error', $e->getMessage());
         }
     }
+
+    public function delTechSkill($id)
+    {
+        $skill = technical_skill::findOrFail($id);
+        $skill->delete(); // Soft delete (moves to trash)
+
+        return redirect()->route('admin.about.tech.skill')->with('success', 'deleted successfully...');
+    }
     public function offer(Request $request, $id = null)
     {
         $arr = service::where('id', $id)->first();
@@ -242,7 +258,7 @@ class AboutUsController extends Controller
             $result['status'] = '';
             $result['id'] = 0;
         }
-        $result['offer'] = DB::table('services')->get();
+        $result['offer'] = service::paginate(10);
         return view('admin.offer', $result);
     }
 
@@ -284,6 +300,14 @@ class AboutUsController extends Controller
             return redirect()->route('admin.about.offer')->with('error', $e->getMessage());
         }
     }
+
+    public function delOffer($id)
+    {
+        $offer = service::findOrFail($id);
+        $offer->delete(); // Soft delete (moves to trash)
+
+        return redirect()->route('admin.about.offer')->with('success', 'deleted successfully...');
+    }
     public function interests(Request $request, $id = null)
     {
 
@@ -299,7 +323,7 @@ class AboutUsController extends Controller
             $result['description'] = '';
             $result['id'] = 0;
         }
-        $result['hobbies'] = DB::table('personal_interests')->get();
+        $result['hobbies'] = PersonalInterest::paginate(10);
 
         return view('admin.hobbies', $result);
     }
@@ -335,5 +359,13 @@ class AboutUsController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('admin.about.interests')->with('error', $e->getMessage());
         }
+    }
+
+    public function delInterests($id)
+    {
+        $intrest = PersonalInterest::findOrFail($id);
+        $intrest->delete(); // Soft delete (moves to trash)
+
+        return redirect()->route('admin.about.interests')->with('success', 'deleted successfully...');
     }
 }

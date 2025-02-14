@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2)->nullable(); // Optional price for the service
             $table->enum('status', ['Active', 'Inactive'])->default('Active'); // Service availability
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

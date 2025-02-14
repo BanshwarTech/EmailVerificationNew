@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('interest_name', 255); // Interest name (e.g., Coding, Photography)
             $table->text('description')->nullable(); // Details about the interest
+            $table->boolean('is_del')->default('0');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

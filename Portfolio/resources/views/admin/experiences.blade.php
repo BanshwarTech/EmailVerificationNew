@@ -16,63 +16,70 @@
                         <form action="{{ route('admin.about.manage.experience') }}" method="POST">
                             @csrf
                             <div class="row g-3">
+                                <input type="hidden" name="id" value="{{ $id }}" />
                                 <!-- Job Title -->
-                                <div class="form-floating ms-0 col-lg-4 ">
+                                <div class="form-floating col-lg-4">
                                     <input type="text" name="job_title" id="job_title" class="form-control"
-                                        placeholder="Job Title">
-                                    <label for="job_title" class="ms-0">Job Title</label>
+                                        placeholder="Job Title" value="{{ old('job_title', $job_title ?? '') }}">
+                                    <label for="job_title">Job Title</label>
                                     @error('job_title')
-                                        <div class="message">
-                                            {{ $message }}
-                                        </div>
+                                        <div class="text-danger small">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <!-- Company Name -->
-                                <div class="form-floating ms-0 col-lg-4 ">
+                                <div class="form-floating col-lg-4">
                                     <input type="text" name="company_name" id="company_name" class="form-control"
-                                        placeholder="Company Name">
-                                    <label for="company_name" class="ms-0">Company Name</label>
+                                        placeholder="Company Name" value="{{ old('company_name', $company_name ?? '') }}">
+                                    <label for="company_name">Company Name</label>
                                     @error('company_name')
-                                        <div class="message">
-                                            {{ $message }}
-                                        </div>
+                                        <div class="text-danger small">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <!-- Location -->
-                                <div class="form-floating ms-0 col-lg-4 ">
+                                <div class="form-floating col-lg-4">
                                     <input type="text" name="location" id="location" class="form-control"
-                                        placeholder="Location">
-                                    <label for="location" class="ms-0">Location</label>
+                                        placeholder="Location" value="{{ old('location', $location ?? '') }}">
+                                    <label for="location">Location</label>
                                 </div>
 
                                 <!-- Start Date -->
-                                <div class="form-floating ms-0 col-lg-6 ">
-                                    <input type="date" name="start_date" id="start_date" class="form-control">
-                                    <label for="start_date" class="ms-0">Start Date</label>
+                                <div class="form-floating col-lg-6">
+                                    <input type="date" name="start_date" id="start_date" class="form-control"
+                                        value="{{ old('start_date', $start_date ?? '') }}">
+                                    <label for="start_date">Start Date</label>
                                     @error('start_date')
-                                        <div class="message">
-                                            {{ $message }}
-                                        </div>
+                                        <div class="text-danger small">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <!-- End Date -->
-                                <div class="form-floating ms-0 col-lg-6 ">
-                                    <input type="date" name="end_date" id="end_date" class="form-control">
-                                    <label for="end_date" class="ms-0">End Date</label>
+                                <div class="form-floating col-lg-6">
+                                    <input type="date" name="end_date" id="end_date" class="form-control"
+                                        value="{{ old('end_date', $end_date ?? '') }}">
+                                    <label for="end_date">End Date</label>
                                 </div>
 
                                 <!-- Description -->
-                                <div class="form-floating ms-0 col-lg-12 ">
-                                    <textarea name="description" id="description" class="form-control" placeholder="Description" rows="3"></textarea>
-                                    <label for="description" class="ms-0">Description</label>
+                                <div class="form-floating col-lg-12">
+                                    <textarea name="description" id="description" class="form-control" placeholder="Description" rows="3">{{ old('description', $description ?? '') }}</textarea>
+                                    <label for="description">Description</label>
                                 </div>
                             </div>
-                            <input type="submit" class="btn btn-primary  me-2 col-3 mt-2" value="Submit" />
+                            <input type="submit" class="btn btn-primary col-3 mt-2"
+                                value="{{ isset($id) && $id > 0 ? 'Update' : 'Submit' }}" />
                         </form>
+
                         <hr>
+                        @if ($id > 0)
+                            <style>
+                                .table-responsive {
+                                    display: none;
+                                }
+                            </style>
+                        @endif
+
                         <div class="table-responsove">
                             <table class="table table-striped">
                                 <thead class="table-dark">
@@ -103,8 +110,11 @@
                                                         <i class="bx bx-dots-vertical-rounded"></i>
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="bx bx-edit-alt me-1"></i> Edit</a>
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('admin.about.experience', $exp->id) }}">
+                                                            <i class="bx bx-edit-alt me-1"></i> Edit
+                                                        </a>
+
                                                         <a class="dropdown-item" href="javascript:void(0);"><i
                                                                 class="bx bx-trash me-1"></i> Delete</a>
                                                     </div>

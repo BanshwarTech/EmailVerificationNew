@@ -16,10 +16,11 @@
                         <form action="{{ route('admin.about.manage.tech.skill') }}" method="POST">
                             @csrf
                             <div class="row g-3">
+                                <input type="hidden" name="id" value="{{ $id }}">
                                 <!-- Skill Name -->
                                 <div class="form-floating ms-0 col-lg-6 ">
                                     <input type="text" name="skill_name" id="skill_name" class="form-control"
-                                        placeholder="Skill Name">
+                                        placeholder="Skill Name" value="{{ $skill_name }}">
                                     <label for="skill_name" class="ms-0">Skill Name</label>
                                     @error('skill_name')
                                         <div class="message">
@@ -32,11 +33,20 @@
                                 <div class="form-floating ms-0 col-lg-6 ">
                                     <select name="proficiency" id="proficiency" class="form-control">
                                         <option value="">Select Proficiency</option>
-                                        <option value="Beginner">Beginner</option>
-                                        <option value="Intermediate">Intermediate</option>
-                                        <option value="Advanced">Advanced</option>
-                                        <option value="Expert">Expert</option>
+                                        <option value="Beginner"
+                                            {{ isset($proficiency) && $proficiency == 'Beginner' ? 'selected' : '' }}>
+                                            Beginner</option>
+                                        <option value="Intermediate"
+                                            {{ isset($proficiency) && $proficiency == 'Intermediate' ? 'selected' : '' }}>
+                                            Intermediate</option>
+                                        <option value="Advanced"
+                                            {{ isset($proficiency) && $proficiency == 'Advanced' ? 'selected' : '' }}>
+                                            Advanced</option>
+                                        <option value="Expert"
+                                            {{ isset($proficiency) && $proficiency == 'Expert' ? 'selected' : '' }}>Expert
+                                        </option>
                                     </select>
+
                                     <label for="proficiency" class="ms-0">Proficiency</label>
                                     @error('proficiency')
                                         <div class="message">
@@ -48,19 +58,19 @@
                                 <!-- Experience (Years) -->
                                 <div class="form-floating ms-0 col-lg-6 ">
                                     <input type="number" name="experience_years" id="experience_years" class="form-control"
-                                        placeholder="Experience (Years)">
+                                        placeholder="Experience (Years)" value="{{ $experience_years }}">
                                     <label for="experience_years" class="ms-0">Experience (Years)</label>
                                 </div>
 
                                 <!-- Category -->
                                 <div class="form-floating ms-0 col-lg-6 ">
                                     <input type="text" name="category" id="category" class="form-control"
-                                        placeholder="Category">
+                                        placeholder="Category" value="{{ $category }}">
                                     <label for="category" class="ms-0">Category</label>
                                 </div>
                             </div>
-
-                            <input type="submit" class="btn btn-primary  me-2 col-3 mt-2" value="Submit" />
+                            <input type="submit" class="btn btn-primary col-3 mt-2"
+                                value="{{ isset($id) && $id > 0 ? 'Update' : 'Submit' }}" />
                         </form>
                     </div>
                 </div>
@@ -93,7 +103,8 @@
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="javascript:void(0);"><i
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('admin.about.tech.skill', $skills->id) }}"><i
                                                             class="bx bx-edit-alt me-1"></i> Edit</a>
                                                     <a class="dropdown-item" href="javascript:void(0);"><i
                                                             class="bx bx-trash me-1"></i> Delete</a>

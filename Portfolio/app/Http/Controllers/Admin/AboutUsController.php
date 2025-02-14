@@ -92,9 +92,29 @@ class AboutUsController extends Controller
         }
     }
 
-    public function experience()
+    public function experience(Request $request, $id = null)
     {
-        $result['experiences'] = DB::table('experiences')->get();
+        $arr = Experience::where('id', $id)->first();
+
+        if ($arr) {
+            $result['job_title'] = $arr->job_title;
+            $result['company_name'] = $arr->company_name;
+            $result['location'] = $arr->location;
+            $result['start_date'] = $arr->start_date;
+            $result['end_date'] = $arr->end_date;
+            $result['description'] = $arr->description;
+            $result['id'] = $arr->id;
+        } else {
+            $result['job_title'] = '';
+            $result['company_name'] = '';
+            $result['location'] = '';
+            $result['start_date'] = '';
+            $result['end_date'] = '';
+            $result['description'] = '';
+            $result['id'] = 0;
+        }
+
+        $result['experiences'] = Experience::all();
         return view('admin.experiences', $result);
     }
 
@@ -122,7 +142,14 @@ class AboutUsController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            $experience = new experience();
+            if ($request->post('id') > 0) {
+                $experience = experience::find($request->post('id'));
+                $msg = "Record updated successfully.";
+            } else {
+                $experience = new experience();
+                $msg = "Record added successfully.";
+            }
+
             $experience->job_title = $request->post('job_title');
             $experience->company_name = $request->post('company_name');
             $experience->location = $request->post('location');
@@ -130,13 +157,29 @@ class AboutUsController extends Controller
             $experience->end_date = $request->post('end_date');
             $experience->description = $request->post('description');
             $experience->save();
-            return redirect()->route('admin.about')->with('success', 'Record added successfully.');
+            return redirect()->route('admin.about.experience')->with('success', $msg);
         } catch (\Exception $e) {
             return redirect()->route('admin.about.experience')->with('error', $e->getMessage());
         }
     }
-    public function tech_skill()
+    public function tech_skill(Request $request, $id = null)
     {
+        $arr = technical_skill::where('id', $id)->first();
+
+        if ($arr) {
+            $result['skill_name'] = $arr->skill_name;
+            $result['proficiency'] = $arr->proficiency;
+            $result['experience_years'] = $arr->experience_years;
+            $result['category'] = $arr->category;
+            $result['id'] = $arr->id;
+        } else {
+            $result['skill_name'] = '';
+            $result['proficiency'] = '';
+            $result['experience_years'] = '';
+            $result['category'] = '';
+            $result['id'] = 0;
+        }
+
         $result['tech_skill'] = DB::table('technical_skills')->get();
         return view('admin.technicalSkill', $result);
     }
@@ -163,19 +206,42 @@ class AboutUsController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            $tech_skill = new technical_skill();
+
+            if ($request->post('id') > 0) {
+                $tech_skill = technical_skill::find($request->post('id'));
+                $msg = 'Record updated successfully.';
+            } else {
+                $tech_skill = new technical_skill();
+                $msg = 'Record added successfully.';
+            }
+
             $tech_skill->skill_name = $request->post('skill_name');
             $tech_skill->proficiency = $request->post('proficiency');
             $tech_skill->experience_years = $request->post('experience_years');
             $tech_skill->category = $request->post('category');
             $tech_skill->save();
-            return redirect()->route('admin.about.tech.skill')->with('success', 'Record added successfully.');
+            return redirect()->route('admin.about.tech.skill')->with('success', $msg);
         } catch (\Exception $e) {
             return redirect()->route('admin.about.tech.skill')->with('error', $e->getMessage());
         }
     }
-    public function offer()
+    public function offer(Request $request, $id = null)
     {
+        $arr = service::where('id', $id)->first();
+
+        if ($arr) {
+            $result['title'] = $arr->title;
+            $result['description'] = $arr->description;
+            $result['price'] = $arr->price;
+            $result['status'] = $arr->status;
+            $result['id'] = $arr->id;
+        } else {
+            $result['title'] = '';
+            $result['description'] = '';
+            $result['price'] = '';
+            $result['status'] = '';
+            $result['id'] = 0;
+        }
         $result['offer'] = DB::table('services')->get();
         return view('admin.offer', $result);
     }
@@ -199,20 +265,40 @@ class AboutUsController extends Controller
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
+            if ($request->post('id') > 0) {
+                $service = service::find($request->post('id'));
+                $msg = "Record updated successfully.";
+            } else {
+                $service = new service();
+                $msg = "Record added successfully.";
+            }
 
-            $service = new service();
+
             $service->title = $request->post('title');
             $service->description = $request->post('description');
             $service->price = $request->post('price');
             $service->status = $request->post('status');
             $service->save();
-            return redirect()->route('admin.about.offer')->with('success', 'Record added successfully.');
+            return redirect()->route('admin.about.offer')->with('success', $msg);
         } catch (\Exception $e) {
             return redirect()->route('admin.about.offer')->with('error', $e->getMessage());
         }
     }
-    public function interests()
+    public function interests(Request $request, $id = null)
     {
+
+
+        $arr = PersonalInterest::where('id', $id)->first();
+
+        if ($arr) {
+            $result['interest_name'] = $arr->interest_name;
+            $result['description'] = $arr->description;
+            $result['id'] = $arr->id;
+        } else {
+            $result['interest_name'] = '';
+            $result['description'] = '';
+            $result['id'] = 0;
+        }
         $result['hobbies'] = DB::table('personal_interests')->get();
 
         return view('admin.hobbies', $result);
@@ -237,11 +323,15 @@ class AboutUsController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            $perIn = new PersonalInterest();
+            if ($request->post('id') > 0) {
+            } else {
+                $perIn = new PersonalInterest();
+                $msg = 'Record added successfully.';
+            }
             $perIn->interest_name = $request->post('interest_name');
             $perIn->description = $request->post('description');
             $perIn->save();
-            return redirect()->route('admin.about.interests')->with('success', 'Record added successfully.');
+            return redirect()->route('admin.about.interests')->with('success', $msg);
         } catch (\Exception $e) {
             return redirect()->route('admin.about.interests')->with('error', $e->getMessage());
         }

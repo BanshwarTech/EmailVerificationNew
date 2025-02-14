@@ -14,11 +14,12 @@
                     <div class="card-body">
                         <form action="{{ route('admin.about.manage.offer') }}" method="post">
                             @csrf
+                            <input type="hidden" name="id" value="{{ $id }}">
                             <div class="row g-3">
                                 <!-- Title -->
                                 <div class="form-floating ms-0 col-lg-4 ">
                                     <input type="text" name="title" id="title" class="form-control"
-                                        placeholder="Title">
+                                        placeholder="Title" value="{{ $title }}">
                                     <label for="title" class="ms-0">Title</label>
                                     @error('title')
                                         <div class="message">
@@ -30,7 +31,7 @@
                                 <!-- Price -->
                                 <div class="form-floating ms-0 col-lg-4 ">
                                     <input type="number" name="price" id="price" class="form-control"
-                                        placeholder="Price" step="0.01">
+                                        placeholder="Price" step="0.01" value="{{ $price }}">
                                     <label for="price" class="ms-0">Price</label>
                                 </div>
 
@@ -38,14 +39,18 @@
                                 <div class="form-floating ms-0 col-lg-4 ">
                                     <select name="status" id="status" class="form-control">
                                         <option value="">Select Status</option>
-                                        <option value="Active">Active</option>
-                                        <option value="Inactive">Inactive</option>
+                                        <option value="Active"
+                                            {{ isset($status) && $status == 'Active' ? 'selected' : '' }}>
+                                            Active</option>
+                                        <option value="Inactive"
+                                            {{ isset($status) && $status == 'Inactive' ? 'selected' : '' }}>
+                                            Inactive</option>
                                     </select>
                                     <label for="status" class="ms-0">Status</label>
                                 </div>
                                 <!-- Description -->
                                 <div class="form-floating ms-0 col-lg-12 ">
-                                    <textarea name="description" id="description" class="form-control" placeholder="Description"></textarea>
+                                    <textarea name="description" id="description" class="form-control" placeholder="Description">{{ $description }}</textarea>
                                     <label for="description" class="ms-0">Description</label>
                                 </div>
                             </div>
@@ -86,7 +91,8 @@
                                                         <i class="bx bx-dots-vertical-rounded"></i>
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);"><i
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('admin.about.offer', $services->id) }}"><i
                                                                 class="bx bx-edit-alt me-1"></i> Edit</a>
                                                         <a class="dropdown-item" href="javascript:void(0);"><i
                                                                 class="bx bx-trash me-1"></i> Delete</a>

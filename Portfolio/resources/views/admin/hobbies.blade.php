@@ -14,11 +14,12 @@
                     <div class="card-body">
                         <form action="{{ route('admin.about.manage.interests') }}" method="POST">
                             @csrf
+                            <input type="hidden" name="id" value="{{ $id }}">
                             <div class="row g-3">
                                 <!-- Title -->
                                 <div class="form-floating ms-0 col-lg-6">
                                     <input type="text" name="interest_name" id="interest_name" class="form-control"
-                                        placeholder="Interest Name">
+                                        placeholder="Interest Name" value="{{ $interest_name }}">
                                     <label for="interest_name" class="ms-0">Interest Name</label>
                                     @error('interest_name')
                                         <div class="message">
@@ -28,7 +29,7 @@
                                 </div>
                                 <!-- Description -->
                                 <div class="form-floating ms-0 col-lg-6">
-                                    <textarea name="description" id="description" class="form-control" placeholder="Description"></textarea>
+                                    <textarea name="description" id="description" class="form-control" placeholder="Description">{{ $description }}</textarea>
                                     <label for="description" class="ms-0">Description</label>
                                 </div>
                             </div>
@@ -57,7 +58,8 @@
                                                         <i class="bx bx-dots-vertical-rounded"></i>
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);"><i
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('admin.about.interests', $interest->id) }}"><i
                                                                 class="bx bx-edit-alt me-1"></i> Edit</a>
                                                         <a class="dropdown-item" href="javascript:void(0);"><i
                                                                 class="bx bx-trash me-1"></i> Delete</a>

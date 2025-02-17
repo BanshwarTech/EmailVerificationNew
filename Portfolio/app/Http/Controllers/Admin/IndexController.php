@@ -33,7 +33,7 @@ class IndexController extends Controller
         }
 
         // Image validation rule (optional for update)
-        $image_validation = "nullable|mimes:jpeg,jpg,png,svg,gif|max:2048";
+        $image_validation = "nullable|mimes:jpeg,jpg,png,svg,gif,webp|max:2048";
 
         // Validation rules
         $rules = [
@@ -124,7 +124,7 @@ class IndexController extends Controller
     {
         try {
             // Image validation rule (optional for update)
-            $image_validation = "nullable|mimes:jpeg,jpg,png,svg,gif|max:2048";
+            $image_validation = "nullable|mimes:jpeg,jpg,png,svg,gif,webp|max:2048";
 
             // Validation rules
             $rules = [

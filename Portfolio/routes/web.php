@@ -1,13 +1,18 @@
 <?php
 
 use App\Http\Controllers\Admin\AboutUsController;
+use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Middleware\AdminAuth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::prefix('/')->controller(HomeController::class)->group(function () {
+    Route::get('/', 'index')->name('home');
+    Route::get('/about', 'about')->name('more.about');
+});
+
 
 // admin routes
 
@@ -34,7 +39,7 @@ Route::middleware([AdminAuth::class])->group(function () {
 
     Route::prefix('admin/about')->controller(AboutUsController::class)->group(function () {
         Route::get('/', 'about')->name('admin.about');
-        Route::post('/manage-about', 'manage_about')->name('admin.about.manage.about');
+        Route::post('/manage-about', 'manage_about')->name('admin.about.manage');
 
         Route::get('/experience/{id?}', 'experience')->name('admin.about.experience');
         Route::post('/manage-experience', 'manage_experience')->name('admin.about.manage.experience');
@@ -51,5 +56,14 @@ Route::middleware([AdminAuth::class])->group(function () {
         Route::get('/interests/{id?}', 'interests')->name('admin.about.interests');
         Route::post('/manage-interests', 'manage_interests')->name('admin.about.manage.interests');
         Route::get('/delete-interests/{id}', 'delInterests')->name('admin.about.interests.delete');
+    });
+
+    Route::prefix('admin/contact')->name('admin.contact.')->controller(ContactController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/update-contact-details/{id}', 'updateContactDetails')->name('manage');
+
+        Route::get('/contact-message', 'message')->name('message');
+
+        Route::get('/read-message/{id}', 'readMessage')->name('read.message');
     });
 });

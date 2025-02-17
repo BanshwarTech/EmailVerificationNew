@@ -1,12 +1,14 @@
 @extends('admin.Includes.app')
-@section('page_title', 'About')
+@section('page_title', 'About Details')
 @section('content')
+
+    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
     <!-- Content wrapper -->
     <div class="content-wrapper">
         <!-- Content -->
 
         <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="fw-bold py-3 mb-4"> About</h4>
+            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">About /</span> @yield('page_title')</h4>
 
             <div class="row">
                 <div class="col-md-12">
@@ -20,12 +22,12 @@
                                 <div class="row align-items-center">
                                     <!-- Form Section (Left Side) -->
                                     <div class="col-lg-10 col-md-10 col-12">
-                                        <form action="{{ route('admin.about.manage.about', $ab->id) }}" method="POST"
+                                        <form action="{{ route('admin.about.manage', $ab->id) }}" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
                                             <input type="text" name="id" value="{{ $ab->id }}" hidden>
                                             <div class="row g-3">
-                                                <div class="form-floating col-lg-4">
+                                                <div class="form-floating col-lg-6">
                                                     <input type="text" name="name" id="name" class="form-control"
                                                         placeholder="Name" value="{{ $ab->name }}">
                                                     <label for="name">Name</label>
@@ -33,7 +35,7 @@
                                                         <div class="message">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-                                                <div class="form-floating col-lg-4">
+                                                <div class="form-floating col-lg-6">
                                                     <input type="file" name="profile" id="profile" class="form-control"
                                                         placeholder="Profile">
                                                     <label for="profile">Profile</label>
@@ -41,7 +43,7 @@
                                                         <div class="message">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-                                                <div class="form-floating col-lg-4">
+                                                <div class="form-floating col-lg-6">
                                                     <input type="text" name="role" id="role" class="form-control"
                                                         placeholder="Role" value="{{ $ab->role }}">
                                                     <label for="role">Role</label>
@@ -58,8 +60,8 @@
                                                         <div class="message">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-                                                <div class="form-floating col-lg-6">
-                                                    <textarea name="tagline" id="tagline" class="form-control" placeholder="Tagline">{{ $ab->tagline }}</textarea>
+                                                <div class="form-floating col-lg-12">
+                                                    <textarea name="tagline" id="editor" class="form-control" placeholder="Tagline">{{ $ab->tagline }}</textarea>
                                                     <label for="tagline">Tagline</label>
                                                     @error('tagline')
                                                         <div class="message">{{ $message }}</div>
@@ -98,4 +100,7 @@
 
     </div>
     <!-- Content wrapper -->
+    <script>
+        CKEDITOR.replace('editor'); // Converts the textarea into a rich text editor
+    </script>
 @endsection

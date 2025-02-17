@@ -6,7 +6,7 @@
         <!-- Content -->
 
         <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">About /</span>@yield('page_title') </h4>
+            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">About /</span> @yield('page_title') </h4>
             <div class="col-md-12">
                 <div class="card mb-4">
                     <div class="card-header">

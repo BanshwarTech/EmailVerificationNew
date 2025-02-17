@@ -149,11 +149,12 @@
                                 <div data-i18n="About Settings">About Settings</div>
                             </a>
                             <ul class="menu-sub">
-                                <li class="menu-item {{ Request::is('admin/about') ? 'active' : '' }}">
+                                <li class="menu-item {{ Request::routeIs('admin.about') ? 'active' : '' }}">
                                     <a href="{{ route('admin.about') }}" class="menu-link">
                                         <div data-i18n="About">About</div>
                                     </a>
                                 </li>
+
                                 <li class="menu-item {{ Request::is('admin/about/experience') ? 'active' : '' }}">
                                     <a href="{{ route('admin.about.experience') }}" class="menu-link">
                                         <div data-i18n="Background & Experience">Background & Experience</div>
@@ -177,6 +178,26 @@
                             </ul>
                         </li>
 
+                        <li
+                            class="menu-item {{ in_array(Request::path(), ['admin/about', 'admin/about/experience', 'admin/about/tech-skill', 'admin/about/offer', 'admin/about/interests']) ? 'active' : '' }} open">
+                            <a href="javascript:void(0);" class="menu-link menu-toggle ">
+                                <i class='menu-icon tf-icons  bx bx-user-pin'></i>
+                                <div data-i18n="About Settings">Contact Settings</div>
+                            </a>
+                            <ul class="menu-sub">
+                                <li class="menu-item {{ Request::routeIs('admin.contact.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.contact.index') }}" class="menu-link">
+                                        <div data-i18n="contact details">Contact Details</div>
+                                    </a>
+                                </li>
+                                <li
+                                    class="menu-item {{ (Request::routeIs('admin.contact.message') ? 'active' : '' || Request::routeIs('admin.contact.read.message')) ? 'active' : '' }}">
+                                    <a href="{{ route('admin.contact.message') }}" class="menu-link">
+                                        <div data-i18n="Background & Experience">Contact Message</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
                     </ul>
                 </aside>

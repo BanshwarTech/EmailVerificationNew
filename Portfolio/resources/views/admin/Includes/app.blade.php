@@ -142,6 +142,29 @@
                             </a>
                         </li>
 
+
+
+                        <li
+                            class="menu-item {{ in_array(Request::path(), ['admin/project', 'admin/project/manage-project']) ? 'active' : '' }} open">
+                            <a href="javascript:void(0);" class="menu-link menu-toggle ">
+                                <i class='menu-icon tf-icons  bx bx-user-pin'></i>
+                                <div data-i18n="Project Settings">Project Settings</div>
+                            </a>
+                            <ul class="menu-sub">
+                                <li class="menu-item {{ Request::routeIs('admin.project.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.project.index') }}" class="menu-link">
+                                        <div data-i18n="Analytics">Projects</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item {{ Request::routeIs('admin.project.manage') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.project.manage') }}" class="menu-link">
+                                        <div data-i18n="Manage Project">Manage Project</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
                         <li
                             class="menu-item {{ in_array(Request::path(), ['admin/about', 'admin/about/experience', 'admin/about/tech-skill', 'admin/about/offer', 'admin/about/interests']) ? 'active' : '' }} open">
                             <a href="javascript:void(0);" class="menu-link menu-toggle ">

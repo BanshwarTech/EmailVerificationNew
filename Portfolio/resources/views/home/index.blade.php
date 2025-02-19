@@ -130,7 +130,10 @@
                 <ul class="navbar-nav nav ml-auto">
                     <li class="nav-item"><a href="#home-section" class="nav-link"><span>Home</span></a></li>
                     <li class="nav-item"><a href="#about-section" class="nav-link"><span>About</span></a></li>
+                    <li class="nav-item"><a href="#skill-section" class="nav-link"><span>Skill</span></a></li>
                     <li class="nav-item"><a href="#resume-section" class="nav-link"><span>Resume</span></a></li>
+
+
                     <li class="nav-item"><a href="#project-section" class="nav-link"><span>Projects</span></a></li>
                     <li class="nav-item"><a href="#contact-section" class="nav-link"><span>Contact</span></a></li>
                 </ul>
@@ -213,7 +216,7 @@
             </div>
         </div>
     </section>
-    <section class="ftco-about img ftco-section ftco-no-pb" id="about-section">
+    <section class="ftco-about img ftco-section ftco-no-pb p-0" id="about-section">
         <div class="container">
             <div class="row">
                 <div class="row d-flex align-items-stretch">
@@ -278,7 +281,7 @@
                         </div>
 
 
-                        <div class="counter-wrap ftco-animate d-flex mt-md-3">
+                        {{-- <div class="counter-wrap ftco-animate d-flex mt-md-3">
                             <div class="text">
                                 <p class="mb-4">
                                     <span class="number" data-number="30">0</span> <span>+</span>
@@ -287,7 +290,7 @@
                                 <p><a href="https://www.linkedin.com/in/rishabhnmishra/"
                                         class="btn btn-primary py-3 px-3">LinkedIn</a></p>
                             </div>
-                        </div>
+                        </div> --}}
 
                     </div>
                 </div>
@@ -297,9 +300,9 @@
 
     {{-- skills --}}
 
-    <section class="ftco-section" id="project-section">
+    <section class="ftco-section p-0" id="skill-section">
         <div class="container">
-            <div class="row justify-content-center mb-5 pb-5">
+            <div class="row justify-content-center mb-2 pb-2">
                 <div class="col-md-7 heading-section text-center ftco-animate">
                     <h1 class="big big-2">Skills</h1>
                     <h2 class="mb-4">Skills</h2>
@@ -336,7 +339,7 @@
                 @endif
 
                 <div class="col-md-6">
-                    <div class="skill-mf mt-4">
+                    <div class="skill-mf mt-2">
                         <span>{{ $tech_skill->skill_name }}</span> <span
                             class="pull-right">{{ $levelPercentage }}%</span>
                         <div class="progress">
@@ -359,8 +362,8 @@
         <div class="container">
             <div class="row justify-content-center pb-5">
                 <div class="col-md-10 heading-section text-center ftco-animate">
-                    <h1 class="big big-2">Resume</h1>
-                    <h2 class="mb-4">Resume</h2>
+                    <h1 class="big big-2">Education & Experience</h1>
+                    <h2 class="mb-4">Education & Experience</h2>
                     <p>Seasoned Senior Data Analyst with 5+ years of experience driving business strategies through
                         data-driven insights. Proven expertise in data science, statistical analysis, machine learning
                         algorithms and project management.</p>
@@ -395,10 +398,6 @@
         @endforeach
 
 
-
-        <br>
-        <br>
-
         <div class="row">
             <h1 class="big-4">Education</h1>
             <div class="underline"></div>
@@ -423,17 +422,17 @@
         @endforeach
 
 
-        <div class="row justify-content-center mt-5">
+        {{-- <div class="row justify-content-center mt-5">
             <div class="col-md-6 text-center ftco-animate">
                 <p><a href="#" class="btn btn-primary py-4 px-5">Download CV</a></p>
             </div>
-        </div>
+        </div> --}}
         </div>
     </section>
 
 
 
-    <section class="ftco-section" id="project-section">
+    <section class="ftco-section p-0" id="project-section">
         <div class="container">
             <div class="row justify-content-center mb-5 pb-5">
                 <div class="col-md-7 heading-section text-center ftco-animate">
@@ -443,86 +442,24 @@
                 </div>
             </div>
             <div class="row d-flex">
-                <div class="col-md-4 d-flex ftco-animate">
-                    <div class="blog-entry justify-content-end">
-                        <a href="https://github.com/rishabhnmishra/SQL_Music_Store_Analysis/blob/main/Music_Store_Query.sql"
-                            class="block-20 zoom-effect" style="background-image: url('asset/images/proj_1.jpg');">
-                        </a>
-                        <div class="text mt-3 float-right d-block">
 
-                            <h3 class="heading"><a
-                                    href="https://github.com/rishabhnmishra/SQL_Music_Store_Analysis/blob/main/Music_Store_Query.sql">Digital
-                                    Music Store Data Analysis using SQL</a></h3>
-                            <p>Analyzed music store data using advanced SQL queires to identify gaps and increase the
-                                business growth.</p>
+                @foreach ($project as $pro_index => $pro)
+                    <div class="col-md-4 d-flex ftco-animate">
+                        <div class="blog-entry justify-content-end">
+                            <img src="{{ asset('storage/uploads/project/' . $pro->image) }}" alt="image not found"
+                                width="100%" onclick="window.location.href='<?= $pro['github_link'] ?>'"
+                                style="cursor: pointer;" height="200.81px">
+
+                            <div class="text mt-3 float-right d-block">
+                                <h3 class="heading"><a href="<?= $pro['github_link'] ?>"><?= $pro['title'] ?></a></h3>
+                                <p><?= $pro['description'] ?></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 d-flex ftco-animate">
-                    <div class="blog-entry justify-content-end">
-                        <a href="https://github.com/rishabhnmishra/Python_Diwali_Sales_Analysis/blob/main/Diwali_Sales_Analysis.ipynb"
-                            class="block-20 zoom-effect" style="background-image: url('asset/images/proj_2.jpg');">
-                        </a>
-                        <div class="text mt-3 float-right d-block">
-
-                            <h3 class="heading"><a
-                                    href="https://github.com/rishabhnmishra/Python_Diwali_Sales_Analysis/blob/main/Diwali_Sales_Analysis.ipynb">Data
-                                    Analysis using Python Project for Beginners</a></h3>
-                            <p>Performed exploratory data analysis on diwali sales data using Python to improve the
-                                customer experience.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 d-flex ftco-animate">
-                    <div class="blog-entry">
-                        <a href="https://github.com/rishabhnmishra/Madhav_Store_Analysis_PowerBI/blob/main/Madhav%20Store%20dashboard.jpg"
-                            class="block-20 zoom-effect" style="background-image: url('asset/images/proj_3.jpg');">
-                        </a>
-                        <div class="text mt-3 float-right d-block">
-
-                            <h3 class="heading"><a
-                                    href="https://github.com/rishabhnmishra/Madhav_Store_Analysis_PowerBI/blob/main/Madhav%20Store%20dashboard.jpg">Power
-                                    BI Sales dashboard Project for Beginners</a></h3>
-                            <p>Designed a power bi dashboard for Madhav Store to track and analyze the online sales data
-                                acorss India.</p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
             <br>
-            <!-- added justify-content-center to center align the last two projects -->
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-4 d-flex ftco-animate">
-                    <div class="blog-entry justify-content-end">
-                        <a href="https://github.com/rishabhnmishra/sales_forecasting/tree/main"
-                            class="block-20 zoom-effect" style="background-image: url('asset/images/proj_4.jpg');">
-                        </a>
-                        <div class="text mt-3 float-right d-block">
 
-                            <h3 class="heading"><a
-                                    href="https://github.com/rishabhnmishra/sales_forecasting/tree/main">Sales
-                                    Forecast- Time Series Forecasting</a></h3>
-                            <p>Used multiple machine learning models to forecast sales (retail store) and performed time
-                                series analysis.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 d-flex ftco-animate">
-                    <div class="blog-entry justify-content-end">
-                        <a href="https://github.com/rishabhnmishra/customer_segmentation/blob/main/Customer_Segmentation-final.ipynb"
-                            class="block-20 zoom-effect" style="background-image: url('asset/images/proj_5.jpg');">
-                        </a>
-                        <div class="text mt-3 float-right d-block">
-
-                            <h3 class="heading"><a
-                                    href="https://github.com/rishabhnmishra/customer_segmentation/blob/main/Customer_Segmentation-final.ipynb">Customer
-                                    Segmentation using clustering model</a></h3>
-                            <p>Developed a ML model to give various recommendations of financial products &amp; services
-                                on target customer groups.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -632,10 +569,8 @@
                             <p><a href="#">resumelink</a></p>
                         </div>
                     </div>
-
+                    <br>
                     <div class="container">
-                        <br>
-                        <br>
                         <div class="row justify-content-center">
                             <div class="col-md-7 ftco-animate text-center">
                                 <h2>Have a<span> Question? </span> <a
@@ -647,18 +582,12 @@
                         <ul
                             class="ftco-footer-social list-unstyled d-flex justify-content-center align-items-center mb-0">
                             <li class="ftco-animate normal-txt">Find me on </li>
-                            <li class="ftco-animate"><a href="https://www.youtube.com/@RishabhMishraOfficial"><span
-                                        class="icon-youtube"></span></a></li>
-                            <li class="ftco-animate"><a href="https://www.linkedin.com/in/rishabhnmishra/"><span
-                                        class="icon-linkedin"></span></a></li>
-                            <li class="ftco-animate"><a href="https://twitter.com/rishabhnmishra"><span
-                                        class="icon-twitter"></span></a></li>
-                            <li class="ftco-animate"><a href="https://twitter.com/rishabhnmishra"><span
-                                        class="icon-facebook"></span></a></li>
-                            <li class="ftco-animate"><a href="https://www.instagram.com/rishabhnmishra/"><span
-                                        class="icon-instagram"></span></a></li>
+                            @foreach ($social_connection as $social_conn)
+                                <li class="ftco-animate"><a href="{{ $social_conn->account_link }}"><img
+                                            src="{{ asset('storage/uploads/account/' . $social_conn->account_related_image) }}"
+                                            alt=""></a></li>
+                            @endforeach
                         </ul>
-                        <br>
                     </div>
                 </div>
             @endforeach
@@ -667,12 +596,13 @@
 
 
 
-    <footer class="ftco-footer ftco-section">
+    <footer class="ftco-footer ftco-section pb-2 pt-3">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 text-center">
+                <div class="col-md-12 text-center" style="border-top:0.5px solid #999999;">
 
-                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    <p class="mt-3">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         Copyright &copy;
                         <script>
                             document.write(new Date().getFullYear());

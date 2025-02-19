@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AboutUs extends Model
+class Project extends Model
 {
     use SoftDeletes, HasFactory;
 
-    protected $fillable = ['name', 'profile_image', 'role', 'experience', 'tagline', 'profile_background', 'education', 'language', 'other_skills', 'is_del'];
+    protected $fillable = ['title', 'description', 'image'];
 
     protected $dates = ['deleted_at'];
 }

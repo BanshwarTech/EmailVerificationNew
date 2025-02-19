@@ -18,7 +18,7 @@ class IndexController extends Controller
     {
         $result['home'] = DB::table('homes')->get();
         $result['accounts'] = DB::table('accounts')->get();
-        $result['social'] = DB::table('social_accounts')->get();
+        $result['social'] = DB::table('accounts')->get();
         return view('admin.homedata', $result);
     }
 

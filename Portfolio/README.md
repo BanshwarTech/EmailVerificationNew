@@ -27,4 +27,8 @@ php artisan migrate:rollback --path=database/migrations/2024_02_14_123456_create
 
 
 
-php artisan migrate:rollback --path=/database/migrations/2025_02_17_085409_create_education_table.php
+php artisan migrate:rollback --path=/database/migrations/2025_02_13_041708_create_about_us_table.php
+
+
+SELECT * FROM
+ tblproducts LEFT JOIN tblproductgroups ON tblproductgroups.id=tblproducts.gid WHERE tblproductgroups.id=1;

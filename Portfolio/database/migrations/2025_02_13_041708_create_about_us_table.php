@@ -18,6 +18,10 @@ return new class extends Migration
             $table->string('role'); // User's Role
             $table->integer('experience')->nullable(); // Experience in Years
             $table->string('tagline')->nullable();
+            $table->string('profile_background');
+            $table->string('education');
+            $table->string('language');
+            $table->string('other_skills');
             $table->boolean('is_del')->default('0');
             $table->timestamps();
             $table->softDeletes();

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Admin\IndexController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Middleware\AdminAuth;
 use Illuminate\Support\Facades\Route;
 
@@ -68,5 +69,11 @@ Route::middleware([AdminAuth::class])->group(function () {
         Route::get('/contact-message', 'message')->name('message');
 
         Route::get('/read-message/{id}', 'readMessage')->name('read.message');
+    });
+
+    Route::prefix('admin/project')->name('admin.project.')->controller(ProjectController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/manage-project/{id?}', 'manage_project')->name('manage');
+        ROute::post('/process-manage-project', 'process_manage_projects')->name('process.manage');
     });
 });

@@ -13,12 +13,17 @@ class AboutUsSeeder extends Seeder
      */
     public function run(): void
     {
-        AboutUs::created([
+        AboutUs::create([
             'name' => "johnDe",
             'profile_image' => "dummy.png",
             'role' => 'professional role',
             'experience' => 1,
-            'tagline' => 'any tag line'
+            'tagline' => 'any tag line',
+            'profile_background' => "Web Developer",
+            'education' => "Bachelor of Engineering",
+            'language' => "English, Hindi",
+            'other_skills' => "GIT",
+            'is_del' => true
         ]);
     }
 }

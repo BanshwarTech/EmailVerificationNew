@@ -100,7 +100,5 @@
 
     </div>
     <!-- Content wrapper -->
-    <script>
-        CKEDITOR.replace('editor'); // Converts the textarea into a rich text editor
-    </script>
+
 @endsection

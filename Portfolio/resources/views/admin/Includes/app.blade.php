@@ -160,6 +160,11 @@
                                         <div data-i18n="Background & Experience">Background & Experience</div>
                                     </a>
                                 </li>
+                                <li class="menu-item {{ Request::is('admin/about/education') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.about.education') }}" class="menu-link">
+                                        <div data-i18n="Education">Education</div>
+                                    </a>
+                                </li>
                                 <li class="menu-item {{ Request::is('admin/about/tech-skill') ? 'active' : '' }}">
                                     <a href="{{ route('admin.about.tech.skill') }}" class="menu-link">
                                         <div data-i18n="Technical Skills">Technical Skills</div>

@@ -56,6 +56,9 @@ Route::middleware([AdminAuth::class])->group(function () {
         Route::get('/interests/{id?}', 'interests')->name('admin.about.interests');
         Route::post('/manage-interests', 'manage_interests')->name('admin.about.manage.interests');
         Route::get('/delete-interests/{id}', 'delInterests')->name('admin.about.interests.delete');
+
+        Route::get('/education/{id?}', 'education')->name('admin.about.education');
+        Route::post('/manage-education', 'manage_education')->name('admin.about.manage.education');
     });
 
     Route::prefix('admin/contact')->name('admin.contact.')->controller(ContactController::class)->group(function () {

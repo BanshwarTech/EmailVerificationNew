@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\AboutUs;
+use App\Models\Admin\Education;
 use App\Models\Admin\experience;
 use App\Models\Admin\PersonalInterest;
 use App\Models\Admin\service;
@@ -367,5 +368,82 @@ class AboutUsController extends Controller
         $intrest->delete(); // Soft delete (moves to trash)
 
         return redirect()->route('admin.about.interests')->with('success', 'deleted successfully...');
+    }
+
+    public function education(Request $request, $id = null)
+    {
+        $arr = Education::where('id', $id)->first();
+
+        if ($arr) {
+            $result['degree'] = $arr->degree;
+            $result['institution'] = $arr->institution;
+            $result['location'] = $arr->location;
+            $result['duration'] = $arr->duration;
+            $result['details'] = $arr->details;
+            $result['division'] = $arr->division;
+            $result['id'] = $arr->id;
+        } else {
+            $result['degree'] = '';
+            $result['institution'] = '';
+            $result['location'] = '';
+            $result['duration'] = '';
+            $result['details'] = '';
+            $result['division'] = '';
+            $result['id'] = 0;
+        }
+
+        $result['education'] = Education::paginate(10);
+        return view('admin.education', $result);
+    }
+
+    public function manage_education(Request $request)
+    {
+        try {
+            // Validation rules
+            $rules = [
+                'degree' => 'required',
+                'institution' => 'required',
+                'location' => 'required',
+                'duration' => 'required',
+                'division' => 'required',
+            ];
+
+            // Custom error messages
+            $messages = [
+                'degree.required' => 'Please enter degree!',
+                'institution.required' => 'Please enter institution!',
+                'location.required' => 'Please enter location!',
+                'duration.required' => 'Please enter duration!',
+                'division.required' => "Please enter division!"
+            ];
+
+            // Validate request
+            $validator = Validator::make($request->all(), $rules, $messages);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            if ($request->post('id') > 0) {
+                $education = Education::find($request->post('id'));
+                $msg = "Record Updated successfully....";
+            } else {
+                $education = new Education();
+                $msg = 'Record added successfully....';
+            }
+
+
+            $education->degree = $request->post('degree');
+            $education->institution = $request->post('institution');
+            $education->location = $request->post('location');
+            $education->duration = $request->post('duration');
+            $education->details = $request->post('details');
+            $education->division = $request->post('division');
+            $education->save();
+
+            return redirect()->route('admin.about.education')->with('success', $msg);
+        } catch (\Exception $e) {
+            return redirect()->route('admin.about.education')->with('error', $e->getMessage());
+        }
     }
 }

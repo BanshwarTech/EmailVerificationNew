@@ -41,7 +41,10 @@ class AboutUsController extends Controller
                 'role' => 'required',
                 'experience' => 'required',
                 'profile' => $image_validation,
-                'tagline' => 'required'
+                'tagline' => 'required',
+                'education' => 'required',
+                'language' => 'required',
+                'intrest' => 'required'
             ];
 
             // Custom error messages
@@ -51,7 +54,10 @@ class AboutUsController extends Controller
                 'experience.required' => 'Please enter your experience!',
                 'profile.mimes' => 'Only JPEG, JPG, PNG, SVG, and GIF formats are allowed!',
                 'profile.max' => 'The image size should not exceed 2MB!',
-                'tagline.required' => 'Please enter a tagline!'
+                'tagline.required' => 'Please enter a tagline!',
+                'education.required' => 'Please enter a education!',
+                'language.required' => 'Please enter a language!',
+                'intrest.required' => 'Please enter a tagline!'
             ];
 
             // Validate request
@@ -67,6 +73,9 @@ class AboutUsController extends Controller
             $about->role = $request->post('role');
             $about->experience = $request->post('experience');
             $about->tagline = $request->post('tagline');
+            $about->education = $request->post('education');
+            $about->language = $request->post('language');
+            $about->other_skills = $request->post('intrest');
 
             // Handle profile image upload
             if ($request->hasFile('profile')) {

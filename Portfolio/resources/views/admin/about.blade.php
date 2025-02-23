@@ -61,12 +61,41 @@
                                                     @enderror
                                                 </div>
                                                 <div class="form-floating col-lg-12">
-                                                    <textarea name="tagline" id="editor" class="form-control" placeholder="Tagline">{{ $ab->tagline }}</textarea>
-                                                    <label for="tagline">Tagline</label>
+                                                    <textarea name="tagline" id="editor" cols="30" rows="20" class="form-control" placeholder="Tagline">{{ $ab->tagline }}</textarea>
+                                                    {{-- <label for="tagline">Tagline</label> --}}
                                                     @error('tagline')
                                                         <div class="message">{{ $message }}</div>
                                                     @enderror
                                                 </div>
+                                                <div class="form-floating col-lg-4">
+                                                    <input type="text" name="education" id="education"
+                                                        class="form-control" placeholder="education"
+                                                        value="{{ $ab->education }}">
+                                                    <label for="education">Education</label>
+                                                    @error('education')
+                                                        <div class="message">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-floating col-lg-4">
+                                                    <input type="text" name="language" id="language"
+                                                        class="form-control" placeholder="language"
+                                                        value="{{ $ab->language }}">
+                                                    <label for="language">Language</label>
+                                                    @error('language')
+                                                        <div class="message">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-floating col-lg-4">
+                                                    <input type="text" name="intrest" id="intrest" cols="30"
+                                                        rows="10" class="form-control"
+                                                        value="{{ $ab->other_skills }}">
+                                                    <label for="intrest">Language</label>
+                                                    @error('intrest')
+                                                        <div class="message">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+
+
                                             </div>
                                             <input type="submit" class="btn btn-primary mt-2" value="Submit">
                                         </form>
@@ -100,5 +129,9 @@
 
     </div>
     <!-- Content wrapper -->
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            CKEDITOR.replace('editor');
+        });
+    </script>
 @endsection

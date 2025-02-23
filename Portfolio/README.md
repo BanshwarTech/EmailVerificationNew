@@ -1,12 +1,12 @@
 ### Here’s a professional PowerPoint presentation template for showcasing your portfolio. I'll include sections like:
 
-#### Introduction (Your name, role, and expertise)
-#### About Me (Brief background and skills)
-#### Projects (Highlight key projects with descriptions, tech stack, and screenshots)
-#### Skills & Technologies
-#### Experience (Internships, work, and freelance projects)
-#### Certifications & Achievements
-#### Contact Information
+ Introduction (Your name, role, and expertise)
+ About Me (Brief background and skills)
+ Projects (Highlight key projects with descriptions, tech stack, and screenshots)
+ Skills & Technologies
+ Experience (Internships, work, and freelance projects)
+ Certifications & Achievements
+ Contact Information
 
 
 php artisan cache:clear
@@ -23,12 +23,12 @@ php artisan optimize
 
 
 #  Rollback & Re-run Migration for a Specific Table
-php artisan migrate:rollback --path=database/migrations/2024_02_14_123456_create_technical_skills_table.php
-
-
-
 php artisan migrate:rollback --path=/database/migrations/2025_02_13_041708_create_about_us_table.php
 
+php artisan db:seed --class=YourTableNameSeeder
 
-SELECT * FROM
- tblproducts LEFT JOIN tblproductgroups ON tblproductgroups.id=tblproducts.gid WHERE tblproductgroups.id=1;
+## Generate a Resume in Word (DOCX) from the Backend
+composer require phpoffice/phpword
+
+
+

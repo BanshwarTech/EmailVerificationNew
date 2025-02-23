@@ -34,7 +34,9 @@
         <!-- Helpers -->
         <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
         <script src="{{ asset('assets/js/config.js') }}"></script>
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+            integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
         <style>
             .message {
                 font-size: 12px;
@@ -123,7 +125,7 @@
                         <!-- Dashboard -->
                         <li class="menu-item {{ Request::is('admin/dashboard') ? 'active' : '' }}">
                             <a href="{{ route('admin.dashboard') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                                <i class=' menu-icon tf-icons bx bxs-dashboard'></i>
                                 <div data-i18n="Analytics">Dashboard</div>
                             </a>
                         </li>
@@ -131,13 +133,13 @@
                         <li
                             class="menu-item {{ (Request::is('admin/home') ? 'active' : '' || Request::is('admin/home/connection')) ? 'active' : '' }}">
                             <a href="{{ route('admin.home.data') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                                <i class="menu-icon tf-icons bx bx-home"></i>
                                 <div data-i18n="Analytics">Home Data</div>
                             </a>
                         </li>
                         <li class="menu-item {{ Request::is('admin/home/account') ? 'active' : '' }}">
                             <a href="{{ route('admin.account') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                                <i class="menu-icon tf-icons bx bxs-user-account"></i>
                                 <div data-i18n="Analytics">Accounts</div>
                             </a>
                         </li>
@@ -147,7 +149,7 @@
                         <li
                             class="menu-item {{ in_array(Request::path(), ['admin/project', 'admin/project/manage-project']) ? 'active' : '' }} open">
                             <a href="javascript:void(0);" class="menu-link menu-toggle ">
-                                <i class='menu-icon tf-icons  bx bx-user-pin'></i>
+                                <i class="menu-icon tf-icons fa-solid fa-diagram-project"></i>
                                 <div data-i18n="Project Settings">Project Settings</div>
                             </a>
                             <ul class="menu-sub">
@@ -168,7 +170,7 @@
                         <li
                             class="menu-item {{ in_array(Request::path(), ['admin/about', 'admin/about/experience', 'admin/about/tech-skill', 'admin/about/offer', 'admin/about/interests']) ? 'active' : '' }} open">
                             <a href="javascript:void(0);" class="menu-link menu-toggle ">
-                                <i class='menu-icon tf-icons  bx bx-user-pin'></i>
+                                <i class="menu-icon tf-icons fa-regular fa-address-card"></i>
                                 <div data-i18n="About Settings">About Settings</div>
                             </a>
                             <ul class="menu-sub">
@@ -207,9 +209,9 @@
                         </li>
 
                         <li
-                            class="menu-item {{ in_array(Request::path(), ['admin/about', 'admin/about/experience', 'admin/about/tech-skill', 'admin/about/offer', 'admin/about/interests']) ? 'active' : '' }} open">
+                            class="menu-item {{ in_array(Request::path(), ['admin/contact', 'admin/contact/contact-message']) ? 'active' : '' }} open">
                             <a href="javascript:void(0);" class="menu-link menu-toggle ">
-                                <i class='menu-icon tf-icons  bx bx-user-pin'></i>
+                                <i class="menu-icon tf-icons fa-solid fa-id-card"></i>
                                 <div data-i18n="About Settings">Contact Settings</div>
                             </a>
                             <ul class="menu-sub">

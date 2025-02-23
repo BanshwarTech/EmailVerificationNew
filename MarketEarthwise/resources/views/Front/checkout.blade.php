@@ -140,7 +140,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="default-form-box">
-                                        <label for="country">country <span style="color:red;">*</span></label>
+                                        <label for="country">Country <span style="color:red;">*</span></label>
                                         <select class="country_option nice-select wide" name="country" id="country">
                                             <option value="NULL">Select Country</option>
                                         </select>
@@ -203,8 +203,88 @@
                                         <textarea id="order_note" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <label class="checkbox-default" for="newShipping" data-bs-toggle="collapse"
+                                        data-bs-target="#anotherShipping">
+                                        <input type="checkbox" id="newShipping">
+                                        <span>Ship to a different address?</span>
+                                    </label>
+
+                                    <div id="anotherShipping" class="collapse mt-3" data-parent="#anotherShipping">
+                                        <div class="row">
+                                            <div class="col-12 col-lg-6">
+                                                <div class="default-form-box">
+                                                    <label>Full Name <span>*</span></label>
+                                                    <input type="text" name="shipping_name" placeholder="Full Name">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <div class="default-form-box">
+                                                    <label>Phone <span>*</span></label>
+                                                    <input type="text" name="shipping_phone" placeholder="Phone">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <div class="default-form-box">
+                                                    <label>Email Address <span>*</span></label>
+                                                    <input type="email" name="shipping_email"
+                                                        placeholder="Email Address">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <div class="default-form-box">
+                                                    <label for="shipping_country">Shipping Country <span
+                                                            style="color:red;">*</span></label>
+                                                    <select class="country_option nice-select wide"
+                                                        name="shipping_country" id="shipping_country">
+                                                        <option value="NULL">Select Country</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="default-form-box">
+                                                    <label>City <span>*</span></label>
+                                                    <input type="text" name="shipping_city" placeholder="City">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="default-form-box">
+                                                    <label>State <span>*</span></label>
+                                                    <input type="text" name="shipping_state" placeholder="State">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="default-form-box">
+                                                    <label>Pincode <span>*</span></label>
+                                                    <input type="text" name="shipping_pincode" placeholder="Pincode">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-lg-12">
+                                                <div class="default-form-box">
+                                                    <label>Street Address <span>*</span></label>
+                                                    <textarea name="shipping_address" placeholder="House number and street name" style="height: 100px;"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <div class="col-12">
+                            <label class="checkbox-default" for="newAccount" data-bs-toggle="collapse"
+                                data-bs-target="#newAccountPassword">
+                                <input type="checkbox" id="newAccount">
+                                <span>Create an account?</span>
+                            </label>
+                            <div id="newAccountPassword" class="collapse mt-3" data-parent="#newAccountPassword">
+                                <div class="card-body1 default-form-box">
+                                    <label> Account password <span>*</span></label>
+                                    <input placeholder="password" type="password">
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-lg-12 col-md-12">
                             <h3>Your order</h3>
                             <div class="order_table table-responsive">
@@ -306,6 +386,24 @@
         });
         countrySelect.style.backgroundColor = 'lightblue';
     </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const shipCountry = document.getElementById("shipping_country");
+
+            if (typeof shipping_country_list !== "undefined" && Array.isArray(shipping_country_list)) {
+                shipping_country_list.forEach(function(shipping_country) {
+                    let option = document.createElement("option");
+                    option.value = shipping_country;
+                    option.text = shipping_country;
+                    shipCountry.appendChild(option);
+                });
+            } else {
+                console.error("shipping_country_list is not defined or not an array.");
+            }
+        });
+    </script>
+
     <style>
         .error-border {
             border: 1px solid red !important;

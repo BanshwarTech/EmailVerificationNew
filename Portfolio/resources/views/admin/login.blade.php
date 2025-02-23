@@ -26,10 +26,12 @@
 
             @if (session()->has('success'))
                 toastr.success("{{ session('success') }}");
+                <?php session()->forget('success'); ?>
             @endif
 
             @if (session()->has('error'))
                 toastr.error("{{ session('error') }}");
+                <?php session()->forget('error'); ?>
             @endif
         });
     </script>

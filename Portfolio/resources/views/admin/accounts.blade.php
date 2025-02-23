@@ -99,7 +99,8 @@
                                             @foreach ($account as $index => $acc)
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
-                                                    <td> {{ $acc->account_related_image }}</td>
+                                                    <td><img src="{{ asset('storage/uploads/account/' . $acc->account_related_image) }}"
+                                                            alt=""> </td>
                                                     <td> {{ $acc->account_name }}</td>
                                                     <td> {{ $acc->account_id }}</td>
                                                     <td> {{ $acc->account_link }}</td>

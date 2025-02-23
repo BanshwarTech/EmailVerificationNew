@@ -33,7 +33,9 @@
                                         @foreach ($project as $index => $pro)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
-                                                <td>{{ $pro->title }}</td>
+                                                <td>{{ $pro->title }} <img
+                                                        src="{{ asset('storage/uploads/project/' . $pro->image) }}"
+                                                        alt="" height="30" width="50"></td>
                                                 <td>{{ $pro->description }}</td>
                                                 <td>{{ $pro->link }}</td>
                                                 <td>{{ $pro->github_link }}</td>
@@ -49,10 +51,10 @@
                                                                 href="{{ route('admin.project.manage', $pro->id) }}">
                                                                 <i class="bx bx-edit-alt me-1"></i> Edit
                                                             </a>
-                                                            {{-- <a class="dropdown-item delete-btn"
-                                                            data-url="{{ route('admin.about.project.delete', ['id' => $pro->id]) }}">
-                                                            <i class="bx bx-trash me-1"></i> Delete
-                                                        </a> --}}
+                                                            <a class="dropdown-item delete-btn"
+                                                                data-url="{{ route('admin.project.delete', ['id' => $pro->id]) }}">
+                                                                <i class="bx bx-trash me-1"></i> Delete
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </td>

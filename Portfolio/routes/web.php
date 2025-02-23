@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/')->controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home');
     Route::get('/about', 'about')->name('more.about');
+    Route::get('/resume', 'resume')->name('resume');
 });
 
 
@@ -26,6 +27,8 @@ Route::middleware([AdminAuth::class])->group(function () {
     Route::prefix('admin/')->controller(DashboardController::class)->group(function () {
         Route::get('dashboard', 'dashboard')->name('admin.dashboard');
         Route::get('logout', 'logout')->name('admin.logout');
+        Route::post('/update-menu/{id}', 'updateMenu')->name('update.menu');
+        Route::post('/update-login-password/{id}', 'updateLoginPassword')->name('update.login.password');
     });
 
     Route::prefix('admin/home')->controller(IndexController::class)->group(function () {
@@ -75,5 +78,6 @@ Route::middleware([AdminAuth::class])->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/manage-project/{id?}', 'manage_project')->name('manage');
         ROute::post('/process-manage-project', 'process_manage_projects')->name('process.manage');
+        Route::get('/del-project/{id}', 'delProject')->name('delete');
     });
 });

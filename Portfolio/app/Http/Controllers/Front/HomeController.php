@@ -15,6 +15,7 @@ class HomeController extends Controller
 {
     public function index()
     {
+        $result['menu'] = DB::table('menus')->first();
         $result["home"] = DB::table('homes')->get();
         $result['about'] = DB::table('about_us')->get();
         $result['skill'] = technical_skill::all();
@@ -25,5 +26,19 @@ class HomeController extends Controller
         $result['social_connection'] = $accounts = Accounts::where('account_type', 'social')->get();
 
         return view('home.index', $result);
+    }
+
+    public function resume()
+    {
+        $result['menu'] = DB::table('menus')->first();
+        $result["home"] = DB::table('homes')->get();
+        $result['about'] = DB::table('about_us')->get();
+        $result['skill'] = technical_skill::all();
+        $result['experiences'] = experience::all();
+        $result['education'] = Education::all();
+        $result['project'] = Project::all();
+        $result['contact_details'] = DB::table('contact_details')->get();
+        $result['social_connection'] = $accounts = Accounts::where('account_type', 'social')->get();
+        return view('home.resume', $result);
     }
 }

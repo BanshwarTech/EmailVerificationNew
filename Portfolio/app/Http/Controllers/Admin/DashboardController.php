@@ -71,7 +71,82 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
-        return view('admin.dashboard');
+        $result['menu'] = DB::table('menus')->get();
+        $result['login'] = Login::where('id', session('ADMIN_ID'))->get();
+
+        return view('admin.dashboard', $result);
+    }
+
+    public function updateMenu(Request $request, $id)
+    {
+        // Get the existing menu record
+        $menu = DB::table('menus')->where('id', $id)->first();
+
+        // Prepare update data
+        $updateData = [
+            'Home'    => $request->Home,
+            'About'   => $request->About,
+            'Skill'   => $request->Skill,
+            'EduExp'  => $request->EduExp,
+            'Project' => $request->Project,
+            'Contact' => $request->Contact,
+            'updated_at' => now(),
+        ];
+
+        // Determine which items were disabled
+        $disabledFields = [];
+        foreach ($updateData as $key => $value) {
+            if ($key !== 'updated_at' && $menu->$key == 1 && $value == 0) {
+                $disabledFields[] = $key;
+            }
+        }
+
+        // Update the menu record
+        DB::table('menus')->where('id', $id)->update($updateData);
+
+        // Check if any fields were disabled
+        if (!empty($disabledFields)) {
+            return redirect()->back()->with('success', 'The following sections were disabled: ' . implode(', ', $disabledFields));
+        }
+
+        return redirect()->back()->with('success', 'Menu updated successfully.');
+    }
+    public function updateLoginPassword(Request $request, $id)
+    {
+        $login = DB::table('logins')->where('id', $id)->first();
+
+        if (!$login) {
+            return redirect()->back()->with('error', 'User not found.');
+        }
+
+        $updateData = [
+            'name' => $request->post('name'),
+            'email' => $request->post('email'),
+            'updated_at' => now(),
+        ];
+
+        // Check if password is filled
+        if ($request->filled('password')) {
+            $newPassword = $request->post('password');
+            $oldPassword = $login->password;
+            // Compare new password with stored hashed password
+            if ($newPassword != $oldPassword) {
+
+                $updateData['password'] = Hash::make($newPassword);
+
+                DB::table('logins')->where('id', $id)->update($updateData);
+                // Store success message in session before logging out
+                session()->put('password_changed_message', 'Password changed. Please log in again.');
+
+                // Remove only relevant session values instead of flushing everything
+                session()->forget(['ADMIN_LOGIN', 'ADMIN_ID', 'ADMIN_NAME', 'ADMIN_EMAIL']);
+
+                return redirect()->route('admin.logout');
+            }
+        }
+        // If password is not changed, update only name and email
+        DB::table('logins')->where('id', $id)->update($updateData);
+        return redirect()->back()->with('success', 'Profile updated successfully.');
     }
 
     public function updatePassword()

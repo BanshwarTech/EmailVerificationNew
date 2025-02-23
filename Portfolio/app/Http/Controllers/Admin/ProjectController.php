@@ -13,7 +13,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $result['project'] = DB::table('projects')->paginate(10);
+        $result['project'] = Project::paginate(10);
         return view('admin.project', $result);
     }
 
@@ -104,5 +104,12 @@ class ProjectController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('admin.project.manage')->with('error', $e->getMessage());
         }
+    }
+
+    public function delProject($id)
+    {
+        $account = Project::findOrFail($id);
+        $account->delete();
+        return redirect()->route('admin.project.index')->with('success', 'deleted successfully.....');
     }
 }
